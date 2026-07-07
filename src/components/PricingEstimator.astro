@@ -1,0 +1,258 @@
+---
+// Interactive pricing estimator for the complexity-tier model. One
+// question up front routes franchise/multi-brand parents to the
+// Enterprise path; everyone else gets an employee stepper with live
+// totals across Launch, Growth, and Scale.
+import { PLANS, OVERAGE_RATE } from '../lib/site';
+
+const publishedPlans = PLANS.filter((p) => p.price !== null);
+---
+
+<div class="est" id="pricing-est">
+  <div class="est-step" id="est-question">
+    <h3>Are you a franchise or multi-brand parent overseeing separate businesses?</h3>
+    <p class="est-hint">
+      One business running routes across any number of zones or cities is not a franchise here.
+      This is about a parent company with separately run child organizations rolling up to it.
+    </p>
+    <div class="est-choices">
+      <button type="button" class="btn btn-ghost" id="est-yes">Yes, we oversee separate businesses</button>
+      <button type="button" class="btn btn-primary" id="est-no">No, one business</button>
+    </div>
+  </div>
+
+  <div class="est-step" id="est-enterprise" hidden>
+    <h3>That is an Enterprise account</h3>
+    <p>
+      Parent and child organizations, franchise management, royalty billing, and regional
+      dashboards, priced by contract rather than a public tier. It starts with a conversation
+      about your structure, not a checkout page.
+    </p>
+    <div class="est-choices">
+      <a href="/contact" class="btn btn-primary">Talk to us about Enterprise</a>
+      <button type="button" class="btn btn-ghost est-back" data-back>Back</button>
+    </div>
+  </div>
+
+  <div class="est-step" id="est-stepper" hidden>
+    <h3 id="est-emp-label">How many people work in the business, including you?</h3>
+    <div class="est-count-row">
+      <button type="button" class="est-bump" id="est-minus" aria-label="One fewer employee">&minus;</button>
+      <input
+        type="range"
+        id="est-range"
+        min="1"
+        max="60"
+        value="4"
+        step="1"
+        aria-labelledby="est-emp-label"
+      />
+      <button type="button" class="est-bump" id="est-plus" aria-label="One more employee">+</button>
+      <span class="est-count" id="est-count" aria-live="polite">4</span>
+    </div>
+
+    <div class="est-plans" id="est-plans" aria-live="polite">
+      {
+        publishedPlans.map((p) => (
+          <div class="est-plan" data-plan={p.name} data-price={p.price} data-included={p.includedEmployees}>
+            <span class="est-plan-name">{p.name}</span>
+            <span class="est-plan-total" data-total>$0</span>
+            <span class="est-plan-break" data-break />
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="est-note">
+      Teammates cost the same everywhere: your plan's allowance is included, and each one past it
+      is ${OVERAGE_RATE} a month flat, shown live in your billing dashboard as it happens. The
+      tiers differ by tooling, not by how many people they allow. Pay yearly and the plan price
+      drops 15%.
+    </p>
+    <button type="button" class="est-back-link" data-back>Franchise or multi-brand parent instead?</button>
+  </div>
+</div>
+
+<style>
+  .est {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .est h3 {
+    margin-bottom: 10px;
+  }
+
+  .est-hint {
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .est-choices {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .est-count-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0 6px;
+  }
+
+  input[type='range'] {
+    flex: 1;
+    accent-color: var(--sage);
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .est-bump {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--line);
+    background: #ffffff;
+    color: var(--navy);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .est-bump:hover {
+    border-color: var(--navy);
+  }
+
+  .est-count {
+    min-width: 2.2em;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .est-plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .est-plans {
+      grid-template-columns: 1fr;
+    }
+
+    .est {
+      padding: 24px 20px;
+    }
+  }
+
+  .est-plan {
+    display: grid;
+    gap: 2px;
+    padding: 16px 18px;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+  }
+
+  .est-plan-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+  }
+
+  .est-plan-total {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .est-plan-total small {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+  }
+
+  .est-plan-break {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+  }
+
+  .est-note {
+    margin: 20px 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+  }
+
+  .est-back-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 14px;
+    color: var(--sage-dark);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<script>
+  const est = document.getElementById('pricing-est')!;
+  const question = document.getElementById('est-question')!;
+  const enterprise = document.getElementById('est-enterprise')!;
+  const stepper = document.getElementById('est-stepper')!;
+  const range = document.getElementById('est-range') as HTMLInputElement;
+  const count = document.getElementById('est-count')!;
+
+  const show = (panel: HTMLElement) => {
+    for (const p of [question, enterprise, stepper]) p.hidden = p !== panel;
+  };
+
+  document.getElementById('est-yes')!.addEventListener('click', () => show(enterprise));
+  document.getElementById('est-no')!.addEventListener('click', () => show(stepper));
+  est.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => show(question)));
+
+  const OVERAGE = 10;
+  const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
+
+  const update = () => {
+    const n = Number(range.value);
+    count.textContent = String(n);
+    est.querySelectorAll<HTMLElement>('.est-plan').forEach((card) => {
+      const price = Number(card.dataset.price);
+      const included = Number(card.dataset.included);
+      const extra = Math.max(0, n - included);
+      card.querySelector('[data-total]')!.innerHTML = `${fmt(price + extra * OVERAGE)}<small>/mo</small>`;
+      card.querySelector('[data-break]')!.textContent =
+        extra === 0
+          ? `covers all ${n} (${included} included)`
+          : `${included} included + ${extra} × ${fmt(OVERAGE)}`;
+    });
+  };
+
+  document.getElementById('est-minus')!.addEventListener('click', () => {
+    range.value = String(Math.max(Number(range.min), Number(range.value) - 1));
+    update();
+  });
+  document.getElementById('est-plus')!.addEventListener('click', () => {
+    range.value = String(Math.min(Number(range.max), Number(range.value) + 1));
+    update();
+  });
+  range.addEventListener('input', update);
+  update();
+</script>

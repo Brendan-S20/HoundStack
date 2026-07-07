@@ -8,79 +8,75 @@ export const SITE = {
   requestAccessFormEndpoint: 'https://formspree.io/f/REPLACE_ACCESS_FORM_ID',
 } as const;
 
-export interface PlanBand {
+// Pricing model: complexity tiers with an included employee allowance.
+// The estimator, the plan comparison, and the Offer schema all read from
+// this single source so the numbers cannot drift apart.
+export const TRIAL_DAYS = 60;
+export const OVERAGE_RATE = 10; // per additional active employee per month
+export const ANNUAL_DISCOUNT = 0.15;
+
+export interface Plan {
   name: string;
-  min: number;
-  max: number | null;
-  /** Flat monthly price in dollars, or null for per-client plans */
-  flat: number | null;
-  /** Per-client monthly rate in dollars, or null for flat plans */
-  perClient: number | null;
-  blurb: string;
+  /** Monthly price in dollars, or null for the sales-assisted tier */
+  price: number | null;
+  /** Active employees included, or null for negotiated allowances */
+  includedEmployees: number | null;
+  audience: string;
+  /** The complexity ladder for this tier, not a feature checklist */
+  ladder: string[];
 }
 
-// Live product pricing. The calculator and the pricing table both read
-// from this single source so the band boundaries cannot drift apart.
-export const PLANS: PlanBand[] = [
+export const PLANS: Plan[] = [
   {
-    name: 'Free',
-    min: 0,
-    max: 3,
-    flat: 0,
-    perClient: null,
-    blurb: 'Free while you have 3 or fewer active clients. No credit card required.',
+    name: 'Launch',
+    price: 79,
+    includedEmployees: 3,
+    audience: 'A solo operator or a small crew running one business.',
+    ladder: [
+      'Standard reporting suite',
+      'Standard roles: owner, office manager, dispatcher, tech',
+      'Email support',
+    ],
   },
   {
-    name: 'Fetch',
-    min: 4,
-    max: 25,
-    flat: 59,
-    perClient: null,
-    blurb: 'For solo operators building past their first few yards.',
+    name: 'Growth',
+    price: 199,
+    includedEmployees: 10,
+    audience: 'Past "just me and a couple techs," still one business.',
+    ladder: [
+      'Advanced analytics: cohort retention, zone profitability, churn drivers',
+      'More automation rules and workflow capacity',
+      'Priority email and chat support',
+    ],
   },
   {
-    name: 'Scoop',
-    min: 26,
-    max: 75,
-    flat: 99,
-    perClient: null,
-    blurb: 'For a full route and your first hire.',
+    name: 'Scale',
+    price: 449,
+    includedEmployees: 30,
+    audience: 'A large operation spread across multiple cities or territories.',
+    ladder: [
+      'Cross-zone and regional performance reporting',
+      'Custom permission sets beyond the standard four roles',
+      'Phone support with a named account contact',
+    ],
   },
   {
-    name: 'Haul',
-    min: 76,
-    max: 125,
-    flat: 149,
-    perClient: null,
-    blurb: 'For multi-tech operations running several routes a day.',
-  },
-  {
-    name: 'Pack Leader',
-    min: 126,
-    max: 200,
-    flat: null,
-    perClient: 2,
-    blurb: '$2.00 per active client per month. Scales with your book, not your headcount.',
-  },
-  {
-    name: 'Kennel',
-    min: 201,
-    max: null,
-    flat: null,
-    perClient: 1.5,
-    blurb: '$1.50 per active client per month. The rate drops as you grow.',
+    name: 'Enterprise',
+    price: null,
+    includedEmployees: null,
+    audience: 'A franchise or multi-brand parent overseeing separate child businesses.',
+    ladder: [
+      'Parent and child organization structure with full rollup',
+      'Franchise management, royalty billing, and regional dashboards',
+      'Dedicated account manager, custom contract terms and SLA',
+    ],
   },
 ];
 
-export function planForClients(clients: number): PlanBand {
-  return (
-    PLANS.find((p) => clients >= p.min && (p.max === null || clients <= p.max)) ?? PLANS[PLANS.length - 1]
-  );
-}
-
-export function priceForClients(clients: number): number {
-  const plan = planForClients(clients);
-  return plan.flat !== null ? plan.flat : plan.perClient! * clients;
+/** Monthly total for a published plan at a given active employee count */
+export function planTotal(plan: Plan, employees: number): number | null {
+  if (plan.price === null || plan.includedEmployees === null) return null;
+  return plan.price + Math.max(0, employees - plan.includedEmployees) * OVERAGE_RATE;
 }
 
 export const NAV = {

@@ -1,17 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PricingCalculator from '../components/PricingCalculator.astro';
+import PricingEstimator from '../components/PricingEstimator.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import CtaSection from '../components/CtaSection.astro';
 import Icon from '../components/Icon.astro';
-import { PLANS, SITE } from '../lib/site';
-
-const planDisplay = PLANS.map((p) => ({
-  ...p,
-  range: p.max === null ? `${p.min}+ active clients` : p.min === 0 ? `Up to ${p.max} active clients` : `${p.min} to ${p.max} active clients`,
-  priceLabel: p.flat === 0 ? '$0' : p.flat !== null ? `$${p.flat}` : `$${p.perClient!.toFixed(2)}`,
-  priceSuffix: p.flat !== null ? '/mo' : '/client/mo',
-}));
+import { PLANS, SITE, TRIAL_DAYS, OVERAGE_RATE } from '../lib/site';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -20,55 +13,101 @@ const softwareSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   url: SITE.url,
-  offers: PLANS.map((p) => ({
+  offers: PLANS.filter((p) => p.price !== null).map((p) => ({
     '@type': 'Offer',
     name: `HoundStack ${p.name}`,
-    price: String(p.flat ?? p.perClient),
+    price: String(p.price),
     priceCurrency: 'USD',
-    description:
-      p.flat !== null
-        ? `${p.flat === 0 ? 'Free' : `$${p.flat} per month`} for ${p.min === 0 ? 'up to' : `${p.min} to`} ${p.max} active clients. Unlimited staff included.`
-        : `$${p.perClient} per active client per month for ${p.max === null ? `${p.min} or more` : `${p.min} to ${p.max}`} active clients. Unlimited staff included.`,
+    description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each. Unlimited customers, dogs, jobs, routes, and zones.`,
   })),
 };
 
+const alwaysIncluded = [
+  'Unlimited customers, dogs, jobs, and routes',
+  'Unlimited zones, cities, and territories',
+  'Scheduling, recurring services, and route optimization',
+  'Estimates, invoicing, payments, and the client portal',
+  'The mobile field app with offline support and photos',
+  'Work orders, notifications, GPS navigation, and reporting',
+];
+
+const addons = [
+  {
+    icon: 'spark',
+    name: 'AI Receptionist',
+    body: 'Answers client texts about pricing and availability and books straight into the calendar. Texts today; voice calls are on the roadmap and will be labeled when live.',
+    availability: 'Available on every plan',
+  },
+  {
+    icon: 'chart',
+    name: 'AI Business Advisor',
+    body: 'The weekly digest: revenue, completed visits, at risk clients, and one recommended action, computed from your real numbers and delivered every week.',
+    availability: 'Available on every plan',
+  },
+  {
+    icon: 'users',
+    name: 'Referral Programs',
+    body: 'Referral codes with credit applied automatically to both the referrer and the new client. Built for the two doors down growth this trade actually runs on.',
+    availability: 'Available on every plan',
+  },
+  {
+    icon: 'network',
+    name: 'Franchise Management and Regional Dashboards',
+    body: 'Parent and child organizations, automatic royalty billing, and rollup reporting across every location in the network.',
+    availability: 'Included with Enterprise',
+  },
+];
+
 const faqs = [
   {
-    q: 'What counts as an active client?',
-    a: 'A client with a recurring visit schedule or a visit completed in the current billing month. Paused clients, one time quotes, and archived accounts do not count toward your total.',
+    q: 'Why don’t you charge by number of customers or employees?',
+    a: 'Because growth is success, not a cost trigger. Winning more customers or hiring more people should never be the reason your software bill jumps. What actually changes as an operation matures is complexity, deeper reporting, more control, franchise structure, and that is what the tiers price.',
   },
   {
-    q: 'Do you ever charge per seat or per user?',
-    a: 'No. Every plan, including Free, has unlimited staff accounts. Owners, office managers, dispatchers, and techs all log in at no extra cost, and hiring never changes your bill.',
+    q: 'What counts as an active employee?',
+    a: 'Anyone with a login used at least once in the billing period, in any role. Techs, dispatchers, and office staff all count the same way. Someone who never logs in that month does not count.',
   },
   {
-    q: 'Do you take a cut of my payments?',
-    a: 'No. Stripe runs on your own key, so you pay Stripe’s published processing rates and nothing on top. HoundStack takes zero markup on payment volume.',
+    q: `What happens after my ${TRIAL_DAYS} day trial?`,
+    a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
   },
   {
-    q: 'What happens when I cross a plan boundary mid month?',
-    a: 'Plan changes are prorated. If you grow from 25 to 26 active clients, you pay Fetch for the days you were on it and Scoop for the rest, calculated automatically.',
+    q: 'What happens if I go over my included employee allowance?',
+    a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
   },
   {
-    q: 'Can I get my data out?',
-    a: 'Yes, one click export at any time: clients, dogs, visits, invoices, and payment history. Your data is yours, on every plan including Free.',
+    q: 'Do I lose features on Launch that Enterprise gets?',
+    a: 'No. Every plan runs the full core ERP: scheduling, routing, invoicing, payments, the field app, the client portal, all of it. The difference between tiers is complexity tooling like advanced analytics, custom permissions, and franchise structure, not core capability.',
+  },
+  {
+    q: 'Can I buy add-ons without upgrading my whole plan?',
+    a: 'Yes for the AI and growth add-ons, they install on any plan. The one exception is franchise management and regional dashboards, which are part of the Enterprise structure because they require the parent and child organization model.',
+  },
+  {
+    q: 'Is there a discount for paying annually?',
+    a: 'Yes, 15% off the plan price, applied automatically when you choose yearly billing.',
+  },
+  {
+    q: 'What happens to my data if I downgrade?',
+    a: 'Nothing is deleted. Downgrades follow the same grace period handling as any plan change, and your data stays exportable in one click on every plan, paused accounts included.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Pooper scooper software pricing: never per seat | HoundStack"
-  description="HoundStack pricing by active client count only: Free up to 3 clients, Fetch $59, Scoop $99, Haul $149, then per client rates at scale. Unlimited staff on every plan."
+  title="Pooper scooper software pricing: Launch $79, Growth $199, Scale $449 | HoundStack"
+  description="HoundStack pricing by operational complexity, not headcount: Launch $79, Growth $199, Scale $449, Enterprise by contract. First teammates included, $10 flat after, 60 day free trial."
   schema={[softwareSchema]}
 >
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">Pricing</span>
-      <h1>Pooper scooper software pricing with no per seat charges, ever</h1>
+      <h1>Pooper scooper software pricing built around complexity, not headcount</h1>
       <p class="lede">
-        Nobody else in this category can say it this plainly: you are priced on active clients
-        only. Unlimited staff on every plan, including Free. Hire whoever you need, the bill does
-        not move.
+        Your plan is set by how complex the operation is, not how many customers you have earned
+        or how many people it takes to run it. Every tier includes an employee allowance, and one
+        more teammate is ${OVERAGE_RATE} a month flat. Customers, dogs, jobs, routes, zones, and
+        cities are unlimited on every plan.
       </p>
     </div>
   </section>
@@ -76,51 +115,126 @@ const faqs = [
   <section class="section-alt">
     <div class="container">
       <div class="reveal">
-        <PricingCalculator />
+        <PricingEstimator />
       </div>
     </div>
   </section>
 
   <section>
     <div class="container">
-      <h2 class="reveal">Every plan, every number</h2>
+      <h2 class="reveal">Four tiers, one ladder</h2>
+      <p class="lede reveal">
+        Every plan runs the full core ERP with nothing held back. What changes as you move up is
+        the tooling a more complex operation actually needs.
+      </p>
       <div class="plan-grid">
         {
-          planDisplay.map((p) => (
+          PLANS.map((p) => (
             <div class="card plan-card reveal">
               <h3>{p.name}</h3>
-              <p class="plan-range">{p.range}</p>
               <p class="plan-price">
-                <span class="plan-amount">{p.priceLabel}</span>
-                <span class="plan-suffix">{p.priceSuffix}</span>
+                {p.price !== null ? (
+                  <>
+                    <span class="plan-amount">${p.price}</span>
+                    <span class="plan-suffix">/mo</span>
+                  </>
+                ) : (
+                  <span class="plan-amount plan-custom">By contract</span>
+                )}
               </p>
-              <p class="plan-blurb">{p.blurb}</p>
-              <ul class="plan-includes">
-                <li><Icon name="check" size={16} /> Unlimited staff</li>
-                <li><Icon name="check" size={16} /> Every feature included</li>
-                <li><Icon name="check" size={16} /> One click data export</li>
+              <p class="plan-emp">
+                {p.includedEmployees !== null
+                  ? `${p.includedEmployees} active employees included`
+                  : 'Custom employee allowance'}
+              </p>
+              <p class="plan-blurb">{p.audience}</p>
+              <ul class="plan-ladder">
+                {p.ladder.map((item) => (
+                  <li>
+                    <Icon name="check" size={16} /> {item}
+                  </li>
+                ))}
               </ul>
             </div>
           ))
         }
       </div>
       <p class="plan-note reveal">
-        Per client plans do real per client math. At 126 active clients Pack Leader is $252 per
-        month, at 200 it is $400, and at 201 the Kennel rate drops the per client price to $1.50,
-        which is $301.50. The calculator above lands on every boundary exactly.
+        Additional active employees are ${OVERAGE_RATE} per month flat on Launch, Growth, and
+        Scale. Yearly billing takes 15% off the plan price. API access will be an add-on on
+        Growth and included on Scale and Enterprise; it is coming soon and will be marked live
+        here when it ships, not before.
       </p>
     </div>
   </section>
 
+  <section class="section-navy always-strip">
+    <div class="container reveal">
+      <h2>Always unlimited, on every plan</h2>
+      <div class="always-grid">
+        {
+          alwaysIncluded.map((item) => (
+            <div class="always-item">
+              <Icon name="check" size={18} />
+              <span>{item}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="always-note">
+        Operating across three cities costs the same as operating across one street. Zones and
+        territories are structure, not a meter.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Add-ons</h2>
+      <p class="lede reveal">
+        Optional tools that install on top of any plan. Everything listed here is live in the
+        product today; more are in development and will appear when they ship.
+      </p>
+      <div class="grid-2 addon-grid">
+        {
+          addons.map((a) => (
+            <div class="card reveal">
+              <span class="card-icon">
+                <Icon name={a.icon as any} />
+              </span>
+              <h3>{a.name}</h3>
+              <p>{a.body}</p>
+              <span class="badge badge-sage addon-badge">{a.availability}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="section-alt">
+    <div class="container reveal enterprise-block">
+      <span class="eyebrow">Enterprise</span>
+      <h2>For franchise and multi-brand parents</h2>
+      <p class="lede">
+        Enterprise is not a size, it is a structure: a parent organization overseeing separately
+        run child businesses that roll up to it. It includes franchise management, automatic
+        royalty billing, regional dashboards, a custom employee allowance, and a dedicated
+        account manager, priced by contract against your locations, allowance, and term.
+      </p>
+      <a href="/contact" class="btn btn-primary">Talk to sales about Enterprise</a>
+    </div>
+  </section>
+
+  <section>
     <div class="container reveal">
       <FaqBlock faqs={faqs} heading="Pricing questions, answered straight" />
     </div>
   </section>
 
   <CtaSection
-    heading="Start free and see if it fits your route"
-    body="Up to 3 active clients free, no credit card, unlimited staff. If you outgrow it, the next tier is $59 and you will know exactly why."
+    heading="Run the trial on your real routes"
+    body={`Every account starts with ${TRIAL_DAYS} days of Launch free, no credit card, purely time based. Import your book with a dry run and judge it on your own operation.`}
   />
 </BaseLayout>
 
@@ -132,12 +246,12 @@ const faqs = [
 
   .plan-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
     margin-top: 32px;
   }
 
-  @media (max-width: 980px) {
+  @media (max-width: 1020px) {
     .plan-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -149,25 +263,27 @@ const faqs = [
     }
   }
 
-  .plan-card h3 {
-    margin-bottom: 2px;
+  .plan-card {
+    padding: 24px;
   }
 
-  .plan-range {
-    color: var(--ink-faint);
-    font-size: 0.88rem;
-    margin-bottom: 14px;
+  .plan-card h3 {
+    margin-bottom: 6px;
   }
 
   .plan-price {
-    margin-bottom: 12px;
+    margin-bottom: 4px;
   }
 
   .plan-amount {
-    font-size: 2rem;
+    font-size: 1.9rem;
     font-weight: 800;
     color: var(--navy);
     letter-spacing: -0.02em;
+  }
+
+  .plan-custom {
+    font-size: 1.35rem;
   }
 
   .plan-suffix {
@@ -176,34 +292,90 @@ const faqs = [
     font-size: 0.9rem;
   }
 
-  .plan-blurb {
-    min-height: 3.2em;
+  .plan-emp {
+    font-weight: 650;
+    color: var(--sage-dark);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
   }
 
-  .plan-includes {
+  .plan-blurb {
+    min-height: 4em;
+    font-size: 0.92rem;
+  }
+
+  .plan-ladder {
     list-style: none;
     padding: 0;
-    margin: 16px 0 0;
+    margin: 14px 0 0;
     display: grid;
-    gap: 8px;
-    font-size: 0.9rem;
+    gap: 9px;
+    font-size: 0.88rem;
     color: var(--ink-muted);
   }
 
-  .plan-includes li {
-    display: flex;
-    align-items: center;
+  .plan-ladder li {
+    display: grid;
+    grid-template-columns: 16px 1fr;
     gap: 8px;
+    align-items: start;
   }
 
-  .plan-includes svg {
+  .plan-ladder svg {
     color: var(--sage-dark);
-    flex-shrink: 0;
+    margin-top: 3px;
   }
 
   .plan-note {
     margin-top: 28px;
     color: var(--ink-muted);
+    max-width: 52em;
+  }
+
+  .always-strip h2 {
+    margin-bottom: 24px;
+  }
+
+  .always-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 32px;
+    max-width: 880px;
+  }
+
+  @media (max-width: 700px) {
+    .always-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .always-item {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .always-item svg {
+    color: #9dbb9d;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .always-note {
+    margin-top: 24px;
+    color: #b9c9d3;
+    max-width: 44em;
+  }
+
+  .addon-grid {
+    margin-top: 32px;
+  }
+
+  .addon-badge {
+    margin-top: 14px;
+  }
+
+  .enterprise-block .lede {
     max-width: 52em;
   }
 </style>

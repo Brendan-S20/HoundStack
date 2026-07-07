@@ -54,7 +54,7 @@ export const COMPETITORS: Competitor[] = [
     strengths:
       'Jobber is polished, reliable, and broad. Quoting, invoicing, scheduling, and payments all work well, the mobile app is solid, and their support has a good reputation. For a general contractor or a lawn care company with varied job types, it is a strong choice.',
     gaps:
-      'For this trade specifically, two things bite. There is no per dog pricing, so the billing model at the center of a scooping business has to be faked with line items. And Jobber charges per user, which means every tech and office hire raises your software bill. HoundStack prices by active clients with unlimited staff, and per dog billing is native, not improvised.',
+      'For this trade specifically, two things bite. There is no per dog pricing, so the billing model at the center of a scooping business has to be faked with line items. And Jobber charges per user starting from the very first one. HoundStack includes your first 3 teammates on every plan and adds one for $10 a month flat after that, and per dog billing is native, not improvised.',
     weakSpotLinks: [
       {
         href: '/features/billing',
@@ -64,7 +64,7 @@ export const COMPETITORS: Competitor[] = [
       {
         href: '/pricing',
         label: 'Pricing',
-        why: 'unlimited staff on every plan, so hiring never raises the bill',
+        why: 'your first 3 teammates included, $10 flat after, versus per user from user one',
       },
     ],
     importerName: 'the Jobber importer',

@@ -2,35 +2,36 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Icon from '../components/Icon.astro';
-import { SITE } from '../lib/site';
+import { SITE, TRIAL_DAYS } from '../lib/site';
 ---
 
 <BaseLayout
-  title="Start a free HoundStack account"
-  description="Start now, no call needed. Request a free HoundStack account: free while you have 3 or fewer active clients, no credit card, unlimited staff on every plan."
+  title="Start a 60 day free trial of HoundStack"
+  description="Start now, no call needed. Request a HoundStack account and get 60 days of the Launch plan free: no credit card, purely time based, with nothing deleted if you pause."
 >
   <section class="page-hero">
     <div class="container contact-grid">
       <div>
         <span class="eyebrow">Start free</span>
-        <h1>Start a free account, no call needed</h1>
+        <h1>Start a {TRIAL_DAYS} day free trial, no call needed</h1>
         <p class="lede">
           This is the self serve path: fill this in and you will get access to your account by
-          email. Free while you have 3 or fewer active clients, no credit card, and every feature
-          is included from day one.
+          email. The trial is {TRIAL_DAYS} days of the full Launch plan, no credit card, and it is
+          purely a clock. Nothing you do inside it, not signing clients, not hiring, not running
+          routes, triggers a charge.
         </p>
         <ul class="checklist start-list">
           <li>
             <Icon name="check" size={20} />
-            <span><strong>Nothing to buy today.</strong> The free tier is real and stays free at 3 or fewer active clients.</span>
+            <span><strong>The whole product, not a demo.</strong> The full core ERP from day one: scheduling, routing, billing, the field app, all of it.</span>
           </li>
           <li>
             <Icon name="check" size={20} />
-            <span><strong>Unlimited staff, even on Free.</strong> Bring your techs in on day one.</span>
+            <span><strong>No usage triggers.</strong> The trial ends when the clock does, not when your business grows.</span>
           </li>
           <li>
             <Icon name="check" size={20} />
-            <span><strong>Your data stays yours.</strong> One click export whenever you want it.</span>
+            <span><strong>Nothing deleted after.</strong> Convert to Launch at $79 a month, or the account pauses with your data preserved and exportable.</span>
           </li>
         </ul>
         <p class="muted">
@@ -43,10 +44,10 @@ import { SITE } from '../lib/site';
           endpoint={SITE.requestAccessFormEndpoint}
           eventName="Request Access Submitted"
           messageLabel="Anything we should know? (optional)"
-          messagePlaceholder="Current software, rough client count, when you want to start"
-          submitLabel="Request free access"
+          messagePlaceholder="Current software, team size, when you want to start"
+          submitLabel="Start my free trial"
           confirmHeading="You are on the way"
-          confirmBody="Request received. Watch your inbox for your account access email."
+          confirmBody="Request received. Watch your inbox for your account access email and your 60 day trial."
         />
       </div>
     </div>
