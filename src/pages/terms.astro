@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Terms of service | HoundStack"
+  description="The HoundStack terms of service: the agreement covering accounts, pricing by active clients, acceptable use, data ownership, and cancellation."
+>
+  <section class="page-hero">
+    <div class="container-narrow prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Terms of service</h1>
+      <p class="muted">Last updated July 6, 2026. Draft pending legal review.</p>
+
+      <h2>The agreement</h2>
+      <p>
+        These terms are an agreement between your business and HoundStack covering use of the
+        HoundStack product and this website. Creating an account means you accept them on behalf
+        of your business.
+      </p>
+
+      <h2>Accounts and pricing</h2>
+      <p>
+        Plans are priced by active client count as published on the <a href="/pricing">pricing
+        page</a>. Accounts with 3 or fewer active clients are free. Staff accounts are unlimited
+        on every plan and are never billed. Plan changes triggered by client count are prorated
+        within the billing period.
+      </p>
+
+      <h2>Your data</h2>
+      <p>
+        The business data you enter belongs to you. You can export it in one click at any time,
+        including after cancellation for a reasonable wind down period. We claim no ownership of
+        your client lists, records, or photos, and we do not sell them.
+      </p>
+
+      <h2>Payments</h2>
+      <p>
+        Payment processing runs on your own Stripe account under Stripe's terms. HoundStack takes
+        no percentage of your payment volume. Subscription fees for HoundStack itself are billed
+        monthly.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>
+        Use the product to run your business, not to break the law, spam, attempt unauthorized
+        access to other accounts, or resell the service without an agreement. SMS features must be
+        used in compliance with applicable messaging regulations, including obtaining consent to
+        text your clients.
+      </p>
+
+      <h2>Availability and support</h2>
+      <p>
+        We work to keep the service available and to fix real problems quickly, and the service is
+        provided as is without a formal uptime guarantee on standard plans. Offline features in
+        the mobile app are designed to keep field work running during connectivity gaps.
+      </p>
+
+      <h2>Cancellation</h2>
+      <p>
+        You can cancel at any time. Access continues through the end of the paid period, your data
+        remains exportable, and we do not do exit fees or retention phone gauntlets.
+      </p>
+
+      <h2>Liability</h2>
+      <p>
+        To the extent permitted by law, HoundStack's liability is limited to the amount you paid
+        for the service in the twelve months before a claim. Neither party is liable for indirect
+        or consequential damages.
+      </p>
+
+      <h2>Changes to these terms</h2>
+      <p>
+        If these terms change materially, account owners will be notified by email before the
+        change takes effect. Continued use after notice means acceptance.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+</style>

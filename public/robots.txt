@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://houndstack.com/sitemap-index.xml

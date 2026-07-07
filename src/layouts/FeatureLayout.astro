@@ -1,0 +1,77 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaSection from '../components/CtaSection.astro';
+
+interface Props {
+  metaTitle: string;
+  metaDescription: string;
+  h1: string;
+  eyebrow: string;
+  intro: string;
+  crumbLabel: string;
+  crumbRoot?: { label: string; href: string };
+  /** The most relevant switch page for the closing link */
+  switchHref: string;
+  switchText: string;
+  schema?: object[];
+}
+
+const {
+  metaTitle,
+  metaDescription,
+  h1,
+  eyebrow,
+  intro,
+  crumbLabel,
+  crumbRoot = { label: 'Features', href: '/features' },
+  switchHref,
+  switchText,
+  schema = [],
+} = Astro.props;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} schema={schema}>
+  <section class="feature-hero">
+    <div class="container">
+      <Breadcrumbs
+        crumbs={[{ label: 'Home', href: '/' }, crumbRoot, { label: crumbLabel, href: Astro.url.pathname }]}
+      />
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{h1}</h1>
+      <p class="lede">{intro}</p>
+    </div>
+  </section>
+
+  <slot />
+
+  <section class="closing-links">
+    <div class="container">
+      <p class="closing-line reveal">
+        See what this costs on the <a href="/pricing">pricing page</a> (short answer: it depends on
+        your client count, never your headcount). {switchText.length > 0 && (
+          <>Coming from somewhere else? Read the <a href={switchHref}>{switchText}</a> guide.</>
+        )}
+      </p>
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .feature-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .closing-links {
+    padding-block: 0 64px;
+  }
+
+  .closing-line {
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+    max-width: 46em;
+  }
+</style>

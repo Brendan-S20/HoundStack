@@ -1,0 +1,235 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'My Day, built for the truck',
+    body: 'One screen with the day in order: next stop, ETA, gate code, hazards, and the two buttons that matter, navigate and complete.',
+  },
+  {
+    title: 'Full offline visit completion',
+    body: 'Dead zone at the back of the neighborhood? Complete the visit anyway. Photos queue locally and sync the moment signal returns.',
+  },
+  {
+    title: 'Required photo capture with categories',
+    body: 'Before, after, and issue photos are required at completion, so the office has proof before the client ever calls to ask.',
+  },
+  {
+    title: 'Safety hazards before the gate opens',
+    body: 'Aggressive dog, escape risk, invisible fence, dog in yard during service, bees or wasps, sharp objects, slippery surfaces. Structured fields, shown up front, every visit.',
+  },
+  {
+    title: 'Gate codes, tap to call, tap to navigate',
+    body: 'The small stuff that eats minutes: the code is on the stop card, the client is one tap away, and navigation opens preloaded.',
+  },
+  {
+    title: 'In field upsell add ons',
+    body: 'Deodorizer spray, an extra area, a one time deep clean. Techs add it at the yard and it lands on the invoice correctly.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Field service mobile app for technicians | HoundStack"
+  metaDescription="A mobile app for pet waste removal techs: offline visit completion, queued photo sync, required before and after photos, safety hazard warnings, and gate codes on every stop."
+  h1="A field service mobile app your techs will actually keep open"
+  eyebrow="The field app"
+  intro="Techs do not want software, they want the next yard, the gate code, and a heads up about the dog. My Day gives them exactly that, works with zero signal, and gets proof photos back to the office without anyone asking."
+  crumbLabel="Field app"
+  switchHref="/switch/from-jobber"
+  switchText="switching from Jobber"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>The whole job on one screen</h2>
+        <p class="lede">
+          This is the stop card a tech sees before opening the gate. Hazards come first, on
+          purpose. A tech who knows about the invisible fence and the escape artist husky before
+          stepping out of the truck finishes the yard and keeps the client.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Offline first.</strong> The full day loads before the truck leaves the shop. Completion, notes, and photos all work without signal.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Photo proof, enforced.</strong> Completion requires photos in before, after, and issue categories. The upload queue drains itself when coverage returns.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame variant="phone" label="Mobile stop card showing safety hazards, gate code, and photo requirements for a visit">
+          <div class="mk-head">
+            <div class="mk-cell">
+              <span class="mk-title">Hartley residence</span>
+              <span class="mk-sub">Stop 4 of 12 &middot; 9:40 ETA</span>
+            </div>
+            <span class="mk-pill sage">on time</span>
+          </div>
+          <div class="fa-hazards">
+            <span class="mk-pill red">Aggressive dog</span>
+            <span class="mk-pill amber">Invisible fence</span>
+            <span class="mk-pill amber">Dog in yard during service</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-faint">Gate code</span>
+              <span class="mk-strong">4482#</span>
+            </div>
+            <div class="mk-cell">
+              <span class="mk-faint">Dogs</span>
+              <span class="mk-strong">3 (Bruno, Pepper, Ace)</span>
+            </div>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-faint">Photos required</span>
+              <span class="mk-strong">Before &middot; After &middot; Issue</span>
+            </div>
+            <span class="mk-pill navy">2 queued offline</span>
+          </div>
+          <div class="fa-actions">
+            <span class="mk-btn">Navigate</span>
+            <span class="mk-btn sage">Complete visit</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in the field app</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container reveal">
+      <h2>Native apps are on the way</h2>
+      <p class="lede stores-lede">
+        My Day runs today from any phone browser, offline support included, so crews are not
+        waiting on a download to start. Native apps for both stores are in the works and will be
+        linked here the day they are live, not before.
+      </p>
+      <div class="store-badges">
+        <span class="store-badge" aria-label="App Store download, coming soon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="26" height="26">
+            <path d="M16.7 12.9c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.2.8-.7 0-1.7-.8-2.8-.7-1.4 0-2.7.8-3.5 2.1-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.5 2.2 2.6 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.6.7 2.8.7 1.2 0 1.9-1 2.6-2.1.8-1.2 1.2-2.4 1.2-2.4s-2.3-.9-2.4-3.5z" />
+            <path d="M14.6 6.2c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.7-.9 2.6 1 .1 2-.5 2.5-1.2z" />
+          </svg>
+          <span class="store-text">
+            <span class="store-small">Coming to the</span>
+            <span class="store-name">App Store</span>
+          </span>
+          <span class="badge badge-amber">Coming soon</span>
+        </span>
+        <span class="store-badge" aria-label="Google Play download, coming soon">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24">
+            <path d="M4.5 3.2c-.3.3-.5.8-.5 1.4v14.8c0 .6.2 1.1.5 1.4l7.6-8.8-7.6-8.8z" />
+            <path d="M13.4 10.7 6.2 2.4l9.3 5.3-2.1 3zM6.2 21.6l7.2-8.3 2.1 3-9.3 5.3zM16.9 8.5 19.6 10c1 .6 1 1.5 0 2.1l-2.7 1.5-2.3-2.6 2.3-2.5z" />
+          </svg>
+          <span class="store-text">
+            <span class="store-small">Coming to</span>
+            <span class="store-name">Google Play</span>
+          </span>
+          <span class="badge badge-amber">Coming soon</span>
+        </span>
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+
+  .fa-hazards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line-soft);
+    background: #fdf8f2;
+  }
+
+  .fa-actions {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px 18px;
+  }
+
+  .fa-actions .mk-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .stores-lede {
+    max-width: 44em;
+  }
+
+  .store-badges {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    background: var(--navy);
+    color: #ffffff;
+  }
+
+  .store-text {
+    display: grid;
+    line-height: 1.25;
+    text-align: left;
+  }
+
+  .store-small {
+    font-size: 0.72rem;
+    color: #b9c9d3;
+  }
+
+  .store-name {
+    font-weight: 700;
+    font-size: 1.02rem;
+  }
+
+  .store-badge .badge {
+    margin-left: 6px;
+  }
+</style>

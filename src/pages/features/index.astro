@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Icon from '../../components/Icon.astro';
+
+const cards = [
+  {
+    href: '/features/scheduling-and-routes',
+    icon: 'route',
+    title: 'Scheduling and routes',
+    body: 'Recurring visits with preferred weekdays, blackout dates that bump forward on their own, zone pricing by postal prefix, a multi tech dispatch board, one click route optimization, and weather aware rescheduling.',
+  },
+  {
+    href: '/features/field-app',
+    icon: 'phone',
+    title: 'The field app',
+    body: 'A mobile My Day view built for the truck. Works fully offline, queues photos until signal returns, requires completion photos, and puts safety hazards and gate codes in front of the tech before the gate.',
+  },
+  {
+    href: '/features/billing',
+    icon: 'card',
+    title: 'Billing and payments',
+    body: 'Prepaid credit ledgers or postpaid invoicing, Stripe with your own key and no markup, automatic overdue reminders, skip reason billing rules, and a client portal for paying invoices.',
+  },
+  {
+    href: '/features/commercial-and-hoa',
+    icon: 'building',
+    title: 'Commercial and HOA',
+    body: 'Per unit monthly billing for complexes and communities, pet waste station service routes, and DNA compliance tooling with chain of custody tracking and per dog registry IDs.',
+  },
+  {
+    href: '/features/neighbor-referrals',
+    icon: 'pin',
+    title: 'Neighbors and referrals',
+    body: 'Two way SMS on Twilio, email from your own domain, automatic Google review prompts, two sided referral credits, and a door to door canvassing map seeded from your existing clients.',
+  },
+  {
+    href: '/features/ai-tools',
+    icon: 'spark',
+    title: 'AI tools',
+    body: 'An in house AI receptionist that answers texts and books visits, churn risk scoring, suggested zone pricing with the reasoning shown, dispatch suggestions, and a weekly business digest.',
+  },
+  {
+    href: '/features/reporting',
+    icon: 'chart',
+    title: 'Reporting',
+    body: 'Revenue and outstanding balances, receivables aging, skip reason breakdowns, tech productivity, zone profitability, top clients, cohort retention, lifetime value, and churn drivers.',
+  },
+];
+
+const extras = [
+  {
+    icon: 'box',
+    title: 'Inventory',
+    body: 'Track bags, deodorizer, and gear per tech with low stock alerts.',
+  },
+  {
+    icon: 'users',
+    title: 'Roles',
+    body: 'Owner, office manager, dispatcher, and tech each see only what their job needs.',
+  },
+  {
+    icon: 'network',
+    title: 'Franchise',
+    body: 'Multi location rollup, automatic royalty billing, and a franchisor dashboard.',
+  },
+  {
+    icon: 'import',
+    title: 'Imports',
+    body: 'Named importers for five competitors plus CSV, each with a mapping preview and dry run.',
+  },
+];
+---
+
+<BaseLayout
+  title="HoundStack features: every tool a pooper scooper business runs on"
+  description="The full HoundStack feature tour: scheduling, route optimization, offline field app, billing, commercial and HOA compliance, referral tools, AI tools, and reporting."
+>
+  <section class="hub-hero">
+    <div class="container">
+      <span class="eyebrow">Features</span>
+      <h1>Pooper scooper software features, all of them on one page</h1>
+      <p class="lede">
+        Seven areas, one product. Each card below opens a deep dive with the full feature list and
+        a look at the actual screens.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt hub-cards">
+    <div class="container">
+      <div class="grid-2">
+        {
+          cards.map((c) => (
+            <a href={c.href} class="card reveal">
+              <span class="card-icon">
+                <Icon name={c.icon as any} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <h2 class="extras-heading reveal">And the parts nobody puts on a homepage</h2>
+      <div class="grid-2">
+        {
+          extras.map((c) => (
+            <div class="card reveal">
+              <span class="card-icon">
+                <Icon name={c.icon as any} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .hub-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .extras-heading {
+    margin-top: 56px;
+  }
+</style>

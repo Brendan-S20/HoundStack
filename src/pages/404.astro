@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | HoundStack"
+  description="That page does not exist. Head back to the HoundStack home page, features, or pricing."
+>
+  <section class="nf">
+    <div class="container text-center">
+      <span class="eyebrow">404</span>
+      <h1>This yard is empty</h1>
+      <p class="lede nf-lede">
+        The page you were after does not exist or has moved. The useful stuff is one click away.
+      </p>
+      <div class="nf-links">
+        <a href="/" class="btn btn-primary">Home</a>
+        <a href="/features" class="btn btn-ghost">Features</a>
+        <a href="/pricing" class="btn btn-ghost">Pricing</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-block: clamp(80px, 12vw, 140px);
+  }
+
+  .nf-lede {
+    margin-inline: auto;
+  }
+
+  .nf-links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+</style>

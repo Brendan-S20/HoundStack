@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import stackedLogo from '../assets/HoundStackTextwLogo-trim.svg';
+---
+
+<BaseLayout
+  title="About HoundStack"
+  description="Why HoundStack exists: software built for the people who show up every day to take care of dogs, after watching this trade run on tools that charge per seat and were built for other work."
+>
+  <section class="page-hero">
+    <div class="container-narrow">
+      <span class="eyebrow">About</span>
+      <h1>Built for the people who show up for dogs</h1>
+
+      <div class="about-body">
+        <p class="lede">
+          HoundStack exists to make life easier for the people who show up every day to take care
+          of dogs. That means the crews running the routes, and it also means the dogs waiting on
+          a clean yard.
+        </p>
+        <p>
+          It started with looking closely at how pet waste removal businesses actually run their
+          day to day. What we found was a trade whose software had not caught up with it. Tools
+          still charging per seat, so hiring a tech means a bigger software bill. Pet waste
+          features bolted onto platforms built for a dozen other trades, so per dog pricing, rain
+          day billing, and gate codes all live in workarounds.
+        </p>
+        <p>
+          So HoundStack is built from the route up for this trade alone. Pricing follows your
+          client book instead of your headcount. The billing understands why a visit was skipped.
+          The field app assumes a truck, a gate, and sometimes no signal. None of that is
+          adaptation. It is the starting point.
+        </p>
+        <p>
+          If that sounds like software made by people who paid attention, that is the whole
+          intent. See <a href="/features">what it does</a>, check
+          <a href="/pricing">what it costs</a>, or <a href="/contact">talk to us</a> directly.
+        </p>
+      </div>
+
+      <img
+        src={stackedLogo.src}
+        alt="HoundStack logo, a faceted geometric mark above the wordmark"
+        width="280"
+        height="180"
+        class="about-logo"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .about-body {
+    max-width: 640px;
+  }
+
+  .about-logo {
+    display: block;
+    margin-top: 48px;
+    width: 220px;
+    height: auto;
+  }
+</style>

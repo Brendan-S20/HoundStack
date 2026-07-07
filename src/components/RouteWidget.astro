@@ -1,0 +1,244 @@
+---
+// Animated "today's route" preview for the home hero. Cycles through
+// stops checking off with one pulsing current stop. Reduced motion gets
+// a static mid-route state.
+const stops = [
+  { time: '8:05', name: 'Kowalski residence', detail: '2 dogs, weekly', state: 'done' },
+  { time: '8:32', name: 'Birchwood Court HOA', detail: '3 stations, restock', state: 'done' },
+  { time: '9:10', name: 'Nguyen residence', detail: '1 dog, biweekly', state: 'now' },
+  { time: '9:40', name: 'Hartley residence', detail: '3 dogs, weekly', state: 'next' },
+  { time: '10:15', name: 'Cedar Flats Apartments', detail: 'per unit, 48 units', state: 'next' },
+];
+---
+
+<div class="route-widget" id="route-widget" aria-label="Preview of a technician's daily route in HoundStack">
+  <div class="rw-header">
+    <div>
+      <span class="rw-title">Today's route</span>
+      <span class="rw-sub">Marcus, Zone 2 north</span>
+    </div>
+    <span class="rw-progress" id="rw-progress">2 of 5 done</span>
+  </div>
+  <ol class="rw-stops">
+    {
+      stops.map((s) => (
+        <li class={`rw-stop is-${s.state}`} data-stop>
+          <span class="rw-marker" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="rw-check">
+              <path d="m5.5 12.5 4.5 4.5 8.5-9.5" />
+            </svg>
+          </span>
+          <span class="rw-time">{s.time}</span>
+          <span class="rw-info">
+            <span class="rw-name">{s.name}</span>
+            <span class="rw-detail">{s.detail}</span>
+          </span>
+          <span class="rw-eta" data-eta>{s.state === 'now' ? 'on site' : s.state === 'done' ? 'done' : 'eta'}</span>
+        </li>
+      ))
+    }
+  </ol>
+  <div class="rw-footer">
+    <span class="rw-drive">Route optimized, 22 min total drive</span>
+  </div>
+</div>
+
+<style>
+  .route-widget {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
+    max-width: 460px;
+    font-size: 0.92rem;
+  }
+
+  .rw-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .rw-title {
+    display: block;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1.02rem;
+  }
+
+  .rw-sub {
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+
+  .rw-progress {
+    font-weight: 650;
+    color: var(--sage-dark);
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .rw-stops {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  .rw-stop {
+    display: grid;
+    grid-template-columns: 26px 44px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 22px;
+    transition: background 300ms ease;
+  }
+
+  .rw-marker {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: #ffffff;
+    transition: background 300ms ease, border-color 300ms ease;
+    position: relative;
+  }
+
+  .rw-check {
+    width: 13px;
+    height: 13px;
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 250ms ease, transform 250ms cubic-bezier(0.2, 1.4, 0.5, 1);
+  }
+
+  .rw-stop.is-done .rw-marker {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+
+  .rw-stop.is-done .rw-check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .rw-stop.is-now .rw-marker {
+    border-color: var(--sage);
+  }
+
+  .rw-stop.is-now .rw-marker::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+
+  @keyframes rw-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(94, 132, 94, 0.45); }
+    70% { box-shadow: 0 0 0 9px rgba(94, 132, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(94, 132, 94, 0); }
+  }
+
+  .rw-stop.is-now .rw-marker {
+    animation: rw-pulse 2s ease-out infinite;
+  }
+
+  .rw-stop.is-now {
+    background: var(--sage-wash);
+  }
+
+  .rw-time {
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+  }
+
+  .rw-info {
+    display: grid;
+    line-height: 1.35;
+  }
+
+  .rw-name {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .rw-detail {
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+  }
+
+  .rw-eta {
+    font-size: 0.78rem;
+    font-weight: 650;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rw-stop.is-now .rw-eta {
+    color: var(--sage-dark);
+  }
+
+  .rw-footer {
+    padding: 12px 22px 16px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--ink-faint);
+    font-size: 0.84rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rw-stop.is-now .rw-marker {
+      animation: none;
+    }
+
+    .rw-check {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Quietly advance the route: every few seconds the current stop
+  // completes and the next one becomes current. Loops back around.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const widget = document.getElementById('route-widget');
+
+  if (widget && !reduced) {
+    const stops = Array.from(widget.querySelectorAll('[data-stop]'));
+    const progress = widget.querySelector('#rw-progress')!;
+    let doneCount = 2;
+
+    const render = () => {
+      stops.forEach((stop, i) => {
+        stop.classList.remove('is-done', 'is-now', 'is-next');
+        const eta = stop.querySelector('[data-eta]')!;
+        if (i < doneCount) {
+          stop.classList.add('is-done');
+          eta.textContent = 'done';
+        } else if (i === doneCount) {
+          stop.classList.add('is-now');
+          eta.textContent = 'on site';
+        } else {
+          stop.classList.add('is-next');
+          eta.textContent = 'eta';
+        }
+      });
+      progress.textContent =
+        doneCount >= stops.length ? 'route complete' : `${doneCount} of ${stops.length} done`;
+    };
+
+    setInterval(() => {
+      doneCount = doneCount >= stops.length ? 0 : doneCount + 1;
+      render();
+    }, 3600);
+  }
+</script>

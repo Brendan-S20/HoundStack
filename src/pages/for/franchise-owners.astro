@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Franchise pet waste removal software | HoundStack"
+  description="Multi location and franchise tooling for pet waste removal: automatic royalty billing, a franchisor dashboard across every location, and per client pricing that scales."
+>
+  <section class="page-hero">
+    <div class="container">
+      <Breadcrumbs
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'For franchise owners', href: '/for/franchise-owners' },
+        ]}
+      />
+      <span class="eyebrow">For franchise owners</span>
+      <h1>Franchise pet waste removal software without the spreadsheet glue</h1>
+      <p class="lede">
+        Most franchisors run royalties on exported spreadsheets and trust. HoundStack rolls every
+        location into one view and bills royalties automatically from real revenue numbers, the
+        same numbers each location already runs on.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>One dashboard across every location</h2>
+        <p class="lede">
+          Each location runs its own routes, techs, and billing. The franchisor level rolls it all
+          up: revenue, visits, and growth per location, side by side, without asking anyone to
+          email a report.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Automatic royalty billing.</strong> Royalties calculate from actual recorded revenue and bill on schedule. No chasing, no honor system.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Locations stay independent.</strong> Each operator manages their own book. The rollup reads, it does not meddle.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Pricing that scales with the system.</strong> Per client rates at volume ($2.00, dropping to $1.50 past 200 active clients per account) keep the math predictable as locations grow.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="Franchisor dashboard showing three locations with revenue and royalty status">
+          <div class="mk-head">
+            <span class="mk-title">Franchise rollup &middot; June</span>
+            <span class="mk-pill navy">3 locations</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Northside</span>
+              <span class="mk-faint">412 visits &middot; royalty invoiced</span>
+            </div>
+            <span class="mk-num">$18,240</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Riverton</span>
+              <span class="mk-faint">288 visits &middot; royalty invoiced</span>
+            </div>
+            <span class="mk-num">$12,610</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Lakewood</span>
+              <span class="mk-faint">201 visits &middot; opened March</span>
+            </div>
+            <span class="mk-num">$8,875</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Royalties this month</span>
+              <span class="mk-faint">billed automatically at 6%</span>
+            </div>
+            <span class="mk-pill sage">$2,383 collected</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container reveal">
+      <h2>Every location gets the full product</h2>
+      <p class="lede">
+        Franchisees run the same <a href="/features/scheduling-and-routes">routing</a>,
+        <a href="/features/field-app">field app</a>, <a href="/features/billing">billing</a>, and
+        <a href="/features/ai-tools">AI tools</a> as any independent operator, with unlimited
+        staff on every plan. The franchise layer sits on top instead of replacing anything.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Talk through your franchise structure"
+    body="Royalty terms and rollup structure vary by system. Book a demo and we will map yours into it live."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

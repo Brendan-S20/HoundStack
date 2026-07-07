@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+
+const integrations = [
+  {
+    icon: 'card',
+    name: 'Stripe',
+    status: 'live',
+    body: 'Payments run through your own Stripe account with your own key. HoundStack adds zero markup on processing, and payouts settle directly to you. Checkout, saved cards, and the client portal all ride on it.',
+    detail: 'Bring your own key. No percentage taken, ever.',
+  },
+  {
+    icon: 'message',
+    name: 'Twilio',
+    status: 'live',
+    body: 'Two way SMS with clients and the AI receptionist both run on Twilio. Clients text your business number, and the conversation lives in HoundStack next to their account.',
+    detail: 'Powers two way SMS and the AI receptionist.',
+  },
+  {
+    icon: 'pin',
+    name: 'Google Maps',
+    status: 'live',
+    body: 'Route optimization uses real drive time data, and techs get one tap turn by turn handoff from any stop. The address a client typed is the pin the tech drives to.',
+    detail: 'Drive time math and turn by turn handoff.',
+  },
+  {
+    icon: 'mail',
+    name: 'Your email domain',
+    status: 'live',
+    body: 'Transactional email (invoices, reminders, visit notifications) sends from your own domain. Clients see your business in the from line, not a software platform.',
+    detail: 'Custom sending domain for all transactional email.',
+  },
+  {
+    icon: 'chart',
+    name: 'QuickBooks',
+    status: 'coming soon',
+    body: 'Accounting sync to QuickBooks is in the works and not live yet. Until it ships, every report and ledger in HoundStack exports cleanly in one click, so your bookkeeper is not waiting on us.',
+    detail: 'In development. One click export covers the gap today.',
+  },
+];
+---
+
+<BaseLayout
+  title="Pet waste removal software integrations | HoundStack"
+  description="How HoundStack connects to Stripe, Twilio, and Google Maps, with payments on your own Stripe key, SMS on Twilio, and route handoff to Google Maps. QuickBooks sync is in development."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Integrations</span>
+      <h1>Integrations that carry real weight, not a logo wall</h1>
+      <p class="lede">
+        HoundStack connects to a small number of services and leans on each one hard. Here is
+        exactly what each connection does and what flows across it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="int-list">
+        {
+          integrations.map((i) => (
+            <div class="card int-card reveal">
+              <span class="card-icon">
+                <Icon name={i.icon as any} />
+              </span>
+              <div class="int-body">
+                <div class="int-title-row">
+                  <h3>{i.name}</h3>
+                  {i.status === 'coming soon' ? (
+                    <span class="badge badge-amber">Coming soon</span>
+                  ) : (
+                    <span class="badge badge-sage">Live</span>
+                  )}
+                </div>
+                <p>{i.body}</p>
+                <p class="int-detail">{i.detail}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <p class="int-note reveal">
+        Weather data for automatic rescheduling and the Claude models behind the
+        <a href="/features/ai-tools">AI tools</a> are built into the product itself rather than
+        configured as integrations. Nothing on this page requires a developer to set up.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .int-list {
+    display: grid;
+    gap: 20px;
+    max-width: 840px;
+  }
+
+  .int-card {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+  }
+
+  .int-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .int-title-row h3 {
+    margin: 0;
+  }
+
+  .int-detail {
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    margin-top: 8px;
+  }
+
+  .int-note {
+    margin-top: 32px;
+    color: var(--ink-muted);
+    max-width: 46em;
+  }
+</style>

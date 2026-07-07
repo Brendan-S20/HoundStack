@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PricingCalculator from '../components/PricingCalculator.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+import { PLANS, SITE } from '../lib/site';
+
+const planDisplay = PLANS.map((p) => ({
+  ...p,
+  range: p.max === null ? `${p.min}+ active clients` : p.min === 0 ? `Up to ${p.max} active clients` : `${p.min} to ${p.max} active clients`,
+  priceLabel: p.flat === 0 ? '$0' : p.flat !== null ? `$${p.flat}` : `$${p.perClient!.toFixed(2)}`,
+  priceSuffix: p.flat !== null ? '/mo' : '/client/mo',
+}));
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'HoundStack',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: SITE.url,
+  offers: PLANS.map((p) => ({
+    '@type': 'Offer',
+    name: `HoundStack ${p.name}`,
+    price: String(p.flat ?? p.perClient),
+    priceCurrency: 'USD',
+    description:
+      p.flat !== null
+        ? `${p.flat === 0 ? 'Free' : `$${p.flat} per month`} for ${p.min === 0 ? 'up to' : `${p.min} to`} ${p.max} active clients. Unlimited staff included.`
+        : `$${p.perClient} per active client per month for ${p.max === null ? `${p.min} or more` : `${p.min} to ${p.max}`} active clients. Unlimited staff included.`,
+  })),
+};
+
+const faqs = [
+  {
+    q: 'What counts as an active client?',
+    a: 'A client with a recurring visit schedule or a visit completed in the current billing month. Paused clients, one time quotes, and archived accounts do not count toward your total.',
+  },
+  {
+    q: 'Do you ever charge per seat or per user?',
+    a: 'No. Every plan, including Free, has unlimited staff accounts. Owners, office managers, dispatchers, and techs all log in at no extra cost, and hiring never changes your bill.',
+  },
+  {
+    q: 'Do you take a cut of my payments?',
+    a: 'No. Stripe runs on your own key, so you pay Stripe’s published processing rates and nothing on top. HoundStack takes zero markup on payment volume.',
+  },
+  {
+    q: 'What happens when I cross a plan boundary mid month?',
+    a: 'Plan changes are prorated. If you grow from 25 to 26 active clients, you pay Fetch for the days you were on it and Scoop for the rest, calculated automatically.',
+  },
+  {
+    q: 'Can I get my data out?',
+    a: 'Yes, one click export at any time: clients, dogs, visits, invoices, and payment history. Your data is yours, on every plan including Free.',
+  },
+];
+---
+
+<BaseLayout
+  title="Pooper scooper software pricing: never per seat | HoundStack"
+  description="HoundStack pricing by active client count only: Free up to 3 clients, Fetch $59, Scoop $99, Haul $149, then per client rates at scale. Unlimited staff on every plan."
+  schema={[softwareSchema]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Pricing</span>
+      <h1>Pooper scooper software pricing with no per seat charges, ever</h1>
+      <p class="lede">
+        Nobody else in this category can say it this plainly: you are priced on active clients
+        only. Unlimited staff on every plan, including Free. Hire whoever you need, the bill does
+        not move.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="reveal">
+        <PricingCalculator />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Every plan, every number</h2>
+      <div class="plan-grid">
+        {
+          planDisplay.map((p) => (
+            <div class="card plan-card reveal">
+              <h3>{p.name}</h3>
+              <p class="plan-range">{p.range}</p>
+              <p class="plan-price">
+                <span class="plan-amount">{p.priceLabel}</span>
+                <span class="plan-suffix">{p.priceSuffix}</span>
+              </p>
+              <p class="plan-blurb">{p.blurb}</p>
+              <ul class="plan-includes">
+                <li><Icon name="check" size={16} /> Unlimited staff</li>
+                <li><Icon name="check" size={16} /> Every feature included</li>
+                <li><Icon name="check" size={16} /> One click data export</li>
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="plan-note reveal">
+        Per client plans do real per client math. At 126 active clients Pack Leader is $252 per
+        month, at 200 it is $400, and at 201 the Kennel rate drops the per client price to $1.50,
+        which is $301.50. The calculator above lands on every boundary exactly.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container reveal">
+      <FaqBlock faqs={faqs} heading="Pricing questions, answered straight" />
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Start free and see if it fits your route"
+    body="Up to 3 active clients free, no credit card, unlimited staff. If you outgrow it, the next tier is $59 and you will know exactly why."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 980px) {
+    .plan-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .plan-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .plan-card h3 {
+    margin-bottom: 2px;
+  }
+
+  .plan-range {
+    color: var(--ink-faint);
+    font-size: 0.88rem;
+    margin-bottom: 14px;
+  }
+
+  .plan-price {
+    margin-bottom: 12px;
+  }
+
+  .plan-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+
+  .plan-suffix {
+    color: var(--ink-faint);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .plan-blurb {
+    min-height: 3.2em;
+  }
+
+  .plan-includes {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+    display: grid;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .plan-includes li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .plan-includes svg {
+    color: var(--sage-dark);
+    flex-shrink: 0;
+  }
+
+  .plan-note {
+    margin-top: 28px;
+    color: var(--ink-muted);
+    max-width: 52em;
+  }
+</style>

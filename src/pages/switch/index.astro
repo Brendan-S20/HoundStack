@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Icon from '../../components/Icon.astro';
+import { COMPETITORS } from '../../lib/competitors';
+
+const shortlines: Record<string, string> = {
+  'from-sweep-and-go': 'The trade specific incumbent. The comparison comes down to the AI layer and the interface.',
+  'from-jobber': 'Great general field service software that charges per user and has no per dog pricing.',
+  'from-housecall-pro': 'Built for plumbers and HVAC. Recurring route work was never its model.',
+  'from-time-to-pet': 'Excellent pet sitting software. Waste removal routes ask different questions.',
+  'from-gorilladesk': 'Grew up in pest control. The commercial scooping side does not exist there.',
+};
+---
+
+<BaseLayout
+  title="Switch from your pet waste removal software | HoundStack"
+  description="Migration guides and named import tools for Sweep&Go, Jobber, Housecall Pro, Time To Pet, and GorillaDesk, plus a CSV importer. Every import runs a dry run before writing anything."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Switching</span>
+      <h1>Switch from your current software without losing a client record</h1>
+      <p class="lede">
+        Five competitors have named, dedicated import tools, and a generic CSV importer covers
+        everything else. Each one shows a field mapping preview and a dry run summary before a
+        single record is written, so the risky part of switching stops being risky.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="grid-2">
+        {
+          COMPETITORS.map((c) => (
+            <a href={`/switch/${c.slug}`} class="card reveal">
+              <h3>Switching from {c.name} <Icon name="arrow-right" size={18} /></h3>
+              <p>{shortlines[c.slug]}</p>
+            </a>
+          ))
+        }
+        <div class="card reveal">
+          <h3>Coming from anywhere else?</h3>
+          <p>
+            The CSV importer takes any export with clients, dogs, schedules, and balances. Same
+            mapping preview, same dry run, same safety net.
+          </p>
+        </div>
+      </div>
+
+      <div class="how reveal">
+        <h2>Every import works the same way</h2>
+        <p class="lede">
+          Upload or connect, preview the field mapping, run a dry run that summarizes what would
+          change, then confirm. Until that last click, your HoundStack account is untouched.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="See your own data on the board first"
+    body="Start free, import with a dry run, and judge HoundStack with your real clients instead of a demo."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .card h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .how {
+    margin-top: 56px;
+  }
+</style>

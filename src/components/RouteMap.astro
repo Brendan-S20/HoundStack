@@ -1,0 +1,145 @@
+---
+// Animated route visualization for the scheduling page. A stylized map
+// with stops that connect in sequence with a drawn line, echoing the
+// dispatch board. Reduced motion shows the completed route instantly.
+---
+
+<div class="route-map" id="route-map">
+  <svg
+    viewBox="0 0 560 360"
+    role="img"
+    aria-label="Route map showing six stops connected in optimized order with drive times"
+  >
+    <!-- street grid -->
+    <g stroke="#dde5ea" stroke-width="1.5">
+      <path d="M0 60h560M0 140h560M0 225h560M0 300h560" />
+      <path d="M80 0v360M190 0v360M300 0v360M410 0v360M500 0v360" />
+    </g>
+    <g stroke="#e7edf1" stroke-width="1">
+      <path d="M0 100h560M0 185h560M0 265h560M135 0v360M245 0v360M355 0v360M455 0v360" />
+    </g>
+
+    <!-- route line -->
+    <path
+      id="route-path"
+      d="M80 300 L190 300 L190 225 L300 225 L300 140 L410 140 L410 60 L500 60"
+      fill="none"
+      stroke="#5e845e"
+      stroke-width="3.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-dasharray="6 8"
+    />
+
+    <!-- stops -->
+    <g id="route-stops">
+      <g class="stop" transform="translate(80,300)">
+        <circle r="11" fill="#142937" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">1</text>
+      </g>
+      <g class="stop" transform="translate(190,262)">
+        <circle r="11" fill="#142937" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">2</text>
+      </g>
+      <g class="stop" transform="translate(245,225)">
+        <circle r="11" fill="#142937" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">3</text>
+      </g>
+      <g class="stop" transform="translate(300,182)">
+        <circle r="11" fill="#142937" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">4</text>
+      </g>
+      <g class="stop" transform="translate(410,100)">
+        <circle r="11" fill="#142937" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">5</text>
+      </g>
+      <g class="stop" transform="translate(500,60)">
+        <circle r="11" fill="#5e845e" />
+        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">6</text>
+      </g>
+    </g>
+  </svg>
+  <div class="map-caption">
+    <span class="badge badge-sage">Optimized</span>
+    <span>6 stops, 22 min of driving, ETAs from real drive time</span>
+  </div>
+</div>
+
+<style>
+  .route-map {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .route-map svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8fafb;
+  }
+
+  #route-path {
+    stroke-dashoffset: 0;
+  }
+
+  .route-map.will-animate #route-path {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+  }
+
+  .route-map.is-animated #route-path {
+    transition: stroke-dashoffset 2.4s ease-in-out;
+    stroke-dashoffset: 0;
+  }
+
+  .route-map .stop {
+    opacity: 1;
+    transition: opacity 300ms ease;
+  }
+
+  .route-map.will-animate .stop {
+    opacity: 0.25;
+  }
+
+  .route-map.is-animated .stop {
+    opacity: 1;
+  }
+
+  .route-map.is-animated .stop:nth-child(2) { transition-delay: 400ms; }
+  .route-map.is-animated .stop:nth-child(3) { transition-delay: 800ms; }
+  .route-map.is-animated .stop:nth-child(4) { transition-delay: 1200ms; }
+  .route-map.is-animated .stop:nth-child(5) { transition-delay: 1700ms; }
+  .route-map.is-animated .stop:nth-child(6) { transition-delay: 2200ms; }
+
+  .map-caption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--line-soft);
+  }
+</style>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const map = document.getElementById('route-map');
+
+  if (map && !reduced && 'IntersectionObserver' in window) {
+    map.classList.add('will-animate');
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          map.classList.add('is-animated');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(map);
+  }
+</script>

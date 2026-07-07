@@ -1,0 +1,331 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RouteWidget from '../components/RouteWidget.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../lib/site';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'HoundStack',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: SITE.url,
+  description:
+    'Pet waste removal software: scheduling, route optimization, dispatch, offline mobile app, billing, commercial and HOA tools, and AI tools in one product.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free while an account has 3 or fewer active clients. No credit card required.',
+  },
+};
+
+const featureCards = [
+  {
+    href: '/features/scheduling-and-routes',
+    icon: 'route',
+    title: 'Scheduling and routes',
+    body: 'Recurring visits, zone pricing by postal prefix, a drag and drop dispatch board, and one click route optimization with real drive time math.',
+  },
+  {
+    href: '/features/field-app',
+    icon: 'phone',
+    title: 'The field app',
+    body: 'A My Day view built for the truck. Full offline completion, required before and after photos, and safety hazards shown before the gate opens.',
+  },
+  {
+    href: '/features/billing',
+    icon: 'card',
+    title: 'Billing and payments',
+    body: 'Prepaid credits or postpaid invoices, Stripe with your own key and no markup, and billing rules that know why a visit was skipped.',
+  },
+  {
+    href: '/features/commercial-and-hoa',
+    icon: 'building',
+    title: 'Commercial and HOA',
+    body: 'Per unit billing for communities, waste station service routes, and DNA compliance with chain of custody tracking.',
+  },
+  {
+    href: '/features/neighbor-referrals',
+    icon: 'pin',
+    title: 'Neighbors and referrals',
+    body: 'Two way SMS, automatic review prompts, referral credits for both sides, and a canvassing map that works your clients’ streets.',
+  },
+  {
+    href: '/features/ai-tools',
+    icon: 'spark',
+    title: 'AI tools',
+    body: 'An in house AI receptionist that books real appointments by text, churn risk scoring, suggested zone pricing, and a weekly business digest.',
+  },
+  {
+    href: '/features/reporting',
+    icon: 'chart',
+    title: 'Reporting',
+    body: 'Revenue, receivables aging, skip reasons, tech productivity, zone profitability, retention cohorts, and churn drivers.',
+  },
+];
+
+const alsoInBox = [
+  {
+    icon: 'import',
+    title: 'Named importers',
+    body: 'Dedicated import tools for Sweep&Go, Jobber, Housecall Pro, Time To Pet, and GorillaDesk, each with a mapping preview and a dry run.',
+    href: '/switch',
+  },
+  {
+    icon: 'network',
+    title: 'Franchise rollup',
+    body: 'Multi location accounts with automatic royalty billing and a franchisor dashboard across every location.',
+    href: '/for/franchise-owners',
+  },
+  {
+    icon: 'users',
+    title: 'Scoped roles',
+    body: 'Owner, office manager, dispatcher, and tech each get their own experience. Nobody wades through screens their job never touches.',
+    href: '/features',
+  },
+  {
+    icon: 'box',
+    title: 'Inventory tracking',
+    body: 'Bags, deodorizer, and gear tracked per tech, with low stock alerts before someone runs out mid route.',
+    href: '/features',
+  },
+];
+---
+
+<BaseLayout
+  title="HoundStack: pet waste removal software built for scooper businesses"
+  description="Scheduling, route optimization, offline field app, billing, HOA compliance, and AI tools for pet waste removal businesses. Free with 3 or fewer active clients, unlimited staff on every plan."
+  schema={[softwareSchema]}
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="badge badge-sage hero-badge">Free while you have 3 or fewer active clients</span>
+        <h1>Run your whole pet waste removal business from one app</h1>
+        <p class="lede">
+          Scheduling, routing, dispatch, billing, and the field app your techs actually use, built
+          for this trade instead of adapted to it. No credit card to start, and no per seat charges
+          on any plan, ever.
+        </p>
+        <div class="hero-ctas">
+          <a href="/request-access" class="btn btn-primary">Start free</a>
+          <a href="/pricing" class="btn btn-ghost">See pricing</a>
+        </div>
+        <p class="hero-note">Unlimited staff on every plan, including Free.</p>
+      </div>
+      <div class="hero-widget">
+        <RouteWidget />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Why it exists</span>
+        <h2>Built for the route, not adapted to it</h2>
+        <p class="lede">
+          Generic field service tools make you fight for per dog pricing, skip rules, and gate
+          codes. HoundStack starts there. Every screen assumes you are scooping yards, servicing
+          waste stations, and getting techs through 20 stops before lunch.
+        </p>
+      </div>
+      <div class="grid-3 feature-grid">
+        {
+          featureCards.map((c) => (
+            <a href={c.href} class="card reveal">
+              <span class="card-icon">
+                <Icon name={c.icon as any} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </a>
+          ))
+        }
+        <a href="/features" class="card reveal card-all">
+          <span class="card-icon"><Icon name="arrow-right" /></span>
+          <h3>Everything in one place</h3>
+          <p>The full feature tour, including inventory, roles, and franchise tools.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container pricing-teaser reveal">
+      <div>
+        <span class="eyebrow">Pricing</span>
+        <h2>Priced by your client book, never by your team</h2>
+        <p class="lede">
+          Every plan includes unlimited staff. Hire a second tech, a dispatcher, and an office
+          manager and your bill does not move a dollar. Plans start free and step up only as your
+          active client count grows.
+        </p>
+        <a href="/pricing" class="btn btn-primary">See the full breakdown</a>
+      </div>
+      <div class="teaser-bands">
+        <div class="band"><span class="band-name">Free</span><span class="band-detail">up to 3 clients</span><span class="band-price">$0</span></div>
+        <div class="band"><span class="band-name">Fetch</span><span class="band-detail">4 to 25 clients</span><span class="band-price">$59/mo</span></div>
+        <div class="band"><span class="band-name">Scoop</span><span class="band-detail">26 to 75 clients</span><span class="band-price">$99/mo</span></div>
+        <div class="band"><span class="band-name">Haul</span><span class="band-detail">76 to 125 clients</span><span class="band-price">$149/mo</span></div>
+        <div class="band"><span class="band-name">Pack Leader</span><span class="band-detail">126 to 200 clients</span><span class="band-price">$2/client</span></div>
+        <div class="band"><span class="band-name">Kennel</span><span class="band-detail">201 and up</span><span class="band-price">$1.50/client</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Also in the box</span>
+        <h2>The unglamorous stuff is covered too</h2>
+      </div>
+      <div class="grid-2 alsobox-grid">
+        {
+          alsoInBox.map((c) => (
+            <a href={c.href} class="card reveal">
+              <span class="card-icon">
+                <Icon name={c.icon as any} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container reveal">
+      <span class="eyebrow">Switching</span>
+      <h2>Already running on something else?</h2>
+      <p class="lede">
+        There are named import tools for Sweep&amp;Go, Jobber, Housecall Pro, Time To Pet, and
+        GorillaDesk, plus a CSV importer for anything else. Every import shows you a field mapping
+        preview and a dry run summary before a single record is written.
+      </p>
+      <a href="/switch" class="btn btn-ghost">See the migration guides <Icon name="arrow-right" size={18} /></a>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Put it on one truck this week"
+    body="Start free with up to 3 active clients, no credit card. Or book a demo and we will walk your actual route setup through it."
+  />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: clamp(40px, 7vw, 88px);
+    padding-bottom: clamp(48px, 7vw, 88px);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    margin-bottom: 20px;
+    font-size: 0.82rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .hero-note {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .feature-grid {
+    margin-top: 40px;
+  }
+
+  .card-all {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .card-all h3 {
+    color: #ffffff;
+  }
+
+  .card-all p {
+    color: #b9c9d3;
+  }
+
+  .card-all .card-icon {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  .pricing-teaser {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .teaser-bands {
+    display: grid;
+    gap: 8px;
+  }
+
+  .band {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 13px 18px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .band-name {
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .band-detail {
+    color: var(--ink-faint);
+    font-size: 0.88rem;
+  }
+
+  .band-price {
+    font-weight: 700;
+    color: var(--sage-dark);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 900px) {
+    .pricing-teaser {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .alsobox-grid {
+    margin-top: 36px;
+  }
+</style>

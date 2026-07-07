@@ -1,0 +1,38 @@
+---
+interface Props {
+  heading?: string;
+  body?: string;
+}
+
+const {
+  heading = 'Try it on your own route',
+  body = 'Free while you have 3 or fewer active clients, unlimited staff on every plan, and named import tools if you are coming from somewhere else.',
+} = Astro.props;
+---
+
+<section class="section-navy cta-section">
+  <div class="container text-center reveal">
+    <h2>{heading}</h2>
+    <p class="lede cta-lede">{body}</p>
+    <div class="cta-buttons">
+      <a href="/request-access" class="btn btn-secondary">Start free</a>
+      <a href="/contact" class="btn btn-ghost">Book a demo</a>
+      <a href="/pricing" class="btn btn-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-lede {
+    margin-inline: auto;
+    max-width: 40em;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+</style>

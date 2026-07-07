@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Icon from '../../components/Icon.astro';
+
+const day = [
+  {
+    icon: 'calendar',
+    title: 'The schedule fills itself',
+    body: 'Recurring visits with preferred weekdays, blackout dates that bump forward automatically, and weather rescheduling that clears a storm day before your phone starts ringing.',
+    href: '/features/scheduling-and-routes',
+  },
+  {
+    icon: 'route',
+    title: 'Routes stop leaking drive time',
+    body: 'One click optimization with real drive time math, zones by postal prefix, and a dispatch board where moving a stop between techs is a drag.',
+    href: '/features/scheduling-and-routes',
+  },
+  {
+    icon: 'phone',
+    title: 'Techs run their day from the truck',
+    body: 'My Day with gate codes, hazards up front, required completion photos, and full offline support for the dead zone behind the golf course.',
+    href: '/features/field-app',
+  },
+  {
+    icon: 'card',
+    title: 'Billing runs itself',
+    body: 'Per dog pricing, prepaid or postpaid, skip reason rules, automatic overdue reminders, and Stripe on your own key with zero markup.',
+    href: '/features/billing',
+  },
+  {
+    icon: 'pin',
+    title: 'Growth points at the next door over',
+    body: 'Canvassing seeded from existing clients, two sided referral credits, and automatic review prompts after completed visits.',
+    href: '/features/neighbor-referrals',
+  },
+  {
+    icon: 'spark',
+    title: 'The AI covers the office',
+    body: 'A receptionist that answers texts and books visits, churn scores on every client, and a weekly digest with one recommended action.',
+    href: '/features/ai-tools',
+  },
+];
+---
+
+<BaseLayout
+  title="Pooper scooper business software | HoundStack"
+  description="Business software for pooper scooper companies: scheduling, route optimization, an offline field app, per dog billing, canvassing tools, and an AI receptionist. Free up to 3 clients."
+>
+  <section class="page-hero">
+    <div class="container">
+      <Breadcrumbs
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'For pooper scooper companies', href: '/for/pooper-scooper-companies' },
+        ]}
+      />
+      <span class="eyebrow">For pooper scooper companies</span>
+      <h1>Pooper scooper business software that starts with the route</h1>
+      <p class="lede">
+        You did not start this business to do software configuration at 9 pm. HoundStack is built
+        around the actual day: load the truck, run the stops, bill correctly, and grow the streets
+        you already drive. Free while you have 3 or fewer active clients, so the trial period is
+        just running your business.
+      </p>
+      <div class="hero-ctas">
+        <a href="/request-access" class="btn btn-primary">Start free</a>
+        <a href="/pricing" class="btn btn-ghost">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <h2 class="reveal">A normal Tuesday, handled</h2>
+      <div class="grid-3">
+        {
+          day.map((c) => (
+            <a href={c.href} class="card reveal">
+              <span class="card-icon">
+                <Icon name={c.icon as any} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container reveal">
+      <h2>The pricing model is the quiet differentiator</h2>
+      <p class="lede">
+        Every plan has unlimited staff. Your first hire, your fifth truck, your office manager,
+        none of it changes the bill. You pay on active clients, which means the software bill only
+        grows when revenue does. Nobody else in this category prices that way on every plan.
+      </p>
+      <a href="/pricing" class="btn btn-primary">See every number</a>
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+</style>

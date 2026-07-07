@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Pet waste removal business tips | The HoundStack blog"
+  description="Practical writing for pet waste removal operators: routing that saves drive time, handling missed yard complaints, what makes a great tech, and more as the data comes in."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Blog</span>
+      <h1>Pet waste removal business tips, from the route out</h1>
+      <p class="lede">
+        Writing for operators, by people who watch this trade closely. No filler posts. More
+        arrives as we have something worth saying, and the data to back it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="post-list">
+        {
+          posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="card reveal post-card">
+              <time datetime={post.data.pubDate.toISOString()}>{fmt.format(post.data.pubDate)}</time>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .post-list {
+    display: grid;
+    gap: 20px;
+    max-width: 760px;
+  }
+
+  .post-card time {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .post-card h2 {
+    font-size: 1.4rem;
+    margin: 8px 0;
+  }
+</style>

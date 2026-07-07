@@ -1,0 +1,198 @@
+---
+// Chrome around stylized product UI recreations. These are honest
+// recreations of real product screens, swapped for screenshots later.
+interface Props {
+  variant?: 'desktop' | 'phone';
+  label: string;
+  class?: string;
+}
+
+const { variant = 'desktop', label, class: className } = Astro.props;
+---
+
+<figure class={`mock mock-${variant} ${className ?? ''}`} role="img" aria-label={label}>
+  {
+    variant === 'desktop' ? (
+      <div class="mock-bar" aria-hidden="true">
+        <span /><span /><span />
+      </div>
+    ) : (
+      <div class="mock-notch" aria-hidden="true" />
+    )
+  }
+  <div class="mock-body">
+    <slot />
+  </div>
+</figure>
+
+<style is:global>
+  .mock {
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
+    font-size: 0.85rem;
+  }
+
+  .mock-phone {
+    max-width: 340px;
+    margin-inline: auto;
+    border-radius: 28px;
+    border-width: 6px;
+    border-color: var(--navy);
+  }
+
+  .mock-bar {
+    display: flex;
+    gap: 6px;
+    padding: 11px 14px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .mock-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+
+  .mock-notch {
+    height: 22px;
+    background: var(--navy);
+    border-radius: 0 0 14px 14px;
+    width: 46%;
+    margin: 0 auto;
+  }
+
+  .mock-body {
+    padding: 0;
+  }
+
+  /* Shared vocabulary for mock UI content */
+  .mk-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .mk-title {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+  }
+
+  .mk-sub {
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+  }
+
+  .mk-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .mk-row:last-child {
+    border-bottom: none;
+  }
+
+  .mk-cell {
+    display: grid;
+    line-height: 1.35;
+    min-width: 0;
+  }
+
+  .mk-strong {
+    font-weight: 600;
+    color: var(--navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mk-faint {
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+  }
+
+  .mk-num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 650;
+    color: var(--navy);
+  }
+
+  .mk-pill {
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .mk-pill.sage { background: var(--sage-wash); color: var(--sage-dark); }
+  .mk-pill.navy { background: var(--navy-wash); color: var(--navy); }
+  .mk-pill.amber { background: var(--amber-wash); color: var(--amber); }
+  .mk-pill.red { background: var(--red-wash); color: var(--red); }
+
+  .mk-btn {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--navy);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  .mk-btn.sage { background: var(--sage); }
+
+  .mk-bubble {
+    max-width: 78%;
+    padding: 9px 13px;
+    border-radius: 14px;
+    margin: 7px 14px;
+    font-size: 0.83rem;
+    line-height: 1.45;
+  }
+
+  .mk-bubble.in {
+    background: var(--bg-alt);
+    color: var(--ink);
+    border-bottom-left-radius: 4px;
+    margin-right: auto;
+  }
+
+  .mk-bubble.out {
+    background: var(--navy);
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
+  }
+
+  .mk-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 90px;
+    padding: 14px 18px 0;
+  }
+
+  .mk-bars span {
+    flex: 1;
+    background: var(--navy-wash);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .mk-bars span.hot {
+    background: var(--sage);
+  }
+</style>

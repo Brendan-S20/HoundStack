@@ -1,0 +1,89 @@
+---
+interface Faq {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  faqs: Faq[];
+  heading?: string;
+}
+
+const { faqs, heading = 'Common questions' } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<div class="faq-block">
+  <h2>{heading}</h2>
+  <div class="faq-list">
+    {
+      faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</div>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<style>
+  .faq-list {
+    display: grid;
+    gap: 12px;
+    max-width: 760px;
+  }
+
+  .faq-item {
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    background: #ffffff;
+    padding: 0;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--navy);
+    padding: 18px 22px;
+    list-style: none;
+    position: relative;
+    padding-right: 46px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--sage-dark);
+  }
+
+  .faq-item[open] summary::after {
+    content: '\2013';
+  }
+
+  .faq-item p {
+    padding: 0 22px 18px;
+    margin: 0;
+    color: var(--ink-muted);
+  }
+</style>

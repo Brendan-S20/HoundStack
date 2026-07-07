@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { SITE } from '../lib/site';
+---
+
+<BaseLayout
+  title="Book a demo of HoundStack"
+  description="Talk to a person before you commit. Book a demo of HoundStack and walk your actual routes, pricing, and migration questions through the product live."
+>
+  <section class="page-hero">
+    <div class="container contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1>Book a demo and talk to a person first</h1>
+        <p class="lede">
+          This form is for teams who want a walkthrough before committing, usually businesses
+          above the free tier with real questions about migration, commercial accounts, or
+          franchise setups. We will reply by email to set a time, and the demo runs on your
+          scenario, not a canned one.
+        </p>
+        <p class="muted">
+          Just want to start using it? Skip the call entirely and
+          <a href="/request-access">start a free account</a> instead. No conversation required.
+        </p>
+      </div>
+      <div class="reveal">
+        <LeadForm
+          endpoint={SITE.contactFormEndpoint}
+          eventName="Contact Submitted"
+          messageLabel="What should we cover?"
+          messagePlaceholder="Current software, client count, what is not working, anything else"
+          submitLabel="Request a demo"
+          confirmHeading="Got it, talk soon"
+          confirmBody="Your demo request is in. Expect an email within one business day to pick a time."
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

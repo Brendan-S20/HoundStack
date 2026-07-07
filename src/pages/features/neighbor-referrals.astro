@@ -1,0 +1,141 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Neighbor canvassing from a map',
+    body: 'Pick an existing client and the tool seeds a list of nearby doors around their address. Your densest growth is two houses down from a yard you already service.',
+  },
+  {
+    title: 'A status pipeline per door',
+    body: 'To visit, contacted, interested, signed up, passed. Every door has a state, so a second pass never knocks where someone already said no.',
+  },
+  {
+    title: 'Walking mode',
+    body: 'A door to door view built for being on foot: the next few doors, their status, and one tap updates between driveways.',
+  },
+  {
+    title: 'Referral codes with two sided credit',
+    body: 'The referrer gets credit, the new client gets credit, and both apply automatically. Nobody mails anyone a gift card.',
+  },
+  {
+    title: 'Automatic Google review prompts',
+    body: 'After a completed visit, the client gets a prompt to leave a Google review while the clean yard is still fresh.',
+  },
+  {
+    title: 'Two way SMS and email from your domain',
+    body: 'Texting runs on Twilio and works both directions. Transactional email sends from your own domain, so messages look like your business, not a platform.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Pooper scooper referral marketing tools | HoundStack"
+  metaDescription="Neighbor canvassing with a map and status pipeline, walking mode for door to door, two sided referral credits, automatic Google review prompts, and two way SMS."
+  h1="Referral marketing that starts two doors down from a client"
+  eyebrow="Neighbors and referrals"
+  intro="Scooping is a density business. Every new client on an existing street is nearly pure margin, and every client on a new street is a bet. These tools point your growth at the streets you already drive."
+  crumbLabel="Neighbors and referrals"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>Canvass the streets you already service</h2>
+        <p class="lede">
+          Seed a door list from any client's address and work it through a pipeline. The map shows
+          which doors are new, which are warm, and which are done. Walking mode turns it into an
+          afternoon on foot instead of a spreadsheet at night.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Doors, not leads.</strong> The unit of work is a physical door near a real client, which is the only lead source this trade reliably converts.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Status survives the season.</strong> "Interested, follow up in spring" is still there in spring.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame variant="phone" label="Canvassing walking mode showing nearby doors with pipeline statuses">
+          <div class="mk-head">
+            <div class="mk-cell">
+              <span class="mk-title">Walking mode</span>
+              <span class="mk-sub">Seeded from Kowalski &middot; Alder St</span>
+            </div>
+            <span class="mk-pill sage">6 doors left</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">1418 Alder St</span>
+              <span class="mk-faint">next door to client</span>
+            </div>
+            <span class="mk-pill navy">to visit</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">1414 Alder St</span>
+              <span class="mk-faint">spoke Jun 30, has 2 dogs</span>
+            </div>
+            <span class="mk-pill amber">interested</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">1411 Alder St</span>
+              <span class="mk-faint">referral code KOWA10 applied</span>
+            </div>
+            <span class="mk-pill sage">signed up</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">1407 Alder St</span>
+              <span class="mk-faint">no dogs</span>
+            </div>
+            <span class="mk-pill red">passed</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in growth and marketing</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

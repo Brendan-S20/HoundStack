@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+---
+
+<BaseLayout
+  title="HoundStack customer stories | Coming soon"
+  description="Customer stories and case studies from pet waste removal businesses running on HoundStack. This page grows as real reviews accumulate; no fabricated testimonials here."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Customers</span>
+      <h1>Customer stories are coming as they happen</h1>
+      <p class="lede">
+        This page will hold real testimonials and case studies from operators running their
+        businesses on HoundStack, with names and numbers attached. We would rather leave it short
+        today than pad it with quotes nobody said.
+      </p>
+      <p class="muted">
+        Running on HoundStack and willing to share how it is going? <a href="/contact">Get in
+        touch</a>, we would genuinely like to hear it, good and bad.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Be the operator we write about first"
+    body="Start free, put it on a real route, and tell us what happened."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+</style>

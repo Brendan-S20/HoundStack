@@ -1,0 +1,160 @@
+---
+// Shared form for /contact and /request-access. Posts to a temporary
+// Formspree-style endpoint; swap endpoints in src/lib/site.ts when the
+// real pipeline exists. Tracks a distinct Plausible event per form.
+interface Props {
+  endpoint: string;
+  eventName: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  submitLabel: string;
+  confirmHeading: string;
+  confirmBody: string;
+}
+
+const {
+  endpoint,
+  eventName,
+  messageLabel,
+  messagePlaceholder,
+  submitLabel,
+  confirmHeading,
+  confirmBody,
+} = Astro.props;
+---
+
+<form
+  class="lead-form"
+  method="POST"
+  action={endpoint}
+  novalidate
+  data-event={eventName}
+>
+  <div class="field">
+    <label for="lf-name">Your name</label>
+    <input type="text" id="lf-name" name="name" autocomplete="name" required />
+    <span class="error-msg">Please tell us your name.</span>
+  </div>
+
+  <div class="field">
+    <label for="lf-business">Business name</label>
+    <input type="text" id="lf-business" name="business" autocomplete="organization" required />
+    <span class="error-msg">Please add your business name.</span>
+  </div>
+
+  <div class="field">
+    <label for="lf-email">Email</label>
+    <input type="email" id="lf-email" name="email" autocomplete="email" required />
+    <span class="error-msg">That email does not look right. Check for typos.</span>
+  </div>
+
+  <div class="field">
+    <label for="lf-message">{messageLabel}</label>
+    <textarea id="lf-message" name="message" rows="4" placeholder={messagePlaceholder}></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary form-submit">{submitLabel}</button>
+  <p class="form-error" hidden>
+    Something went wrong sending that. Try again, or email us and we will sort it out.
+  </p>
+</form>
+
+<div class="form-confirm" hidden>
+  <h2>{confirmHeading}</h2>
+  <p class="lede">{confirmBody}</p>
+</div>
+
+<style>
+  .lead-form {
+    max-width: 480px;
+  }
+
+  .form-submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .form-error {
+    margin-top: 14px;
+    color: var(--red);
+    font-size: 0.92rem;
+  }
+
+  .form-confirm {
+    max-width: 480px;
+    padding: 32px;
+    background: var(--sage-wash);
+    border: 1px solid var(--sage);
+    border-radius: var(--radius);
+  }
+
+  .form-confirm h2 {
+    margin-bottom: 8px;
+  }
+
+  .form-confirm .lede {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+</style>
+
+<script>
+  declare global {
+    interface Window {
+      plausible?: (event: string, opts?: object) => void;
+    }
+  }
+
+  document.querySelectorAll<HTMLFormElement>('.lead-form').forEach((form) => {
+    const confirm = form.nextElementSibling as HTMLElement;
+    const errorBanner = form.querySelector<HTMLElement>('.form-error')!;
+
+    const validate = () => {
+      let ok = true;
+      form.querySelectorAll<HTMLElement>('.field').forEach((field) => {
+        const input = field.querySelector<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
+        if (!input || !input.required) {
+          field.classList.remove('has-error');
+          return;
+        }
+        const valid =
+          input.type === 'email'
+            ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())
+            : input.value.trim().length > 0;
+        field.classList.toggle('has-error', !valid);
+        if (!valid) ok = false;
+      });
+      return ok;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBanner.hidden = true;
+      if (!validate()) return;
+
+      const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      button.disabled = true;
+      button.textContent = 'Sending...';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        window.plausible?.(form.dataset.event!);
+        form.hidden = true;
+        confirm.hidden = false;
+        confirm.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      } catch {
+        errorBanner.hidden = false;
+        button.disabled = false;
+        button.textContent = form.dataset.submitLabel ?? 'Send';
+      }
+    });
+
+    form.dataset.submitLabel = form.querySelector('button[type=submit]')!.textContent ?? 'Send';
+  });
+</script>

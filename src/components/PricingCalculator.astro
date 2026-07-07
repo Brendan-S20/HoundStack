@@ -1,0 +1,198 @@
+---
+import { PLANS } from '../lib/site';
+---
+
+<div class="calc" id="pricing-calc">
+  <h3 id="calc-label">How many active clients do you have?</h3>
+  <div class="calc-slider-row">
+    <input
+      type="range"
+      id="calc-range"
+      min="0"
+      max="300"
+      value="40"
+      step="1"
+      aria-labelledby="calc-label"
+      aria-describedby="calc-result"
+    />
+  </div>
+  <div class="calc-scale" aria-hidden="true">
+    <span>0</span><span>75</span><span>150</span><span>225</span><span>300+</span>
+  </div>
+  <div class="calc-readout" id="calc-result" aria-live="polite">
+    <div class="calc-clients">
+      <span class="calc-count" id="calc-count">40</span>
+      <span class="calc-count-label">active clients</span>
+    </div>
+    <div class="calc-plan">
+      <span class="calc-plan-name" id="calc-plan">Scoop</span>
+      <span class="calc-price"><span id="calc-price">$99</span><span class="calc-per">/mo</span></span>
+      <span class="calc-note" id="calc-note">Flat rate for 26 to 75 active clients.</span>
+    </div>
+  </div>
+  <p class="calc-footnote">
+    Unlimited staff on every plan, including Free. The price never changes when you hire.
+  </p>
+</div>
+
+<script type="application/json" id="calc-plans" set:html={JSON.stringify(PLANS)} />
+
+<style>
+  .calc {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .calc h3 {
+    margin-bottom: 22px;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--sage);
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .calc-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    margin-top: -4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .calc-readout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 26px;
+    padding: 22px 24px;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+  }
+
+  .calc-clients {
+    display: grid;
+  }
+
+  .calc-count {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .calc-count-label {
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .calc-plan {
+    display: grid;
+    text-align: right;
+    justify-items: end;
+  }
+
+  .calc-plan-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+  }
+
+  .calc-price {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .calc-per {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+  }
+
+  .calc-note {
+    color: var(--ink-muted);
+    font-size: 0.85rem;
+    max-width: 22em;
+  }
+
+  .calc-footnote {
+    margin: 18px 0 0;
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 540px) {
+    .calc {
+      padding: 24px 20px;
+    }
+
+    .calc-readout {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .calc-plan {
+      text-align: left;
+      justify-items: start;
+    }
+  }
+</style>
+
+<script>
+  interface Plan {
+    name: string;
+    min: number;
+    max: number | null;
+    flat: number | null;
+    perClient: number | null;
+  }
+
+  const plans: Plan[] = JSON.parse(document.getElementById('calc-plans')!.textContent!);
+  const range = document.getElementById('calc-range') as HTMLInputElement;
+  const countEl = document.getElementById('calc-count')!;
+  const planEl = document.getElementById('calc-plan')!;
+  const priceEl = document.getElementById('calc-price')!;
+  const noteEl = document.getElementById('calc-note')!;
+
+  const fmt = (n: number) =>
+    Number.isInteger(n) ? `$${n.toLocaleString('en-US')}` : `$${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+  const update = () => {
+    const clients = Number(range.value);
+    const plan = plans.find((p) => clients >= p.min && (p.max === null || clients <= p.max))!;
+    const price = plan.flat !== null ? plan.flat : plan.perClient! * clients;
+
+    countEl.textContent = String(clients);
+    planEl.textContent = plan.name;
+    priceEl.textContent = fmt(price);
+
+    if (plan.flat === 0) {
+      noteEl.textContent = 'Free up to 3 active clients. No credit card required.';
+    } else if (plan.flat !== null) {
+      noteEl.textContent = `Flat rate for ${plan.min} to ${plan.max} active clients.`;
+    } else if (plan.max !== null) {
+      noteEl.textContent = `${fmt(plan.perClient!)} per active client, ${plan.min} to ${plan.max} clients.`;
+    } else {
+      noteEl.textContent = `${fmt(plan.perClient!)} per active client above ${plan.min - 1}.`;
+    }
+  };
+
+  range.addEventListener('input', update);
+  update();
+</script>

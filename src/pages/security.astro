@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import Icon from '../components/Icon.astro';
+
+const sections = [
+  {
+    icon: 'lock',
+    title: 'What data HoundStack holds',
+    body: 'Client contact details, service addresses, dog records, visit history and photos, gate codes and access notes, safety hazard notes, invoices, and message history. That is the working set a service business needs, and nothing about it is sold or shared with third parties for advertising.',
+  },
+  {
+    icon: 'key',
+    title: 'How gate codes and hazard notes are protected',
+    body: 'Gate codes and hazard notes are the most sensitive things in the system and are treated that way: encrypted in transit and at rest, and visible only to roles that need them for the day’s work. A tech sees codes for their own route. They do not see your whole book.',
+  },
+  {
+    icon: 'card',
+    title: 'How payment data is handled',
+    body: 'Card numbers never touch HoundStack servers. Payments run on your own Stripe account with your own key, and card data is entered into and stored by Stripe directly. Stripe is PCI DSS Level 1 certified, the highest level. HoundStack stores only the references needed to show you what was paid.',
+  },
+  {
+    icon: 'shield',
+    title: 'Can a competitor see my data? No.',
+    body: 'HoundStack is fully multi tenant with row level isolation, which means every record in the database is stamped with your account and every query is scoped to it at the database layer, not just in application code. Another business on HoundStack cannot see your clients, your pricing, or your routes, full stop.',
+  },
+  {
+    icon: 'users',
+    title: 'Access inside your own team',
+    body: 'Owner, office manager, dispatcher, and tech roles each see only what the job requires. Offboarding a tech is one click, and their access ends immediately, including the mobile app.',
+  },
+  {
+    icon: 'chart',
+    title: 'Analytics on this website',
+    body: 'This marketing site uses Plausible, a privacy respecting analytics tool. No advertising trackers, no cross site profiles, no cookie banner theater. We count visits, not people.',
+  },
+];
+---
+
+<BaseLayout
+  title="Is HoundStack secure? Data handling, explained plainly"
+  description="How HoundStack protects gate codes, hazard notes, and payment data: encryption, role scoped access, Stripe holding all card data, and full multi tenant row level isolation."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Security and trust</span>
+      <h1>Is HoundStack secure? Here is the plain answer</h1>
+      <p class="lede">
+        You are trusting this software with gate codes, home access notes, and payment
+        relationships. That deserves specifics rather than a badge wall, so this page answers the
+        questions property managers and owners actually ask, in order.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="grid-2">
+        {
+          sections.map((s) => (
+            <div class="card reveal">
+              <span class="card-icon">
+                <Icon name={s.icon as any} />
+              </span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="sec-note reveal">
+        Have a security question this page does not answer, or a vendor questionnaire that needs
+        filling out? <a href="/contact">Contact us</a> and it goes to the people who built the
+        system, not a queue. The <a href="/privacy">privacy policy</a> covers the formal detail.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Bring the hard questions to a demo"
+    body="HOA boards and property managers are welcome to put the compliance and data questions to us directly before anything is signed."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .sec-note {
+    margin-top: 32px;
+    color: var(--ink-muted);
+    max-width: 46em;
+  }
+</style>

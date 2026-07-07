@@ -1,0 +1,158 @@
+---
+import { SITE, NAV } from '../lib/site';
+import textLogo from '../assets/HoundStackText-trim.svg';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src={textLogo.src} alt="HoundStack" width="160" height="34" class="footer-logo" />
+        <p>
+          Software for pet waste removal businesses. Scheduling, routing, billing, and growth in
+          one app, priced by clients, never by seats.
+        </p>
+      </div>
+
+      <nav aria-label="Features">
+        <h4>Features</h4>
+        <ul>
+          {NAV.features.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          <li><a href="/integrations">Integrations</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Switch and audiences">
+        <h4>Switching</h4>
+        <ul>
+          {NAV.switch.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+        <h4 class="footer-h-gap">Built for</h4>
+        <ul>
+          {NAV.personas.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/customers">Customers</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/security">Security</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/request-access">Start free</a></li>
+          <li><a href={SITE.appUrl} data-app-link>Sign in</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-legal">
+      <p>&copy; {year} HoundStack. All rights reserved.</p>
+      <ul>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: #b9c9d3;
+    padding: 64px 0 32px;
+    font-size: 0.94rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .footer-logo {
+    height: 30px;
+    width: auto;
+    margin-bottom: 16px;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-brand p {
+    max-width: 30em;
+  }
+
+  .site-footer h4 {
+    color: #ffffff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 14px;
+  }
+
+  .footer-h-gap {
+    margin-top: 26px;
+  }
+
+  .site-footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer li {
+    margin-bottom: 9px;
+  }
+
+  .site-footer a {
+    color: #b9c9d3;
+  }
+
+  .site-footer a:hover {
+    color: #ffffff;
+  }
+
+  .footer-legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 24px;
+  }
+
+  .footer-legal p {
+    margin: 0;
+  }
+
+  .footer-legal ul {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-legal li {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .footer-legal {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

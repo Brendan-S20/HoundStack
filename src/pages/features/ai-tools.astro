@@ -1,0 +1,153 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'AI receptionist, built in house',
+    body: 'Built on Twilio and Claude, not a third party bolt on. It answers texts about pricing and availability and books directly into your calendar. Call answering is on the roadmap.',
+  },
+  {
+    title: 'AI marketing content',
+    body: 'Drafts for social posts, email blasts, and review responses, generated from your actual services and prices, ready to edit and send.',
+  },
+  {
+    title: 'Churn risk scoring',
+    body: 'Every active client gets a churn risk score, so you hear about the quietly unhappy ones before the cancellation text arrives.',
+  },
+  {
+    title: 'Suggested zone pricing, with the reasoning',
+    body: 'Pricing suggestions based on drive time density per zone, shown with the why behind each number so you can accept or ignore it with eyes open.',
+  },
+  {
+    title: 'Suggested dispatch reassignment',
+    body: 'When the board gets lopsided, the AI proposes moves between techs. You stay in charge, it just spots the imbalance first.',
+  },
+  {
+    title: 'The weekly digest',
+    body: 'One email a week: revenue, completed visits, at risk clients, and one recommended action. A business review you actually read.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is the AI receptionist a third party chatbot bolted on?',
+    a: 'No. It is built in house on Twilio and Claude, wired directly into HoundStack scheduling and pricing data. When it quotes availability, it is reading your real calendar, and when it books, the visit lands on the dispatch board like any other.',
+  },
+  {
+    q: 'Can the AI receptionist answer phone calls?',
+    a: 'Not yet. Today it answers text messages about pricing and availability and books visits into the calendar. Voice calls are on the roadmap and will be announced when they ship, not before.',
+  },
+  {
+    q: 'Do I have to review what the AI suggests?',
+    a: 'Pricing and dispatch suggestions are exactly that, suggestions with reasoning attached. Nothing reprices a zone or moves a tech without you accepting it.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="AI receptionist for service businesses | HoundStack AI tools"
+  metaDescription="An in house AI receptionist that answers texts and books visits, plus churn risk scoring, suggested zone pricing with reasoning, dispatch suggestions, and a weekly business digest."
+  h1="An AI receptionist that books yards while you are on a route"
+  eyebrow="AI tools"
+  intro="Most missed revenue in this trade is a text that sat unanswered until dinner. The AI receptionist answers in seconds with your real pricing and availability, books the visit, and the rest of the AI layer watches the business while you run it."
+  crumbLabel="AI tools"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>It answers like your best office day</h2>
+        <p class="lede">
+          The receptionist runs on Twilio and Claude and is wired straight into your calendar and
+          zone pricing. It quotes the real number, offers real openings, and the booking lands on
+          the dispatch board. Texts today; calls are coming and will be labeled clearly when they
+          do.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Books, not just chats.</strong> A confirmed visit on the calendar, not a "we will get back to you."</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Your prices, your rules.</strong> Quotes come from your zone pricing, so the number it gives is the number you charge.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame variant="phone" label="AI receptionist text conversation quoting a price and booking a weekly visit">
+          <div class="mk-head">
+            <div class="mk-cell">
+              <span class="mk-title">Texts &middot; (555) 014-2210</span>
+              <span class="mk-sub">answered by AI receptionist</span>
+            </div>
+          </div>
+          <p class="mk-bubble in">Hi, how much for weekly cleanup? 2 dogs, backyard only, 98107</p>
+          <p class="mk-bubble out">
+            Hi! For 2 dogs on a weekly visit in 98107 it is $22 per visit. We have Thursday
+            mornings open in your area. Want me to set that up?
+          </p>
+          <p class="mk-bubble in">yes thursday works</p>
+          <p class="mk-bubble out">
+            You are booked for Thursdays starting Jul 10, 9 to 11 am window. You will get a text
+            when your tech is on the way.
+          </p>
+          <div class="ai-booked">
+            <span class="mk-pill sage">Visit created &middot; Zone 3 &middot; Thu weekly</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">The whole AI layer</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container reveal">
+      <FaqBlock faqs={faqs} heading="Fair questions about the AI" />
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+
+  .ai-booked {
+    padding: 10px 14px 16px;
+    text-align: center;
+  }
+</style>

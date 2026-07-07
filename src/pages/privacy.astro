@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy policy | HoundStack"
+  description="The HoundStack privacy policy: what data the marketing site and product collect, how it is used, and the choices you have."
+>
+  <section class="page-hero">
+    <div class="container-narrow prose">
+      <span class="eyebrow">Legal</span>
+      <h1>Privacy policy</h1>
+      <p class="muted">Last updated July 6, 2026. Draft pending legal review.</p>
+
+      <h2>The short version</h2>
+      <p>
+        We collect what is needed to run the service and nothing speculative. We do not sell your
+        data. We do not run advertising trackers on this site. Payment card data goes to Stripe
+        and never touches our servers.
+      </p>
+
+      <h2>What this site collects</h2>
+      <p>
+        This marketing site uses Plausible Analytics, a privacy respecting tool that does not use
+        cookies and does not track you across sites. We see aggregate page views and referral
+        sources, not individual profiles. If you submit the contact or request access form, we
+        receive the name, business name, email, and message you typed, and we use them to respond
+        to you.
+      </p>
+
+      <h2>What the product collects</h2>
+      <p>
+        Accounts on app.houndstack.com store the business data you put into them: client and dog
+        records, service addresses, schedules, visit history and photos, gate codes and access
+        notes, hazard notes, invoices, and message history. This data belongs to the business that
+        entered it. We process it to provide the service and for nothing else.
+      </p>
+
+      <h2>Payments</h2>
+      <p>
+        Payments are processed by Stripe under your own Stripe account. Card numbers are entered
+        into and stored by Stripe directly and never reach HoundStack servers. Stripe's own
+        privacy policy governs that data.
+      </p>
+
+      <h2>Subprocessors</h2>
+      <p>
+        We use a small set of service providers to run the product: Stripe (payments), Twilio
+        (SMS), Google Maps (routing and navigation), Anthropic (AI features), and our hosting
+        providers. Each receives only what its function requires.
+      </p>
+
+      <h2>Data isolation</h2>
+      <p>
+        HoundStack is multi tenant with row level isolation. Every record is scoped to a single
+        business account at the database layer, and no other customer can access your data.
+      </p>
+
+      <h2>Your choices</h2>
+      <p>
+        You can export your data in one click at any time, request deletion of your account and
+        its data, and unsubscribe from any non transactional email. Requests can be sent through
+        the <a href="/contact">contact form</a>.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If this policy changes in a way that matters, account owners will be notified by email
+        before the change takes effect.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+</style>

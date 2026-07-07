@@ -1,0 +1,142 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Prepaid credits or postpaid invoices',
+    body: 'Run clients on a prepaid credit ledger that draws down per visit, or invoice after the work. Mix both across your book.',
+  },
+  {
+    title: 'Stripe, your key, no markup',
+    body: 'Connect your own Stripe account. HoundStack takes zero cut of your payment processing, and the money settles to you directly.',
+  },
+  {
+    title: 'Skip reason billing rules',
+    body: 'A locked gate is not the same as a rain day. Bill full, prorate, or waive automatically depending on why the visit was skipped.',
+  },
+  {
+    title: 'Automatic overdue reminders',
+    body: 'Reminders go out on a schedule you set, so chasing money stops being an evening job.',
+  },
+  {
+    title: 'Client portal',
+    body: 'Clients view and pay invoices themselves, see their visit history, and update their card without calling you.',
+  },
+  {
+    title: 'Promotions and coupon codes',
+    body: 'Run a spring cleanup special or a first month discount with a code. The discount applies itself on the invoice instead of living in a sticky note.',
+  },
+  {
+    title: 'Free tier with real teeth',
+    body: 'Free while your account has 3 or fewer active clients, no credit card required, and unlimited staff even on Free.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Pet waste removal invoicing software | HoundStack billing"
+  metaDescription="Invoicing built for scooper businesses: prepaid credits or postpaid billing, Stripe with your own key and zero markup, skip reason billing rules, overdue reminders, and a client portal."
+  h1="Invoicing software that knows why the visit was skipped"
+  eyebrow="Billing and payments"
+  intro="Billing in this trade has edge cases generic tools fumble: rain days, locked gates, prepaid punch cards, per dog rates. HoundStack handles each one with a rule, not a workaround, and never touches a percentage of your payments."
+  crumbLabel="Billing and payments"
+  switchHref="/switch/from-jobber"
+  switchText="switching from Jobber"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>Skip rules do the awkward math</h2>
+        <p class="lede">
+          Every skip carries a reason, and every reason carries a billing rule you chose in
+          advance. The invoice comes out right without anyone remembering what happened two
+          Tuesdays ago.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Your Stripe, your money.</strong> Bring your own key. Card fees are Stripe's published rates and nothing more.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Two billing styles, one book.</strong> Prepaid credit ledgers for some clients, monthly invoices for others, side by side.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="Billing screen showing skip reason rules applied to an invoice">
+          <div class="mk-head">
+            <span class="mk-title">Invoice draft &middot; Nguyen residence</span>
+            <span class="mk-pill navy">March</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">4 completed visits</span>
+              <span class="mk-faint">weekly, 1 dog</span>
+            </div>
+            <span class="mk-num">$96.00</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Skipped Mar 12</span>
+              <span class="mk-faint">reason: weather &middot; rule: waive</span>
+            </div>
+            <span class="mk-num">$0.00</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Skipped Mar 19</span>
+              <span class="mk-faint">reason: locked gate &middot; rule: bill full</span>
+            </div>
+            <span class="mk-num">$24.00</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Total due</span>
+              <span class="mk-faint">auto reminder in 14 days</span>
+            </div>
+            <span class="mk-num">$120.00</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in billing and payments</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

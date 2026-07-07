@@ -1,0 +1,120 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+
+const features = [
+  {
+    title: 'Revenue and outstanding balances',
+    body: 'What came in, what is invoiced, and what is overdue, on one dashboard instead of three exports.',
+  },
+  {
+    title: 'Accounts receivable aging',
+    body: 'Overdue balances bucketed by age, so the awkward calls happen at 30 days instead of 90.',
+  },
+  {
+    title: 'Skip reason breakdowns',
+    body: 'See exactly how much weather, locked gates, and client requests cost you last month, in visits and in dollars.',
+  },
+  {
+    title: 'Tech productivity',
+    body: 'Visits completed, time per stop, and photo compliance per tech. Coaching conversations get numbers instead of vibes.',
+  },
+  {
+    title: 'Zone activity and profitability',
+    body: 'Which zones make money and which ones quietly eat drive time. The answer changes routes and pricing both.',
+  },
+  {
+    title: 'Top clients, retention, and lifetime value',
+    body: 'Top clients by revenue, cohort retention over time, lifetime value, and churn driver analysis for the ones you lost.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Field service business reporting software | HoundStack"
+  metaDescription="Reporting for pet waste removal businesses: revenue dashboards, receivables aging, skip reason costs, tech productivity, zone profitability, retention cohorts, and churn drivers."
+  h1="Business reporting that answers route level questions"
+  eyebrow="Reporting"
+  intro="Generic dashboards tell you revenue went down. These tell you it went down because Zone 4 lost three clients to a move away and rain ate nine visits, which is an answer you can act on."
+  crumbLabel="Reporting"
+  switchHref="/switch/from-gorilladesk"
+  switchText="switching from GorillaDesk"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>From gut feel to zone level truth</h2>
+        <p class="lede">
+          Every report is cut by the dimensions this trade actually runs on: zones, techs, skip
+          reasons, and client cohorts. When a number looks off, the drill down is one click, not a
+          spreadsheet weekend.
+        </p>
+      </div>
+      <div class="reveal">
+        <MockFrame label="Reporting dashboard showing monthly revenue by zone with an outstanding balance summary">
+          <div class="mk-head">
+            <span class="mk-title">Revenue by zone &middot; June</span>
+            <span class="mk-pill sage">on pace</span>
+          </div>
+          <div class="mk-bars" aria-hidden="true">
+            <span style="height: 46%"></span>
+            <span style="height: 72%" class="hot"></span>
+            <span style="height: 58%"></span>
+            <span style="height: 34%"></span>
+            <span style="height: 64%"></span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Zone 2 north</span>
+              <span class="mk-faint">highest margin per drive minute</span>
+            </div>
+            <span class="mk-pill sage">most profitable</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Overdue over 30 days</span>
+              <span class="mk-faint">4 clients &middot; reminders queued</span>
+            </div>
+            <span class="mk-num">$486</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Every report in the suite</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

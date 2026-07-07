@@ -1,0 +1,249 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import RouteMap from '../../components/RouteMap.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Recurring visits that match how clients actually buy',
+    body: 'Weekly, biweekly, or a custom cadence, with preferred weekdays per client. Set it once and the schedule fills itself forward.',
+  },
+  {
+    title: 'Blackout dates with automatic bump forward',
+    body: 'Mark a holiday or a day off and every affected visit moves to the next valid day on its own. No hand rescheduling forty stops.',
+  },
+  {
+    title: 'Zone based pricing and routing by postal prefix',
+    body: 'Group your service area into zones, price each one for its drive density, and keep routes from sprawling across town.',
+  },
+  {
+    title: 'Multi tech dispatch board',
+    body: 'Every tech, every stop, one board. Drag a visit from one tech to another and the day rebalances.',
+  },
+  {
+    title: 'One click route optimization',
+    body: 'Real drive time and ETA math, not straight line guesses. Reorder a full day in one click and hand the result straight to the truck.',
+  },
+  {
+    title: 'Turn by turn handoff to Google Maps',
+    body: 'Techs tap a stop and Google Maps opens with the destination loaded. No copying addresses.',
+  },
+  {
+    title: 'Weather aware automatic rescheduling',
+    body: 'When a storm is coming, affected visits reschedule automatically under your skip rules instead of piling into a phone triage morning.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Route optimization software for pet waste removal | HoundStack"
+  metaDescription="Recurring visits, zone pricing, a drag and drop dispatch board, one click route optimization with real drive times, and weather aware rescheduling for scooper businesses."
+  h1="Route optimization built for pet waste removal, not deliveries"
+  eyebrow="Scheduling and routes"
+  intro="A scooping route lives or dies on drive time. HoundStack plans recurring visits, prices by zone, and reorders a full day of stops in one click using real drive time math, then hands turn by turn directions to the truck."
+  crumbLabel="Scheduling and routes"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>Watch a day get shorter</h2>
+        <p class="lede">
+          This is the shape of the dispatch board: stops in optimized order, drive time between
+          them, and an ETA for every yard. The board is drag and drop, so moving a stop between
+          techs takes one gesture.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>ETAs clients can hold you to.</strong> Drive times come from real road data, so the 9:40 stop happens at 9:40.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Zones keep the math honest.</strong> Postal prefix zones stop a new signup from dragging a route 20 minutes off pattern.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <RouteMap />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in scheduling and dispatch</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <div class="boundary-sketch" id="boundary-sketch">
+          <svg
+            viewBox="0 0 560 320"
+            role="img"
+            aria-label="Property map with a service boundary drawn around the back yard of a client's lot"
+          >
+            <g stroke="#dde5ea" stroke-width="1.5">
+              <path d="M0 90h560M0 230h560" />
+              <path d="M120 0v320M420 0v320" />
+            </g>
+            <g stroke="#e7edf1" stroke-width="1">
+              <path d="M0 160h560M270 0v320" />
+            </g>
+            <!-- lot -->
+            <rect x="170" y="110" width="200" height="150" fill="#f0f4f2" stroke="#c9d6cd" stroke-width="1.5" />
+            <!-- house footprint -->
+            <rect x="195" y="128" width="90" height="58" fill="#dde5ea" stroke="#b7c5cf" stroke-width="1.5" />
+            <!-- drawn service boundary -->
+            <path
+              id="boundary-path"
+              d="M188 196 L352 196 L352 246 L188 246 Z"
+              fill="rgba(94, 132, 94, 0.14)"
+              stroke="#5e845e"
+              stroke-width="3"
+              stroke-linejoin="round"
+              stroke-dasharray="7 6"
+            />
+            <g id="boundary-handles" fill="#ffffff" stroke="#5e845e" stroke-width="2">
+              <rect x="183" y="191" width="10" height="10" />
+              <rect x="347" y="191" width="10" height="10" />
+              <rect x="347" y="241" width="10" height="10" />
+              <rect x="183" y="241" width="10" height="10" />
+            </g>
+            <!-- address pin, for contrast -->
+            <g transform="translate(240,96)">
+              <path d="M0 22 C-9 10 -11 6 -11 -1 A11 11 0 1 1 11 -1 C11 6 9 10 0 22 Z" fill="#142937" />
+              <circle cy="-1" r="4" fill="#ffffff" />
+            </g>
+            <text x="258" y="104" font-family="inherit" font-size="12" fill="#48606f">address pin</text>
+            <text x="240" y="232" font-family="inherit" font-size="12" font-weight="650" fill="#4a6b4a">service area</text>
+          </svg>
+          <div class="sketch-caption">
+            <span class="badge badge-sage">Boundary drawn</span>
+            <span>Back yard only, gate on the east side</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <h2>Property boundaries you draw, not guess</h2>
+        <p class="lede">
+          An address pin tells a tech where the house is. It does not say the client only pays for
+          the back yard, or that the side strip past the gate is included. In HoundStack you
+          sketch the actual service boundary on a map, per property, and that drawing rides along
+          on the stop card.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>The quote matches the yard.</strong> Pricing conversations get simpler when both sides are looking at the same drawn area.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Substitute techs service the right area.</strong> The boundary answers "which part of this lot" before anyone texts the office.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<script>
+  // Draw the boundary polygon when it scrolls into view, matching the
+  // route map animation. Reduced motion shows it complete.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sketch = document.getElementById('boundary-sketch');
+
+  if (sketch && !reduced && 'IntersectionObserver' in window) {
+    sketch.classList.add('will-animate');
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          sketch.classList.add('is-animated');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(sketch);
+  }
+</script>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+
+  .boundary-sketch {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .boundary-sketch svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8fafb;
+  }
+
+  .boundary-sketch.will-animate #boundary-path {
+    opacity: 0;
+    transform: scale(0.9);
+    transform-origin: 270px 221px;
+    transform-box: view-box;
+  }
+
+  .boundary-sketch.is-animated #boundary-path {
+    transition: opacity 500ms ease, transform 700ms cubic-bezier(0.2, 1.2, 0.4, 1);
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .boundary-sketch.will-animate #boundary-handles {
+    opacity: 0;
+  }
+
+  .boundary-sketch.is-animated #boundary-handles {
+    transition: opacity 400ms ease 600ms;
+    opacity: 1;
+  }
+
+  .sketch-caption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--line-soft);
+  }
+</style>

@@ -1,0 +1,161 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Per unit monthly billing',
+    body: 'Apartment complexes, HOAs, and communities bill by unit count per month, completely separate from residential per dog pricing.',
+  },
+  {
+    title: 'Pet waste station service routes',
+    body: 'Stations go on a route like any yard: restock bags, empty bins, and log the service so there is a record per station, per visit.',
+  },
+  {
+    title: 'Service logs the property manager can see',
+    body: 'Every station visit is logged with time and tech. When the board asks whether the stations were serviced, the answer is a report, not a promise.',
+  },
+  {
+    title: 'DNA sample logging',
+    body: 'Log pile samples and cheek swabs against specific dogs, with collection details captured at the moment they happen.',
+  },
+  {
+    title: 'Full chain of custody',
+    body: 'Every sample is tracked from collection through lab handoff to result, so a match holds up when the fine gets contested.',
+  },
+  {
+    title: 'Per dog registration with registry IDs',
+    body: 'Each dog in the community gets a registry ID tied to a named, breed tagged record. The registry is the backbone the whole program hangs on.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'How does dog waste DNA testing work for an HOA?',
+    a: 'Residents register each dog with a cheek swab that goes to a lab and becomes a DNA profile on file. When unattended waste is found, a pile sample is collected and compared against the registry. HoundStack manages the registry, logs both sample types, and tracks chain of custody from collection to result.',
+  },
+  {
+    q: 'Can we bill the community per unit instead of per dog?',
+    a: 'Yes. Commercial and HOA accounts use per unit monthly billing, which is separate from residential per dog pricing. A 120 unit community bills as 120 units regardless of how many dogs live there.',
+  },
+  {
+    q: 'Do waste station visits show up somewhere the board can verify?',
+    a: 'Every station service is logged with the date, time, tech, and work done (restock, empty, or both). Property managers get a clean service history instead of taking anyone’s word for it.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="HOA pet waste compliance software | HoundStack"
+  metaDescription="Per unit billing for HOAs and apartment communities, pet waste station service routes with logged visits, and DNA compliance tooling with registry IDs and chain of custody tracking."
+  h1="HOA pet waste compliance, from station routes to DNA registry"
+  eyebrow="Commercial and HOA"
+  intro="Communities do not buy scooping the way homeowners do. They buy per unit, they want service logs they can show the board, and more of them every year want a DNA program with teeth. HoundStack ships all three."
+  crumbLabel="Commercial and HOA"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+  schema={[]}
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>A DNA program that survives an argument</h2>
+        <p class="lede">
+          A DNA match is only as good as its paper trail. Every sample in HoundStack carries a
+          chain of custody from the moment it is collected to the lab result, tied to a registered
+          dog with a registry ID. When a resident disputes a fine, the record is already in order.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Two sample types.</strong> Cheek swabs build the registry, pile samples get matched against it.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Real dog records.</strong> Registrations are tied to named, breed tagged dogs, not a loose spreadsheet of unit numbers.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="DNA compliance screen showing registered dogs and sample chain of custody status">
+          <div class="mk-head">
+            <span class="mk-title">Birchwood Court HOA &middot; DNA registry</span>
+            <span class="mk-pill sage">142 dogs registered</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Sample #S-0448 &middot; pile</span>
+              <span class="mk-faint">collected Jun 28 &middot; station 3 lawn</span>
+            </div>
+            <span class="mk-pill amber">at lab</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Sample #S-0447 &middot; pile</span>
+              <span class="mk-faint">match: HS-0031 &middot; Bruno, boxer &middot; unit 214</span>
+            </div>
+            <span class="mk-pill sage">matched</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Swab #S-0446 &middot; cheek</span>
+              <span class="mk-faint">new registration &middot; Daisy, beagle &middot; unit 108</span>
+            </div>
+            <span class="mk-pill navy">registry ID issued</span>
+          </div>
+          <div class="mk-row">
+            <div class="mk-cell">
+              <span class="mk-strong">Chain of custody</span>
+              <span class="mk-faint">collected &rarr; sealed &rarr; shipped &rarr; lab &rarr; result</span>
+            </div>
+            <span class="mk-pill sage">complete</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything for commercial and HOA accounts</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container reveal">
+      <FaqBlock faqs={faqs} heading="Questions property managers ask" />
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

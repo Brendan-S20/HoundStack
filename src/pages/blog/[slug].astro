@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { getCollection, render } from 'astro:content';
+import { SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  url: new URL(`/blog/${post.id}`, SITE.url).href,
+  author: { '@type': 'Organization', name: 'HoundStack' },
+  publisher: { '@type': 'Organization', name: 'HoundStack', url: SITE.url },
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} | HoundStack blog`}
+  description={post.data.description}
+  schema={[articleSchema]}
+  ogType="article"
+>
+  <article>
+    <section class="post-hero">
+      <div class="container-narrow">
+        <Breadcrumbs
+          crumbs={[
+            { label: 'Home', href: '/' },
+            { label: 'Blog', href: '/blog' },
+            { label: post.data.title, href: `/blog/${post.id}` },
+          ]}
+        />
+        <time datetime={post.data.pubDate.toISOString()} class="post-date">
+          {fmt.format(post.data.pubDate)}
+        </time>
+        <h1>{post.data.title}</h1>
+        <p class="lede">{post.data.description}</p>
+      </div>
+    </section>
+
+    <section class="post-body">
+      <div class="container-narrow prose">
+        <Content />
+        <p class="related">
+          Related in the product: <a href={post.data.relatedFeature.href}>{post.data.relatedFeature.label}</a>
+        </p>
+      </div>
+    </section>
+  </article>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .post-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: 0;
+  }
+
+  .post-date {
+    display: block;
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .post-body {
+    padding-top: 24px;
+  }
+
+  .related {
+    margin-top: 40px;
+    padding: 18px 22px;
+    background: var(--sage-wash);
+    border-radius: var(--radius);
+    font-weight: 550;
+  }
+</style>

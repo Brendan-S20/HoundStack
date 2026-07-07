@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Icon from '../../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Dog waste DNA testing for HOAs and communities | HoundStack"
+  description="How HOAs and property managers run dog waste DNA programs and station servicing with HoundStack: per dog registry IDs, chain of custody, logged station visits, and per unit billing."
+>
+  <section class="page-hero">
+    <div class="container">
+      <Breadcrumbs
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'For HOAs and property managers', href: '/for/hoa-and-property-managers' },
+        ]}
+      />
+      <span class="eyebrow">For HOAs and property managers</span>
+      <h1>Dog waste DNA testing for HOAs, explained without the jargon</h1>
+      <p class="lede">
+        You have a waste problem on the property, a board that wants it fixed, and residents who
+        will dispute any fine that is not airtight. This page explains how a DNA program and
+        professional station servicing actually work, and what the software behind them does.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="reveal">
+        <h2>How a DNA program works, start to finish</h2>
+      </div>
+      <ol class="steps">
+        <li class="reveal">
+          <span class="step-num">1</span>
+          <div>
+            <h3>Every dog gets registered</h3>
+            <p>
+              Each resident dog gets a one time cheek swab, sent to a lab, which becomes a DNA
+              profile. In HoundStack that profile lives on a named, breed tagged dog record with
+              its own registry ID, tied to the unit.
+            </p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="step-num">2</span>
+          <div>
+            <h3>Unattended waste gets sampled</h3>
+            <p>
+              When waste is found on the property, the service crew logs a pile sample on the
+              spot: where, when, and by whom, captured at collection.
+            </p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="step-num">3</span>
+          <div>
+            <h3>The lab matches it to the registry</h3>
+            <p>
+              The sample is compared against the community's registered profiles. A match points
+              to a specific dog and unit.
+            </p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span class="step-num">4</span>
+          <div>
+            <h3>The record holds up</h3>
+            <p>
+              Every sample carries a full chain of custody in HoundStack, from collection through
+              shipping to result. When a resident contests the fine, the paper trail is already
+              complete, which is the difference between a program with teeth and a program with
+              arguments.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">The other half: stations that actually get serviced</h2>
+      <div class="grid-3">
+        <div class="card reveal">
+          <span class="card-icon"><Icon name="route" /></span>
+          <h3>Stations on real routes</h3>
+          <p>
+            Bag restocks and bin emptying run on scheduled service routes, not on whenever someone
+            remembers.
+          </p>
+        </div>
+        <div class="card reveal">
+          <span class="card-icon"><Icon name="check" /></span>
+          <h3>Every visit logged</h3>
+          <p>
+            Date, time, tech, and work done, recorded per station per visit. The service history
+            is a report you can forward to the board.
+          </p>
+        </div>
+        <div class="card reveal">
+          <span class="card-icon"><Icon name="building" /></span>
+          <h3>Billing that fits a community</h3>
+          <p>
+            Per unit monthly billing, sized to the property, completely separate from how
+            residential clients are priced.
+          </p>
+        </div>
+      </div>
+      <p class="reveal persona-note">
+        Curious about the deeper mechanics? The <a href="/features/commercial-and-hoa">commercial
+        and HOA feature page</a> covers the tooling in detail, and the
+        <a href="/security">security page</a> answers what happens to resident and payment data.
+      </p>
+    </div>
+  </section>
+
+  <CtaSection
+    heading="Talk through your property first"
+    body="Most HOA programs start with a conversation, not a signup. Book a demo and bring your community's specifics."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: grid;
+    gap: 22px;
+    max-width: 720px;
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .steps h3 {
+    margin-bottom: 4px;
+  }
+
+  .steps p {
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .persona-note {
+    margin-top: 32px;
+    color: var(--ink-muted);
+  }
+</style>
