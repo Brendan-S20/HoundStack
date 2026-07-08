@@ -2,8 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RouteWidget from '../components/RouteWidget.astro';
 import CtaSection from '../components/CtaSection.astro';
+import MockFrame from '../components/MockFrame.astro';
+import FaqBlock from '../components/FaqBlock.astro';
 import Icon from '../components/Icon.astro';
-import { SITE } from '../lib/site';
+import { getCollection } from 'astro:content';
+import { SITE, TRIAL_DAYS, PRICING_FAQS } from '../lib/site';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const postDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -104,19 +113,19 @@ const alsoInBox = [
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <span class="badge badge-sage hero-badge">Try Launch free for 60 days, no card required</span>
         <h1>Run your whole pet waste removal business without paying for who you employ</h1>
         <p class="lede">
-          Scheduling, routing, dispatch, billing, and the field app your techs actually use, built
-          for this trade instead of adapted to it. Plans are priced by how complex the operation
-          is, not by how many customers you have earned, and your first teammates are included on
-          every tier.
+          Scheduling, routing, billing, and a field app built for this trade instead of adapted
+          to it. Priced by how complex the operation is, never by headcount.
         </p>
         <div class="hero-ctas">
-          <a href="/request-access" class="btn btn-primary">Start your free trial</a>
+          <a href={SITE.signupUrl} class="btn btn-primary" data-app-link>Start your free trial</a>
           <a href="/pricing" class="btn btn-ghost">See pricing</a>
         </div>
-        <p class="hero-note">Unlimited customers, dogs, jobs, routes, and zones on every plan.</p>
+        <p class="hero-note">
+          {TRIAL_DAYS} day free trial · No credit card · Unlimited customers, dogs, jobs, routes,
+          and zones on every plan
+        </p>
       </div>
       <div class="hero-widget">
         <RouteWidget />
@@ -157,6 +166,138 @@ const alsoInBox = [
   </section>
 
   <section>
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">The product</span>
+        <h2>Have a look around before you sign up</h2>
+        <p class="lede">
+          The dispatch board, billing, the AI receptionist, and reporting, shown the way they
+          look inside the product. Stylized recreations of real screens, not stock mockups.
+        </p>
+      </div>
+      <div class="gallery-grid">
+        <MockFrame label="The HoundStack dispatch board showing three techs' routes for the day" class="reveal">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Dispatch board</span>
+              <div class="mk-sub">Tuesday · Zone 2 north · 3 trucks</div>
+            </div>
+            <span class="mk-btn sage">Optimize all</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Marcus T.</span>
+              <span class="mk-faint">18 stops · done by 2:40</span>
+            </span>
+            <span class="mk-pill sage">on pace</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Dana R.</span>
+              <span class="mk-faint">21 stops · done by 3:10</span>
+            </span>
+            <span class="mk-pill sage">on pace</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Priya K.</span>
+              <span class="mk-faint">16 stops · Birchwood Court HOA restock</span>
+            </span>
+            <span class="mk-pill amber">2 unassigned</span>
+          </div>
+        </MockFrame>
+
+        <MockFrame label="The HoundStack invoice list with paid, due, and skip credit statuses" class="reveal">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Invoices</span>
+              <div class="mk-sub">This month · $8,410 collected</div>
+            </div>
+            <span class="mk-pill navy">receivables: $1,285</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Kowalski residence</span>
+              <span class="mk-faint">2 dogs, weekly</span>
+            </span>
+            <span class="mk-num">$89</span>
+            <span class="mk-pill sage">paid</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Birchwood Court HOA</span>
+              <span class="mk-faint">3 stations, per unit</span>
+            </span>
+            <span class="mk-num">$1,240</span>
+            <span class="mk-pill navy">due Apr 1</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Nguyen residence</span>
+              <span class="mk-faint">skipped: gate locked</span>
+            </span>
+            <span class="mk-num">$0</span>
+            <span class="mk-pill amber">credit applied</span>
+          </div>
+        </MockFrame>
+
+        <MockFrame variant="phone" label="An AI receptionist text conversation booking a new weekly client" class="reveal">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">AI receptionist</span>
+              <div class="mk-sub">answering as your business, by text</div>
+            </div>
+          </div>
+          <div class="mk-thread">
+            <div class="mk-bubble in">How much for 2 dogs every week? Back yard only.</div>
+            <div class="mk-bubble out">
+              For 2 dogs weekly it's $22 a visit in your zone. Thursday mornings are open — want
+              me to start you April 3?
+            </div>
+            <div class="mk-bubble in">Yes please</div>
+            <div class="mk-bubble out">Booked: Thursdays from April 3. You'll get a text the night before each visit.</div>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Booked by AI · already on the dispatch board</span>
+          </div>
+        </MockFrame>
+
+        <MockFrame label="A HoundStack zone profitability report with monthly revenue bars" class="reveal">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Zone profitability</span>
+              <div class="mk-sub">Last 6 months</div>
+            </div>
+            <span class="mk-pill sage">margin up 4%</span>
+          </div>
+          <div class="mk-bars" aria-hidden="true">
+            <span style="height: 42%"></span>
+            <span style="height: 55%"></span>
+            <span style="height: 49%"></span>
+            <span style="height: 66%"></span>
+            <span style="height: 74%"></span>
+            <span class="hot" style="height: 88%"></span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Zone 2 north</span>
+              <span class="mk-faint">densest route, 4 min between stops</span>
+            </span>
+            <span class="mk-num">61% margin</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Zone 5 east</span>
+              <span class="mk-faint">flagged: drive time creeping up</span>
+            </span>
+            <span class="mk-num">38% margin</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
     <div class="container pricing-teaser reveal">
       <div>
         <span class="eyebrow">Pricing</span>
@@ -178,7 +319,7 @@ const alsoInBox = [
     </div>
   </section>
 
-  <section class="section-alt">
+  <section>
     <div class="container">
       <div class="reveal">
         <span class="eyebrow">Also in the box</span>
@@ -200,7 +341,7 @@ const alsoInBox = [
     </div>
   </section>
 
-  <section>
+  <section class="section-alt">
     <div class="container reveal">
       <span class="eyebrow">Switching</span>
       <h2>Already running on something else?</h2>
@@ -210,6 +351,55 @@ const alsoInBox = [
         preview and a dry run summary before a single record is written.
       </p>
       <a href="/switch" class="btn btn-ghost">See the migration guides <Icon name="arrow-right" size={18} /></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="container faq-home reveal">
+      <span class="eyebrow">Straight answers</span>
+      <FaqBlock faqs={PRICING_FAQS.slice(0, 3)} heading="The questions everyone asks first" />
+      <p class="faq-more">
+        More on contracts, allowances, and downgrades in the <a href="/pricing">full pricing FAQ</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container founder-strip reveal">
+      <div>
+        <span class="eyebrow">Who's behind this</span>
+        <h2>Built by someone who watched this trade closely</h2>
+        <p class="lede">
+          "HoundStack started with looking hard at how scooper businesses actually run their day,
+          and at software that charges you more for every person you hire. This trade deserved a
+          tool built from the route up, so I'm building it."
+        </p>
+        <p class="founder-sig">
+          — Brendan Schmidt, founder · <a href="/about">read the whole story</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">From the blog</span>
+        <h2>Writing for operators, not for algorithms</h2>
+      </div>
+      <div class="grid-3 blog-grid">
+        {
+          posts.map((post) => (
+            <a href={`/blog/${post.id}`} class="card reveal">
+              <time datetime={post.data.pubDate.toISOString()} class="post-date">
+                {postDate.format(post.data.pubDate)}
+              </time>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -328,5 +518,48 @@ const alsoInBox = [
 
   .alsobox-grid {
     margin-top: 36px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 40px;
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mk-thread {
+    padding: 8px 0;
+  }
+
+  .faq-more {
+    margin-top: 20px;
+    color: var(--ink-muted);
+  }
+
+  .founder-strip .lede {
+    max-width: 42em;
+  }
+
+  .founder-sig {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .blog-grid {
+    margin-top: 36px;
+  }
+
+  .post-date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
   }
 </style>

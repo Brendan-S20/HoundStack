@@ -4,7 +4,7 @@ import PricingEstimator from '../components/PricingEstimator.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import CtaSection from '../components/CtaSection.astro';
 import Icon from '../components/Icon.astro';
-import { PLANS, SITE, TRIAL_DAYS, OVERAGE_RATE } from '../lib/site';
+import { PLANS, SITE, TRIAL_DAYS, OVERAGE_RATE, PRICING_FAQS } from '../lib/site';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -58,40 +58,7 @@ const addons = [
   },
 ];
 
-const faqs = [
-  {
-    q: 'Why don’t you charge by number of customers or employees?',
-    a: 'Because growth is success, not a cost trigger. Winning more customers or hiring more people should never be the reason your software bill jumps. What actually changes as an operation matures is complexity, deeper reporting, more control, franchise structure, and that is what the tiers price.',
-  },
-  {
-    q: 'What counts as an active employee?',
-    a: 'Anyone with a login used at least once in the billing period, in any role. Techs, dispatchers, and office staff all count the same way. Someone who never logs in that month does not count.',
-  },
-  {
-    q: `What happens after my ${TRIAL_DAYS} day trial?`,
-    a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
-  },
-  {
-    q: 'What happens if I go over my included employee allowance?',
-    a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
-  },
-  {
-    q: 'Do I lose features on Launch that Enterprise gets?',
-    a: 'No. Every plan runs the full core ERP: scheduling, routing, invoicing, payments, the field app, the client portal, all of it. The difference between tiers is complexity tooling like advanced analytics, custom permissions, and franchise structure, not core capability.',
-  },
-  {
-    q: 'Can I buy add-ons without upgrading my whole plan?',
-    a: 'Yes for the AI and growth add-ons, they install on any plan. The one exception is franchise management and regional dashboards, which are part of the Enterprise structure because they require the parent and child organization model.',
-  },
-  {
-    q: 'Is there a discount for paying annually?',
-    a: 'Yes, 15% off the plan price, applied automatically when you choose yearly billing.',
-  },
-  {
-    q: 'What happens to my data if I downgrade?',
-    a: 'Nothing is deleted. Downgrades follow the same grace period handling as any plan change, and your data stays exportable in one click on every plan, paused accounts included.',
-  },
-];
+const faqs = PRICING_FAQS;
 ---
 
 <BaseLayout
@@ -130,7 +97,8 @@ const faqs = [
       <div class="plan-grid">
         {
           PLANS.map((p) => (
-            <div class="card plan-card reveal">
+            <div class={`card plan-card reveal ${p.popular ? 'plan-popular' : ''}`}>
+              {p.popular && <span class="badge badge-sage popular-badge">Most popular</span>}
               <h3>{p.name}</h3>
               <p class="plan-price">
                 {p.price !== null ? (
@@ -265,6 +233,28 @@ const faqs = [
 
   .plan-card {
     padding: 24px;
+    position: relative;
+  }
+
+  .plan-popular {
+    border-color: var(--sage);
+    border-width: 2px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* margin, not transform, so the .reveal transition cannot cancel the lift */
+  @media (min-width: 1021px) {
+    .plan-popular {
+      margin-top: -8px;
+    }
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: var(--sage);
+    color: #ffffff;
   }
 
   .plan-card h3 {

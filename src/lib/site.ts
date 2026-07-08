@@ -1,7 +1,8 @@
 export const SITE = {
   name: 'HoundStack',
-  url: 'https://houndstack.com',
+  url: 'https://www.houndstack.com',
   appUrl: 'https://app.houndstack.com',
+  signupUrl: 'https://app.houndstack.com/signup',
   // Temporary form backend. Swap both endpoints to the real signup
   // pipeline when it exists; the forms post plain FormData.
   contactFormEndpoint: 'https://formspree.io/f/REPLACE_CONTACT_FORM_ID',
@@ -24,6 +25,8 @@ export interface Plan {
   audience: string;
   /** The complexity ladder for this tier, not a feature checklist */
   ladder: string[];
+  /** Visually highlighted as the recommended tier on pricing surfaces */
+  popular?: boolean;
 }
 
 export const PLANS: Plan[] = [
@@ -42,6 +45,7 @@ export const PLANS: Plan[] = [
     name: 'Growth',
     price: 199,
     includedEmployees: 10,
+    popular: true,
     audience: 'Past "just me and a couple techs," still one business.',
     ladder: [
       'Advanced analytics: cohort retention, zone profitability, churn drivers',
@@ -78,6 +82,43 @@ export function planTotal(plan: Plan, employees: number): number | null {
   if (plan.price === null || plan.includedEmployees === null) return null;
   return plan.price + Math.max(0, employees - plan.includedEmployees) * OVERAGE_RATE;
 }
+
+// Pricing FAQ lives here so the /pricing page and the homepage excerpt
+// share one source of truth.
+export const PRICING_FAQS = [
+  {
+    q: 'Why don’t you charge by number of customers or employees?',
+    a: 'Because growth is success, not a cost trigger. Winning more customers or hiring more people should never be the reason your software bill jumps. What actually changes as an operation matures is complexity, deeper reporting, more control, franchise structure, and that is what the tiers price.',
+  },
+  {
+    q: 'What counts as an active employee?',
+    a: 'Anyone with a login used at least once in the billing period, in any role. Techs, dispatchers, and office staff all count the same way. Someone who never logs in that month does not count.',
+  },
+  {
+    q: `What happens after my ${TRIAL_DAYS} day trial?`,
+    a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
+  },
+  {
+    q: 'What happens if I go over my included employee allowance?',
+    a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
+  },
+  {
+    q: 'Do I lose features on Launch that Enterprise gets?',
+    a: 'No. Every plan runs the full core ERP: scheduling, routing, invoicing, payments, the field app, the client portal, all of it. The difference between tiers is complexity tooling like advanced analytics, custom permissions, and franchise structure, not core capability.',
+  },
+  {
+    q: 'Can I buy add-ons without upgrading my whole plan?',
+    a: 'Yes for the AI and growth add-ons, they install on any plan. The one exception is franchise management and regional dashboards, which are part of the Enterprise structure because they require the parent and child organization model.',
+  },
+  {
+    q: 'Is there a discount for paying annually?',
+    a: 'Yes, 15% off the plan price, applied automatically when you choose yearly billing.',
+  },
+  {
+    q: 'What happens to my data if I downgrade?',
+    a: 'Nothing is deleted. Downgrades follow the same grace period handling as any plan change, and your data stays exportable in one click on every plan, paused accounts included.',
+  },
+];
 
 export const NAV = {
   features: [

@@ -2,11 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CtaSection from '../components/CtaSection.astro';
 import stackedLogo from '../assets/HoundStackTextwLogo-trim.svg';
+import { SITE } from '../lib/site';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Brendan Schmidt',
+  jobTitle: 'Founder',
+  url: new URL('/about', SITE.url).href,
+  worksFor: {
+    '@type': 'Organization',
+    name: 'HoundStack',
+    url: SITE.url,
+  },
+};
 ---
 
 <BaseLayout
   title="About HoundStack"
-  description="Why HoundStack exists: software built for the people who show up every day to take care of dogs, after watching this trade run on tools that charge for every user and were built for other work."
+  description="Why founder Brendan Schmidt built HoundStack: software for the people who show up every day to take care of dogs, after watching this trade run on tools that charge for every user and were built for other work."
+  schema={[personSchema]}
 >
   <section class="page-hero">
     <div class="container-narrow">
@@ -34,9 +49,24 @@ import stackedLogo from '../assets/HoundStackTextwLogo-trim.svg';
         </p>
         <p>
           If that sounds like software made by people who paid attention, that is the whole
-          intent. See <a href="/features">what it does</a>, check
-          <a href="/pricing">what it costs</a>, or <a href="/contact">talk to us</a> directly.
+          intent. See <a href="/features">what it does</a>, check <a href="/pricing">what it costs</a>, or <a href="/contact">talk to us</a> directly.
         </p>
+      </div>
+
+      <div class="founder-card">
+        <h2>Who is building it</h2>
+        <p>
+          HoundStack is built by <strong>Brendan Schmidt</strong>, its founder. The paragraphs
+          above are his reasons, not a marketing team's: he went looking at how scooper businesses
+          actually run a Tuesday, decided the software this trade was renting did not deserve it,
+          and started building the one it should have had.
+        </p>
+        <p>
+          It is early, and that is on purpose too. If you run routes and something in the product
+          fights you, <a href="/contact">tell him directly</a> — that feedback is currently the
+          product roadmap.
+        </p>
+        <p class="founder-sig">Brendan Schmidt · Founder, HoundStack</p>
       </div>
 
       <img
@@ -61,6 +91,25 @@ import stackedLogo from '../assets/HoundStackTextwLogo-trim.svg';
 
   .about-body {
     max-width: 640px;
+  }
+
+  .founder-card {
+    max-width: 640px;
+    margin-top: 40px;
+    padding: 28px;
+    background: var(--bg-alt);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+  }
+
+  .founder-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .founder-sig {
+    margin: 0;
+    font-weight: 650;
+    color: var(--navy);
   }
 
   .about-logo {

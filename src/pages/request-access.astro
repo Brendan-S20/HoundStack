@@ -7,19 +7,20 @@ import { SITE, TRIAL_DAYS } from '../lib/site';
 
 <BaseLayout
   title="Start a 60 day free trial of HoundStack"
-  description="Start now, no call needed. Request a HoundStack account and get 60 days of the Launch plan free: no credit card, purely time based, with nothing deleted if you pause."
+  description="Create your account now and get 60 days of the Launch plan free: no credit card, purely time based, with nothing deleted if you pause. Or have us set it up and run your import for you."
 >
   <section class="page-hero">
     <div class="container contact-grid">
       <div>
         <span class="eyebrow">Start free</span>
-        <h1>Start a {TRIAL_DAYS} day free trial, no call needed</h1>
+        <h1>Start a {TRIAL_DAYS} day free trial</h1>
         <p class="lede">
-          This is the self serve path: fill this in and you will get access to your account by
-          email. The trial is {TRIAL_DAYS} days of the full Launch plan, no credit card, and it is
-          purely a clock. Nothing you do inside it, not signing clients, not hiring, not running
-          routes, triggers a charge.
+          The fastest path is self serve: <a href={SITE.signupUrl} data-app-link>create your account now</a> and you are inside
+          the product in a couple of minutes. The trial is {TRIAL_DAYS} days of the full Launch
+          plan, no credit card, and it is purely a clock. Nothing you do inside it, not signing
+          clients, not hiring, not running routes, triggers a charge.
         </p>
+        <a href={SITE.signupUrl} class="btn btn-primary start-btn" data-app-link>Create my account</a>
         <ul class="checklist start-list">
           <li>
             <Icon name="check" size={20} />
@@ -35,19 +36,24 @@ import { SITE, TRIAL_DAYS } from '../lib/site';
           </li>
         </ul>
         <p class="muted">
-          Want a walkthrough with a human before deciding? That is what the
-          <a href="/contact">demo form</a> is for.
+          Want a walkthrough with a human before deciding? That is what the <a href="/contact">demo form</a> is for.
         </p>
       </div>
       <div class="reveal">
+        <h2 class="handled-h">Rather have it set up for you?</h2>
+        <p class="muted handled-p">
+          If you are switching from another platform, we will create the account, run your import
+          with a dry run, and hand it over ready to route. Fill this in and expect an email from
+          us within one business day.
+        </p>
         <LeadForm
           endpoint={SITE.requestAccessFormEndpoint}
           eventName="Request Access Submitted"
           messageLabel="Anything we should know? (optional)"
           messagePlaceholder="Current software, team size, when you want to start"
-          submitLabel="Start my free trial"
+          submitLabel="Set it up for me"
           confirmHeading="You are on the way"
-          confirmBody="Request received. Watch your inbox for your account access email and your 60 day trial."
+          confirmBody="Request received. We will email you within one business day to set up your account and your 60 day trial."
         />
       </div>
     </div>
@@ -75,6 +81,18 @@ import { SITE, TRIAL_DAYS } from '../lib/site';
   }
 
   .start-list {
+    margin-bottom: 20px;
+  }
+
+  .start-btn {
+    margin-bottom: 24px;
+  }
+
+  .handled-h {
+    font-size: 1.3rem;
+  }
+
+  .handled-p {
     margin-bottom: 20px;
   }
 </style>

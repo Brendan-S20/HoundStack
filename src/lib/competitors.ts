@@ -1,3 +1,8 @@
+export interface CostLine {
+  label: string;
+  amount: string;
+}
+
 export interface Competitor {
   slug: string;
   name: string;
@@ -12,6 +17,25 @@ export interface Competitor {
   /** Feature pages that address this competitor's weak spots */
   weakSpotLinks: { href: string; label: string; why: string }[];
   importerName: string;
+  /**
+   * Quantified cost comparison for a fixed scenario. Every competitor
+   * figure comes from the vendor's own published pricing page and the
+   * source line says exactly where and when it was read. Update the
+   * numbers and the date together or not at all.
+   */
+  cost: {
+    scenario: string;
+    lines: CostLine[];
+    total: string;
+    hsLines: CostLine[];
+    hsTotal: string;
+    /** A concession or caveat that keeps the comparison honest */
+    fairNote?: string;
+    growthNote: string;
+    source: string;
+  };
+  /** Honest capability rows: concede where they are strong */
+  featureRows: { feature: string; them: string; us: string }[];
 }
 
 export const COMPETITORS: Competitor[] = [
@@ -41,6 +65,29 @@ export const COMPETITORS: Competitor[] = [
       },
     ],
     importerName: 'the Sweep&Go importer',
+    cost: {
+      scenario: 'An owner and two techs: 3 active staff, monthly billing.',
+      lines: [
+        { label: 'Scoop&Go tier (their most popular), 1–3 staff band: $69 per active staff × 3', amount: '$207' },
+      ],
+      total: '$207/mo',
+      hsLines: [{ label: 'Launch plan, all 3 active employees included', amount: '$79' }],
+      hsTotal: '$79/mo',
+      fairNote:
+        'To be fair: their EntreMANURE tier would be $29 × 3 = $87 a month, but it caps every tech at 15 jobs a day, which a dense route passes before lunch.',
+      growthNote:
+        'The gap widens as you hire. At 10 active staff, Scoop&Go is $39 × 10 = $390 a month. HoundStack is $149 on Launch ($79 + 7 extra teammates at $10) or $199 on Growth with 10 included.',
+      source:
+        'Sweep&Go prices as published on sweepandgo.com/pooper-scooper-app/pricing, July 2026, monthly billing. Their promos and bands change; check their page for current numbers.',
+    },
+    featureRows: [
+      { feature: 'Per dog pricing and scoop schedules', them: 'Yes, genuinely built for this trade', us: 'Yes' },
+      { feature: 'Pricing model', them: 'Per active staff member, every month', us: 'Flat tier with an employee allowance' },
+      { feature: 'AI receptionist that books by text', them: 'No', us: 'Yes, as an add-on on any plan' },
+      { feature: 'Churn risk scoring and suggested zone pricing', them: 'No', us: 'Yes' },
+      { feature: 'DNA compliance with chain of custody', them: 'No, tracked outside the app', us: 'Built in' },
+      { feature: 'Interface', them: 'Functional, showing its age', us: 'Built a decade later, and it shows too' },
+    ],
   },
   {
     slug: 'from-jobber',
@@ -68,6 +115,30 @@ export const COMPETITORS: Competitor[] = [
       },
     ],
     importerName: 'the Jobber importer',
+    cost: {
+      scenario: 'An owner and two techs: 3 users, month-to-month billing.',
+      lines: [
+        { label: 'Connect plan, 1 user included', amount: '$139' },
+        { label: '2 additional users × $29', amount: '$58' },
+      ],
+      total: '$197/mo',
+      hsLines: [{ label: 'Launch plan, all 3 active employees included', amount: '$79' }],
+      hsTotal: '$79/mo',
+      fairNote:
+        'Their Core plan is $49 a month, but it is a single user with the lighter feature set, and users are still $29 each on top of any plan. Annual prepay brings Connect down to $99.',
+      growthNote:
+        'On Jobber, every hire is another $29 a month on every plan, forever. On HoundStack your first 3 teammates are included and each one after is $10 flat.',
+      source:
+        'Jobber prices as published on getjobber.com/pricing, July 2026, month-to-month rates (1-year commitment and annual prepay are lower). Check their page for current numbers.',
+    },
+    featureRows: [
+      { feature: 'General field service polish', them: 'Excellent: quoting, invoicing, payments all mature', us: 'Focused on one trade instead' },
+      { feature: 'Per dog pricing', them: 'No, faked with line items', us: 'Native' },
+      { feature: 'Skip reason billing (rain days, locked gates)', them: 'No', us: 'Yes, rules per reason' },
+      { feature: 'Dense recurring route optimization', them: 'General scheduling', us: 'Built for 20 stops before lunch' },
+      { feature: 'HOA waste stations and DNA compliance', them: 'No', us: 'Built in' },
+      { feature: 'Pricing model', them: 'Per user from the very first one', us: 'Flat tier with an employee allowance' },
+    ],
   },
   {
     slug: 'from-housecall-pro',
@@ -95,6 +166,29 @@ export const COMPETITORS: Competitor[] = [
       },
     ],
     importerName: 'the Housecall Pro importer',
+    cost: {
+      scenario: 'An owner and two techs: 3 users, monthly billing.',
+      lines: [
+        { label: 'Essentials plan, up to 5 users (Basic is single user, so 3 users start here)', amount: '$189' },
+      ],
+      total: '$189/mo',
+      hsLines: [{ label: 'Launch plan, all 3 active employees included', amount: '$79' }],
+      hsTotal: '$79/mo',
+      fairNote:
+        'Annual billing brings Essentials down to $149 a month. Either way you are paying for a plan sized in users, plus the add-ons most operators end up needing.',
+      growthNote:
+        'Past 5 users, the next stop is MAX at $329 a month plus $35 per user beyond its allowance. On HoundStack, teammate number four is $10.',
+      source:
+        'Housecall Pro prices as published on housecallpro.com/pricing, July 2026, monthly billing ($149 Essentials on annual). Check their page for current numbers.',
+    },
+    featureRows: [
+      { feature: 'Appointment based home services', them: 'Very strong: booking, dispatch, payments', us: 'Built for routes instead of appointments' },
+      { feature: 'Per dog pricing', them: 'No', us: 'Native' },
+      { feature: 'Skip reason billing', them: 'No', us: 'Yes, rules per reason' },
+      { feature: 'Zone based recurring routes', them: 'No, day-to-day job model', us: 'The core of the product' },
+      { feature: 'HOA waste stations and DNA compliance', them: 'No', us: 'Built in' },
+      { feature: 'Pricing model', them: 'User-count plan tiers', us: 'Flat tier with an employee allowance' },
+    ],
   },
   {
     slug: 'from-time-to-pet',
@@ -122,6 +216,30 @@ export const COMPETITORS: Competitor[] = [
       },
     ],
     importerName: 'the Time To Pet importer',
+    cost: {
+      scenario: 'An owner and two techs: 3 active staff, monthly billing.',
+      lines: [
+        { label: 'Team plan base', amount: '$40' },
+        { label: '3 active staff × $16', amount: '$48' },
+      ],
+      total: '$88/mo',
+      hsLines: [{ label: 'Launch plan, all 3 active employees included', amount: '$79' }],
+      hsTotal: '$79/mo',
+      fairNote:
+        'At this size the bills are honestly close. The difference is what the money buys: Time To Pet is pet sitting software, so none of it goes toward route optimization, per dog waste pricing, or skip reason billing.',
+      growthNote:
+        'The gap opens as you hire: at 10 active staff, Time To Pet is $40 + 10 × $16 = $200 a month. HoundStack is $149 on Launch ($79 + 7 teammates at $10), with the route tooling included.',
+      source:
+        'Time To Pet prices as published on timetopet.com/pricing, July 2026 (In-Home plans; their Lite and Solo tiers serve smaller sitters). Check their page for current numbers.',
+    },
+    featureRows: [
+      { feature: 'Client communication and visit report cards', them: 'Excellent, genuinely loved', us: 'Also strong: two way SMS, photos, review prompts' },
+      { feature: 'Route optimization for dense stop lists', them: 'No, visit model', us: 'One click, real drive time math' },
+      { feature: 'Per dog waste pricing', them: 'No', us: 'Native' },
+      { feature: 'Skip reason billing for rain days', them: 'No', us: 'Yes, rules per reason' },
+      { feature: 'HOA waste stations and DNA compliance', them: 'No', us: 'Built in' },
+      { feature: 'Pricing model', them: '$16 per active staff on Team', us: 'Flat tier with an employee allowance' },
+    ],
   },
   {
     slug: 'from-gorilladesk',
@@ -149,5 +267,28 @@ export const COMPETITORS: Competitor[] = [
       },
     ],
     importerName: 'the GorillaDesk importer',
+    cost: {
+      scenario: 'An owner and two solo techs: 2 paid routes, monthly billing.',
+      lines: [
+        { label: 'Pro plan (subscription billing and the portal live here): $99 per route × 2 solo techs', amount: '$198' },
+      ],
+      total: '$198/mo',
+      hsLines: [{ label: 'Launch plan, all 3 active employees included', amount: '$79' }],
+      hsTotal: '$79/mo',
+      fairNote:
+        'Credit where due: GorillaDesk gives you unlimited free office users, and only techs with schedules need a paid route. Their Basic tier is $49 a route, but it caps routing at 25 stops and drops the customer portal.',
+      growthNote:
+        'Every new solo tech is another $99 route each month. On HoundStack a new teammate is $10 flat once you are past your included 3.',
+      source:
+        'GorillaDesk prices as published on gorilladesk.com/pricing, July 2026, monthly billing (annual is lower). Check their page for current numbers.',
+    },
+    featureRows: [
+      { feature: 'Simple, affordable recurring service basics', them: 'Yes, quick to learn', us: 'Yes, plus the trade specific layer' },
+      { feature: 'Free office users', them: 'Unlimited, genuinely good', us: 'First 3 teammates of any role included' },
+      { feature: 'Per dog pricing', them: 'No', us: 'Native' },
+      { feature: 'Skip reason billing', them: 'No', us: 'Yes, rules per reason' },
+      { feature: 'HOA per unit billing, stations, DNA compliance', them: 'No', us: 'Built in' },
+      { feature: 'Growth tools', them: 'Basic marketing', us: 'Canvassing map, referrals, AI layer' },
+    ],
   },
 ];

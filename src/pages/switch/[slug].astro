@@ -83,6 +83,72 @@ const migrationSteps = [
 
   <section class="section-alt">
     <div class="container">
+      <h2 class="reveal">What the same crew costs, in dollars</h2>
+      <p class="lede reveal">{c.cost.scenario}</p>
+      <div class="cost-grid">
+        <div class="card cost-card reveal">
+          <h3>{c.name}</h3>
+          {
+            c.cost.lines.map((l) => (
+              <div class="cost-line">
+                <span>{l.label}</span>
+                <span class="cost-amount">{l.amount}</span>
+              </div>
+            ))
+          }
+          <div class="cost-total">
+            <span>Total</span>
+            <span>{c.cost.total}</span>
+          </div>
+        </div>
+        <div class="card cost-card cost-card-hs reveal">
+          <h3>HoundStack</h3>
+          {
+            c.cost.hsLines.map((l) => (
+              <div class="cost-line">
+                <span>{l.label}</span>
+                <span class="cost-amount">{l.amount}</span>
+              </div>
+            ))
+          }
+          <div class="cost-total">
+            <span>Total</span>
+            <span>{c.cost.hsTotal}</span>
+          </div>
+        </div>
+      </div>
+      {c.cost.fairNote && <p class="cost-note reveal">{c.cost.fairNote}</p>}
+      <p class="cost-note reveal">{c.cost.growthNote}</p>
+      <p class="cost-source reveal">{c.cost.source}</p>
+
+      <h2 class="reveal table-h">Side by side, honestly</h2>
+      <div class="table-wrap reveal">
+        <table class="data">
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col">{c.name}</th>
+              <th scope="col">HoundStack</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              c.featureRows.map((r) => (
+                <tr>
+                  <th scope="row">{r.feature}</th>
+                  <td>{r.them}</td>
+                  <td>{r.us}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
       <h2 class="reveal">What the migration actually looks like</h2>
       <p class="lede reveal">
         {c.name} has a named, dedicated import tool in HoundStack. Four steps, and nothing is
@@ -146,6 +212,90 @@ const migrationSteps = [
     margin-top: 28px;
     font-size: 1.05rem;
     color: var(--ink-muted);
+  }
+
+  .cost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 28px;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .cost-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cost-card h3 {
+    margin-bottom: 16px;
+  }
+
+  .cost-card-hs {
+    border-color: var(--sage);
+    border-width: 2px;
+  }
+
+  .cost-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+  }
+
+  .cost-amount {
+    font-variant-numeric: tabular-nums;
+    font-weight: 650;
+    color: var(--navy);
+    white-space: nowrap;
+  }
+
+  .cost-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    font-weight: 750;
+    color: var(--navy);
+    font-size: 1.15rem;
+  }
+
+  .cost-card-hs .cost-total {
+    color: var(--sage-dark);
+  }
+
+  .cost-note {
+    margin-top: 20px;
+    color: var(--ink-muted);
+    max-width: 52em;
+  }
+
+  .cost-note + .cost-note {
+    margin-top: 10px;
+  }
+
+  .cost-source {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    max-width: 52em;
+  }
+
+  .table-h {
+    margin-top: 56px;
+  }
+
+  .table-wrap {
+    margin-top: 24px;
+  }
+
+  table.data th[scope='row'] {
+    font-weight: 600;
+    color: var(--navy);
   }
 
   .steps {

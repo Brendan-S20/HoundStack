@@ -1,4 +1,6 @@
 ---
+import { SITE, TRIAL_DAYS } from '../lib/site';
+
 interface Props {
   heading?: string;
   body?: string;
@@ -15,10 +17,11 @@ const {
     <h2>{heading}</h2>
     <p class="lede cta-lede">{body}</p>
     <div class="cta-buttons">
-      <a href="/request-access" class="btn btn-secondary">Start free</a>
+      <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
       <a href="/contact" class="btn btn-ghost">Book a demo</a>
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
     </div>
+    <p class="cta-note">{TRIAL_DAYS} day free trial · No credit card · Cancel anytime, data stays exportable</p>
   </div>
 </section>
 
@@ -34,5 +37,11 @@ const {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 28px;
+  }
+
+  .cta-note {
+    margin: 16px 0 0;
+    font-size: 0.88rem;
+    color: #b9c9d3;
   }
 </style>

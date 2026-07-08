@@ -313,20 +313,22 @@ a.card:hover {
   color: var(--ink-muted);
 }
 
-/* Scroll reveal */
-.reveal {
+/* Scroll reveal. Content is fully visible by default; the hidden start
+   state only applies once JS has stamped html.js, so crawlers, no-JS,
+   and slow connections always see full-contrast content. */
+html.js .reveal {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 360ms ease, transform 360ms ease;
 }
 
-.reveal.is-visible {
+html.js .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  html.js .reveal {
     opacity: 1;
     transform: none;
     transition: none;

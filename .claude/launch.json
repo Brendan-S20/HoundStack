@@ -3,9 +3,17 @@
   "configurations": [
     {
       "name": "houndstack-site",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["astro", "dev", "--port", "4321"],
-      "port": 4321
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npx astro dev --port \"${PORT:-4321}\""],
+      "port": 4321,
+      "autoPort": true
+    },
+    {
+      "name": "houndstack-site-qa",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npx astro preview --port \"${PORT:-4333}\""],
+      "port": 4333,
+      "autoPort": true
     }
   ]
 }

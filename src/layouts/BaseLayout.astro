@@ -35,6 +35,11 @@ const allSchema = [organizationSchema, ...schema];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Stamped as early as possible so .reveal only hides content when
+      // the reveal script is actually going to run.
+      document.documentElement.classList.add('js');
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -106,9 +111,40 @@ const allSchema = [organizationSchema, ...schema];
               }
             }
           },
-          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+          { threshold: 0.06, rootMargin: '0px 0px -24px 0px' }
         );
-        targets.forEach((el) => io.observe(el));
+        // Anything already in or near the viewport shows instantly with no
+        // fade; only content the user scrolls to animates. Avoids the
+        // low-contrast first paint on tall sections and on mid-page reloads.
+        const instantReveal = (el: Element) => {
+          (el as HTMLElement).style.transition = 'none';
+          el.classList.add('is-visible');
+        };
+        const inView = (el: Element) => {
+          const r = el.getBoundingClientRect();
+          return r.top < window.innerHeight * 0.92 && r.bottom > -40;
+        };
+        targets.forEach((el) => {
+          if (inView(el)) {
+            instantReveal(el);
+          } else {
+            io.observe(el);
+          }
+        });
+        // Browsers restore mid-page scroll positions after this script runs
+        // on reload; re-check once so restored viewports are never blank.
+        window.addEventListener(
+          'load',
+          () => {
+            targets.forEach((el) => {
+              if (!el.classList.contains('is-visible') && inView(el)) {
+                io.unobserve(el);
+                instantReveal(el);
+              }
+            });
+          },
+          { once: true }
+        );
       }
     </script>
   </body>
