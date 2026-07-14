@@ -3,17 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import MockFrame from '../../components/MockFrame.astro';
 import Icon from '../../components/Icon.astro';
-import { COMPETITORS } from '../../lib/competitors';
+import { COMPETITORS, SWITCH_MARKS } from '../../lib/competitors';
 
-// Monogram tiles stand in for competitor logos: distinct, tidy, and no
-// trademark art to license. One accent per tool, reused nowhere else.
-const marks: Record<string, { mark: string; bg: string; fg: string; line: string }> = {
-  'from-sweep-and-go': { mark: 'SG', bg: '#eef3f8', fg: '#33566e', line: '#d4e0ea' },
-  'from-jobber': { mark: 'J', bg: '#f3efe6', fg: '#7a5f22', line: '#e6dcc4' },
-  'from-housecall-pro': { mark: 'HP', bg: '#f0eef6', fg: '#544a7d', line: '#dcd7ea' },
-  'from-time-to-pet': { mark: 'TP', bg: '#eaf4f0', fg: '#2f6b52', line: '#cfe4da' },
-  'from-gorilladesk': { mark: 'GD', bg: '#f6eeee', fg: '#7a3d3d', line: '#e8d4d4' },
-};
+const marks = SWITCH_MARKS;
 
 const shortlines: Record<string, string> = {
   'from-sweep-and-go': 'The trade specific incumbent. The comparison comes down to the AI layer and the interface.',
