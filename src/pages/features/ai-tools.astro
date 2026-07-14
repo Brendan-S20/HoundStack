@@ -45,17 +45,28 @@ const faqs = [
     a: 'Pricing and dispatch suggestions are exactly that, suggestions with reasoning attached. Nothing reprices a zone or moves a tech without you accepting it.',
   },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <FeatureLayout
   metaTitle="AI receptionist for service businesses | HoundStack AI tools"
-  metaDescription="An in house AI receptionist that answers texts and books visits, plus churn risk scoring, suggested zone pricing with reasoning, dispatch suggestions, and a weekly business digest."
+  metaDescription="An in-house AI receptionist that answers texts and books visits, churn risk scoring, suggested zone pricing with reasoning, and a weekly business digest."
   h1="An AI receptionist that books yards while you are on a route"
   eyebrow="AI tools"
   intro="Most missed revenue in this trade is a text that sat unanswered until dinner. The AI receptionist answers in seconds with your real pricing and availability, books the visit, and the rest of the AI layer watches the business while you run it."
   crumbLabel="AI tools"
   switchHref="/switch/from-sweep-and-go"
   switchText="switching from Sweep&Go"
+  schema={[faqSchema]}
 >
   <section class="section-alt">
     <div class="container split">

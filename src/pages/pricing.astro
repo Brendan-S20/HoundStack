@@ -62,6 +62,17 @@ const addons = [
 
 const faqs = PRICING_FAQS;
 
+// FAQ rich-result eligibility: the same questions rendered on the page.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 const discountPct = Math.round(ANNUAL_DISCOUNT * 100);
 
 /** Per-month price under yearly billing, formatted without trailing .00 */
@@ -72,9 +83,9 @@ const yearlyMonthly = (price: number) => {
 ---
 
 <BaseLayout
-  title="Pooper scooper software pricing: Launch $79, Growth $199, Scale $449 | HoundStack"
-  description="HoundStack pricing: Launch $79, Growth $199, Scale $449, Enterprise by contract. Employee allowance included on every tier, $10 flat per additional active employee, 14 day free trial."
-  schema={[softwareSchema]}
+  title="Pooper scooper software pricing | HoundStack"
+  description="HoundStack pricing: Launch $79, Growth $199, Scale $449, Enterprise by contract. Employee allowance on every tier, $10 per extra active employee."
+  schema={[softwareSchema, faqSchema]}
 >
   <section class="page-hero">
     <div class="container">

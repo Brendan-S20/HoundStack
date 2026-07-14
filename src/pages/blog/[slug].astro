@@ -22,6 +22,7 @@ const articleSchema = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.pubDate.toISOString(),
+  image: new URL('/og.png', SITE.url).href,
   url: new URL(`/blog/${post.id}`, SITE.url).href,
   author: { '@type': 'Organization', name: 'HoundStack' },
   publisher: { '@type': 'Organization', name: 'HoundStack', url: SITE.url },
@@ -29,7 +30,7 @@ const articleSchema = {
 ---
 
 <BaseLayout
-  title={`${post.data.title} | HoundStack blog`}
+  title={`${post.data.title} | HoundStack`}
   description={post.data.description}
   schema={[articleSchema]}
   ogType="article"

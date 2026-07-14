@@ -42,9 +42,9 @@ export const COMPETITORS: Competitor[] = [
   {
     slug: 'from-sweep-and-go',
     name: 'Sweep&Go',
-    metaTitle: 'Sweep and Go alternative built for scooper businesses | HoundStack',
+    metaTitle: 'Sweep and Go alternative for scooper businesses | HoundStack',
     metaDescription:
-      'Comparing HoundStack and Sweep&Go for pet waste removal: where Sweep&Go is solid, where it stops, and how the dedicated Sweep&Go importer moves your data with a dry run first.',
+      'Comparing HoundStack and Sweep&Go for pet waste removal: where Sweep&Go is solid, where it stops, and how the importer moves your data with a dry run.',
     h1: 'A Sweep and Go alternative with an AI layer and a modern interface',
     intro:
       'Sweep&Go is the incumbent in this trade, and plenty of good businesses run on it. If you are here, you are probably weighing what a decade newer product buys you. Here is the honest comparison.',
@@ -94,7 +94,7 @@ export const COMPETITORS: Competitor[] = [
     name: 'Jobber',
     metaTitle: 'Jobber alternative for pet waste removal | HoundStack',
     metaDescription:
-      'Why scooper businesses outgrow Jobber: per user pricing and no per dog billing. How HoundStack compares and how the Jobber importer migrates your clients with a dry run.',
+      'Why scooper businesses outgrow Jobber: per user pricing and no per dog billing. How HoundStack compares and how the importer migrates your data.',
     h1: 'A Jobber alternative built for pet waste removal, with per dog billing native',
     intro:
       'Jobber is excellent general purpose field service software. The question is not whether Jobber is good, it is whether a tool built for every trade can fit the specific way a scooping business bills, routes, and grows.',
@@ -145,7 +145,7 @@ export const COMPETITORS: Competitor[] = [
     name: 'Housecall Pro',
     metaTitle: 'Housecall Pro alternative for scooper businesses | HoundStack',
     metaDescription:
-      'Housecall Pro versus HoundStack for pet waste removal: what Housecall Pro does well for home services broadly, where it was never designed for this trade, and the migration path.',
+      'Housecall Pro is built for plumbers and HVAC. How HoundStack compares for recurring scooping routes and how the importer migrates your data.',
     h1: 'A Housecall Pro alternative actually designed for this trade',
     intro:
       'Housecall Pro serves plumbers, electricians, and HVAC crews well. Pet waste removal asks different questions of software, and this page is about that difference.',
@@ -195,7 +195,7 @@ export const COMPETITORS: Competitor[] = [
     name: 'Time To Pet',
     metaTitle: 'Time To Pet alternative for pet waste removal | HoundStack',
     metaDescription:
-      'Time To Pet is built for pet sitting and dog walking. Here is how HoundStack differs for waste removal routes, and how the Time To Pet importer moves your client list safely.',
+      'Time To Pet is built for pet sitting. How HoundStack compares for waste removal routes and how the importer migrates your clients with a dry run.',
     h1: 'A Time To Pet alternative for waste removal instead of pet sitting',
     intro:
       'Time To Pet is well loved software, but it is pet sitting software. If your trucks run scooping routes, you are borrowing a tool from an adjacent business, and the fit shows in the daily details.',
@@ -246,7 +246,7 @@ export const COMPETITORS: Competitor[] = [
     name: 'GorillaDesk',
     metaTitle: 'GorillaDesk alternative for scooper businesses | HoundStack',
     metaDescription:
-      'GorillaDesk versus HoundStack for pet waste removal: what GorillaDesk does well for pest control, where the fit ends for scooping routes, and the dedicated migration path.',
+      'GorillaDesk grew up in pest control. How HoundStack compares for scooper businesses and how the importer migrates your data with a dry run.',
     h1: 'A GorillaDesk alternative built around scooping routes',
     intro:
       'GorillaDesk grew up in pest control and does that job well. Scooping shares the trucks and the recurring visits, but not much else about how the business actually bills and grows.',
