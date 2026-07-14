@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import AppScene from '../components/AppScene.astro';
 import CtaSection from '../components/CtaSection.astro';
 import MockFrame from '../components/MockFrame.astro';
+import PostArt from '../components/PostArt.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
@@ -253,7 +254,7 @@ const alsoInBox = [
           <div class="mk-thread">
             <div class="mk-bubble in">How much for 2 dogs every week? Back yard only.</div>
             <div class="mk-bubble out">
-              For 2 dogs weekly it's $22 a visit in your zone. Thursday mornings are open — want
+              For 2 dogs weekly it's $22 a visit in your zone. Thursday mornings are open. Want
               me to start you April 3?
             </div>
             <div class="mk-bubble in">Yes please</div>
@@ -308,7 +309,7 @@ const alsoInBox = [
         <span class="eyebrow">Pricing</span>
         <h2>Simple pricing that scales with your team</h2>
         <p class="lede">
-          Each tier includes an employee allowance — your first 3 teammates on Launch — and every
+          Each tier includes an employee allowance (your first 3 teammates on Launch), and every
           additional active employee is $10 a month flat, shown live in the dashboard, never a
           surprise invoice. Higher tiers unlock deeper tooling like advanced analytics, custom
           permissions, and franchise structure.
@@ -380,7 +381,7 @@ const alsoInBox = [
           tool built from the route up, so I'm building it."
         </p>
         <p class="founder-sig">
-          — Brendan Schmidt, founder · <a href="/about">read the whole story</a>
+          Brendan Schmidt, founder · <a href="/about">read the whole story</a>
         </p>
       </div>
     </div>
@@ -394,8 +395,9 @@ const alsoInBox = [
       </div>
       <div class="grid-3 blog-grid">
         {
-          posts.map((post) => (
+          posts.map((post, i) => (
             <a href={`/blog/${post.id}`} class="card reveal">
+              <PostArt seed={post.id} variant={(['route', 'check', 'chat'] as const)[i % 3]} class="home-post-art" />
               <time datetime={post.data.pubDate.toISOString()} class="post-date">
                 {postDate.format(post.data.pubDate)}
               </time>
@@ -605,5 +607,9 @@ const alsoInBox = [
     font-size: 0.85rem;
     color: var(--ink-faint);
     margin-bottom: 8px;
+  }
+
+  .blog-grid :global(.home-post-art) {
+    margin-bottom: 14px;
   }
 </style>

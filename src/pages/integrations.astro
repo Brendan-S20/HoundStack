@@ -89,6 +89,45 @@ const integrations = [
     </div>
   </section>
 
+  <section>
+    <div class="container">
+      <h2 class="reveal">The API, and what gets built on it</h2>
+      <p class="lede reveal">
+        Everything above works without a developer. For teams that want to wire HoundStack into
+        their own stack, here is what is coming, in the order it ships.
+      </p>
+      <div class="grid-2 api-grid">
+        <div class="card reveal">
+          <span class="card-icon"><Icon name="network" /></span>
+          <div class="int-title-row">
+            <h3>API access</h3>
+            <span class="badge badge-amber">In development</span>
+          </div>
+          <p>
+            Programmatic access to your own data: clients, visits, invoices, and reports. It will
+            be an add-on on Growth and included on Scale and Enterprise, and it will be marked
+            live on the <a href="/pricing">pricing page</a> when it ships, not before.
+          </p>
+        </div>
+        <div class="card reveal">
+          <span class="card-icon"><Icon name="route" /></span>
+          <div class="int-title-row">
+            <h3>Zapier and an integration marketplace</h3>
+            <span class="badge badge-navy">Planned</span>
+          </div>
+          <p>
+            Built on top of the API once it lands: connect HoundStack to the rest of your tools
+            without writing code. If a specific integration matters to your business, say so.
+          </p>
+        </div>
+      </div>
+      <p class="int-note reveal">
+        Both live on the <a href="/roadmap">public roadmap</a>, where you can upvote them and
+        suggest what should connect next.
+      </p>
+    </div>
+  </section>
+
   <CtaSection />
 </BaseLayout>
 
@@ -108,6 +147,14 @@ const integrations = [
     display: grid;
     grid-template-columns: 44px 1fr;
     gap: 20px;
+  }
+
+  .api-grid {
+    margin-top: 32px;
+  }
+
+  .api-grid p {
+    margin-top: 4px;
   }
 
   .int-title-row {
