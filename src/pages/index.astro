@@ -171,8 +171,9 @@ const alsoInBox = [
         <span class="eyebrow">The product</span>
         <h2>Have a look around before you sign up</h2>
         <p class="lede">
-          The dispatch board, billing, the AI receptionist, and reporting, shown the way they
-          look inside the product. Stylized recreations of real screens, not stock mockups.
+          The dispatch board, invoices, the AI receptionist, and zone profitability, shown the
+          way they look inside the product. Stylized recreations of real screens, not stock
+          mockups.
         </p>
       </div>
       <div class="gallery-grid">
@@ -189,21 +190,21 @@ const alsoInBox = [
               <span class="mk-strong">Marcus T.</span>
               <span class="mk-faint">18 stops · done by 2:40</span>
             </span>
-            <span class="mk-pill sage">on pace</span>
+            <span class="mk-pill positive">on pace</span>
           </div>
           <div class="mk-row">
             <span class="mk-cell">
               <span class="mk-strong">Dana R.</span>
               <span class="mk-faint">21 stops · done by 3:10</span>
             </span>
-            <span class="mk-pill sage">on pace</span>
+            <span class="mk-pill positive">on pace</span>
           </div>
           <div class="mk-row">
             <span class="mk-cell">
               <span class="mk-strong">Priya K.</span>
               <span class="mk-faint">16 stops · Birchwood Court HOA restock</span>
             </span>
-            <span class="mk-pill amber">2 unassigned</span>
+            <span class="mk-pill warning">2 unassigned</span>
           </div>
         </MockFrame>
 
@@ -213,7 +214,7 @@ const alsoInBox = [
               <span class="mk-title">Invoices</span>
               <div class="mk-sub">This month · $8,410 collected</div>
             </div>
-            <span class="mk-pill navy">receivables: $1,285</span>
+            <span class="mk-pill neutral">receivables: $1,285</span>
           </div>
           <div class="mk-row">
             <span class="mk-cell">
@@ -221,7 +222,7 @@ const alsoInBox = [
               <span class="mk-faint">2 dogs, weekly</span>
             </span>
             <span class="mk-num">$89</span>
-            <span class="mk-pill sage">paid</span>
+            <span class="mk-pill positive">paid</span>
           </div>
           <div class="mk-row">
             <span class="mk-cell">
@@ -229,7 +230,7 @@ const alsoInBox = [
               <span class="mk-faint">3 stations, per unit</span>
             </span>
             <span class="mk-num">$1,240</span>
-            <span class="mk-pill navy">due Apr 1</span>
+            <span class="mk-pill neutral">due Apr 1</span>
           </div>
           <div class="mk-row">
             <span class="mk-cell">
@@ -237,16 +238,17 @@ const alsoInBox = [
               <span class="mk-faint">skipped: gate locked</span>
             </span>
             <span class="mk-num">$0</span>
-            <span class="mk-pill amber">credit applied</span>
+            <span class="mk-pill neutral">credit applied</span>
           </div>
         </MockFrame>
 
-        <MockFrame variant="phone" label="An AI receptionist text conversation booking a new weekly client" class="reveal">
+        <MockFrame label="An AI receptionist text conversation booking a new weekly client" class="reveal">
           <div class="mk-head">
             <div>
               <span class="mk-title">AI receptionist</span>
               <div class="mk-sub">answering as your business, by text</div>
             </div>
+            <span class="mk-pill positive">new client booked</span>
           </div>
           <div class="mk-thread">
             <div class="mk-bubble in">How much for 2 dogs every week? Back yard only.</div>
@@ -268,7 +270,7 @@ const alsoInBox = [
               <span class="mk-title">Zone profitability</span>
               <div class="mk-sub">Last 6 months</div>
             </div>
-            <span class="mk-pill sage">margin up 4%</span>
+            <span class="mk-pill positive">margin up 4%</span>
           </div>
           <div class="mk-bars" aria-hidden="true">
             <span style="height: 42%"></span>
@@ -534,8 +536,23 @@ const alsoInBox = [
     }
   }
 
+  /* The SMS thread sits in the same desktop frame as its gallery
+     siblings; inset the bubbles so they read as a conversation panel
+     rather than hugging the card edges. */
   .mk-thread {
-    padding: 8px 0;
+    padding: 10px 4px;
+  }
+
+  .mk-thread .mk-bubble {
+    max-width: 62%;
+  }
+
+  .mk-thread .mk-bubble.in {
+    margin-left: 18px;
+  }
+
+  .mk-thread .mk-bubble.out {
+    margin-right: 18px;
   }
 
   .faq-more {

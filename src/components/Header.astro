@@ -61,19 +61,20 @@ const path = Astro.url.pathname;
 </header>
 
 <style>
+  /* Fully opaque, always: a translucent backdrop-filter header lags a
+     frame behind compositor scrolling and lets page headings bleed
+     through the logo for that frame. Only the border and shadow react
+     to scroll position. */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--bg);
     border-bottom: 1px solid transparent;
-    transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
   }
 
   .site-header.is-scrolled {
-    background: #ffffff;
     border-bottom-color: var(--line-soft);
     box-shadow: var(--shadow-sm);
   }

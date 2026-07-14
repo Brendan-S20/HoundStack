@@ -2,7 +2,7 @@ export const SITE = {
   name: 'HoundStack',
   url: 'https://www.houndstack.com',
   appUrl: 'https://app.houndstack.com',
-  signupUrl: 'https://app.houndstack.com/signup',
+  signupUrl: 'https://app.houndstack.com/sign-up',
   // Temporary form backend. Swap both endpoints to the real signup
   // pipeline when it exists; the forms post plain FormData.
   contactFormEndpoint: 'https://formspree.io/f/REPLACE_CONTACT_FORM_ID',
@@ -82,6 +82,99 @@ export function planTotal(plan: Plan, employees: number): number | null {
   if (plan.price === null || plan.includedEmployees === null) return null;
   return plan.price + Math.max(0, employees - plan.includedEmployees) * OVERAGE_RATE;
 }
+
+// The complete feature model, one structure for everything a tier gets:
+// the per-tier deltas, the always-unlimited items, and the add-ons all
+// live here so the pricing page can render each tier's full list without
+// three disconnected sections a visitor has to mentally merge (and
+// without any of them drifting apart).
+//
+// Availability is per tier in PLANS order (Launch, Growth, Scale,
+// Enterprise): true = included, false = not offered, a string = a
+// qualified availability shown next to the feature (e.g. 'add-on').
+export type TierAvailability = boolean | string;
+
+export interface TierFeature {
+  label: string;
+  tiers: [TierAvailability, TierAvailability, TierAvailability, TierAvailability];
+}
+
+export interface TierFeatureGroup {
+  category: string;
+  features: TierFeature[];
+}
+
+export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
+  {
+    category: 'Always unlimited',
+    features: [
+      { label: 'Unlimited customers, dogs, jobs, and routes', tiers: [true, true, true, true] },
+      { label: 'Unlimited zones, cities, and territories', tiers: [true, true, true, true] },
+      { label: 'Scheduling, recurring services, and route optimization', tiers: [true, true, true, true] },
+      { label: 'Estimates, invoicing, payments, and the client portal', tiers: [true, true, true, true] },
+      { label: 'The mobile field app with offline support and photos', tiers: [true, true, true, true] },
+      { label: 'Work orders, notifications, GPS navigation, and reporting', tiers: [true, true, true, true] },
+    ],
+  },
+  {
+    category: 'Reporting and analytics',
+    features: [
+      { label: 'Standard reporting suite', tiers: [true, true, true, true] },
+      {
+        label: 'Advanced analytics: cohort retention, zone profitability, churn drivers',
+        tiers: [false, true, true, true],
+      },
+      { label: 'Cross-zone and regional performance reporting', tiers: [false, false, true, true] },
+    ],
+  },
+  {
+    category: 'Team and permissions',
+    features: [
+      { label: 'Standard roles: owner, office manager, dispatcher, tech', tiers: [true, true, true, true] },
+      { label: 'Custom permission sets beyond the standard four roles', tiers: [false, false, true, true] },
+    ],
+  },
+  {
+    category: 'Automation',
+    features: [
+      {
+        label: 'Automation rules and workflows',
+        tiers: ['standard capacity', 'expanded capacity', 'expanded capacity', 'expanded capacity'],
+      },
+    ],
+  },
+  {
+    category: 'Add-ons',
+    features: [
+      { label: 'AI Receptionist', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'AI Business Advisor', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'Referral Programs', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      {
+        label: 'API access (coming soon, marked live here when it ships, not before)',
+        tiers: [false, 'add-on', true, true],
+      },
+    ],
+  },
+  {
+    category: 'Franchise and multi-brand',
+    features: [
+      { label: 'Parent and child organization structure with full rollup', tiers: [false, false, false, true] },
+      {
+        label: 'Franchise management, royalty billing, and regional dashboards',
+        tiers: [false, false, false, true],
+      },
+    ],
+  },
+  {
+    category: 'Support',
+    features: [
+      { label: 'Email support', tiers: [true, true, true, true] },
+      { label: 'Priority email and chat support', tiers: [false, true, true, true] },
+      { label: 'Phone support with a named account contact', tiers: [false, false, true, true] },
+      { label: 'Dedicated account manager, custom contract terms and SLA', tiers: [false, false, false, true] },
+    ],
+  },
+];
 
 // Pricing FAQ lives here so the /pricing page and the homepage excerpt
 // share one source of truth.

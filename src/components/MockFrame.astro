@@ -138,10 +138,15 @@ const { variant = 'desktop', label, class: className } = Astro.props;
     white-space: nowrap;
   }
 
-  .mk-pill.sage { background: var(--sage-wash); color: var(--sage-dark); }
-  .mk-pill.navy { background: var(--navy-wash); color: var(--navy); }
-  .mk-pill.amber { background: var(--amber-wash); color: var(--amber); }
-  .mk-pill.red { background: var(--red-wash); color: var(--red); }
+  /* Semantic status colors, one meaning per hue across every mockup:
+     positive  = done well (paid, on pace, matched, signed up)
+     warning   = needs attention (unassigned, hazards, pending follow-up)
+     neutral   = informational state (due dates, queued, registry IDs)
+     negative  = a hard stop (passed, aggressive dog) */
+  .mk-pill.positive { background: var(--sage-wash); color: var(--sage-dark); }
+  .mk-pill.neutral { background: var(--navy-wash); color: var(--navy); }
+  .mk-pill.warning { background: var(--amber-wash); color: var(--amber); }
+  .mk-pill.negative { background: var(--red-wash); color: var(--red); }
 
   .mk-btn {
     display: inline-block;

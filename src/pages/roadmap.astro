@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+// Only features already promised elsewhere on this site belong here.
+// Nothing gets a date, and nothing is marked live before it ships —
+// the same rule the pricing and integrations pages already follow.
+const buildingNow = [
+  {
+    icon: 'import',
+    title: 'QuickBooks two-way sync',
+    body: 'Accounting sync to QuickBooks is in development. Until it ships, every report and ledger in HoundStack exports cleanly in one click, so your bookkeeper is not waiting on us.',
+    promised: 'Promised on the integrations page',
+    href: '/integrations',
+  },
+  {
+    icon: 'spark',
+    title: 'Voice calls for the AI receptionist',
+    body: 'The receptionist answers texts about pricing and availability and books visits today. Call answering is next, and it will be announced when it ships, not before.',
+    promised: 'Promised on the AI tools page',
+    href: '/features/ai-tools',
+  },
+  {
+    icon: 'network',
+    title: 'API access',
+    body: 'Programmatic access to your own data. It will be an add-on on Growth and included on Scale and Enterprise, and it will be marked live on the pricing page when it ships.',
+    promised: 'Promised on the pricing page',
+    href: '/pricing',
+  },
+];
+---
+
+<BaseLayout
+  title="Product roadmap | HoundStack"
+  description="What HoundStack is building next: QuickBooks two-way sync, voice calls for the AI receptionist, and API access. No dates, nothing marked live before it ships."
+>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Roadmap</span>
+      <h1>What we are building, in the open</h1>
+      <p class="lede">
+        Everything on this page has already been promised somewhere on this site, so it lives here
+        too, in one place you can check back on. No dates, no teasers: an item is marked live when
+        it ships, not before, and shipped items move to the <a href="/blog">blog</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <h2 class="reveal">Building now</h2>
+      <div class="grid-3 roadmap-grid">
+        {
+          buildingNow.map((item) => (
+            <div class="card reveal roadmap-card">
+              <span class="card-icon">
+                <Icon name={item.icon as any} />
+              </span>
+              <span class="badge badge-amber">In development</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <a href={item.href} class="roadmap-source">{item.promised}</a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container reveal suggest-block">
+      <h2>What belongs on this list?</h2>
+      <p class="lede">
+        The next entries come from operators, not from a brainstorm. If HoundStack is missing
+        something your business needs, say so and it gets weighed against everything else here.
+        Suggestions get read by the person building the product.
+      </p>
+      <a href="/contact" class="btn btn-primary">Suggest a feature</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .roadmap-grid {
+    margin-top: 32px;
+  }
+
+  .roadmap-card .badge {
+    margin-bottom: 12px;
+  }
+
+  .roadmap-card h3 {
+    margin-bottom: 8px;
+  }
+
+  .roadmap-source {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.85rem;
+  }
+
+  .suggest-block .lede {
+    max-width: 46em;
+  }
+</style>

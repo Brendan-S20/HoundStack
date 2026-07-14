@@ -315,16 +315,23 @@ a.card:hover {
 
 /* Scroll reveal. Content is fully visible by default; the hidden start
    state only applies once JS has stamped html.js, so crawlers, no-JS,
-   and slow connections always see full-contrast content. */
-html.js .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 360ms ease, transform 360ms ease;
-}
+   and slow connections always see full-contrast content.
 
-html.js .reveal.is-visible {
-  opacity: 1;
-  transform: none;
+   The hidden state is additionally gated to mouse-driven viewports:
+   on touch devices, momentum scrolling outruns any observer, so
+   hide-then-fade turns every section transition into a blank flash.
+   Touch viewports get full-contrast content with no reveal animation. */
+@media (hover: hover) and (pointer: fine) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 360ms ease, transform 360ms ease;
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

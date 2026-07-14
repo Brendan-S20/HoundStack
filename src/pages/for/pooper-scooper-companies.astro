@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Icon from '../../components/Icon.astro';
+import { SITE } from '../../lib/site';
 
 const day = [
   {
@@ -65,7 +66,7 @@ const day = [
         period is just running your business.
       </p>
       <div class="hero-ctas">
-        <a href="/request-access" class="btn btn-primary">Start free</a>
+        <a href={SITE.signupUrl} class="btn btn-primary" data-app-link>Start free</a>
         <a href="/pricing" class="btn btn-ghost">See pricing</a>
       </div>
     </div>

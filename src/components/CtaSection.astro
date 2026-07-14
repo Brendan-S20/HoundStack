@@ -4,11 +4,15 @@ import { SITE, TRIAL_DAYS } from '../lib/site';
 interface Props {
   heading?: string;
   body?: string;
+  /** Pages where the sale starts with a conversation (e.g. HOA programs)
+      lead with the demo button instead of self-serve signup. */
+  leadWithDemo?: boolean;
 }
 
 const {
   heading = 'Try it on your own route',
   body = 'Every account starts with a 60 day free trial, no credit card. Your first 3 teammates are included on every plan, and named import tools are ready if you are coming from somewhere else.',
+  leadWithDemo = false,
 } = Astro.props;
 ---
 
@@ -17,8 +21,19 @@ const {
     <h2>{heading}</h2>
     <p class="lede cta-lede">{body}</p>
     <div class="cta-buttons">
-      <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
-      <a href="/contact" class="btn btn-ghost">Book a demo</a>
+      {
+        leadWithDemo ? (
+          <>
+            <a href="/contact" class="btn btn-secondary">Book a demo</a>
+            <a href={SITE.signupUrl} class="btn btn-ghost" data-app-link>Start free</a>
+          </>
+        ) : (
+          <>
+            <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
+            <a href="/contact" class="btn btn-ghost">Book a demo</a>
+          </>
+        )
+      }
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
     </div>
     <p class="cta-note">{TRIAL_DAYS} day free trial · No credit card · Cancel anytime, data stays exportable</p>

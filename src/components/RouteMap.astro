@@ -1,67 +1,132 @@
 ---
-// Animated route visualization for the scheduling page. A stylized map
-// with stops that connect in sequence with a drawn line, echoing the
-// dispatch board. Reduced motion shows the completed route instantly.
+// Animated route visualization for the scheduling page. A stylized
+// neighborhood map — named streets, houses, a park — with labeled
+// client stops that connect in optimized order, echoing the dispatch
+// board. Client names and zone naming match the mockups used across
+// the site. Reduced motion shows the completed route instantly.
 ---
 
 <div class="route-map" id="route-map">
   <svg
     viewBox="0 0 560 360"
     role="img"
-    aria-label="Route map showing six stops connected in optimized order with drive times"
+    aria-label="Neighborhood route map for Zone 2 north showing six labeled client stops connected in optimized order along named streets, with drive times between stops"
   >
-    <!-- street grid -->
-    <g stroke="#dde5ea" stroke-width="1.5">
+    <!-- park block -->
+    <rect x="420" y="236" width="72" height="50" rx="6" fill="#eef3ee" />
+    <text x="456" y="264" text-anchor="middle" font-size="9" fill="#7a9a7a">Fairview Park</text>
+
+    <!-- houses along the blocks -->
+    <g fill="#e3eaef" aria-hidden="true">
+      <rect x="96" y="266" width="14" height="10" rx="1.5" />
+      <rect x="120" y="266" width="14" height="10" rx="1.5" />
+      <rect x="144" y="266" width="14" height="10" rx="1.5" />
+      <rect x="210" y="78" width="14" height="10" rx="1.5" />
+      <rect x="234" y="78" width="14" height="10" rx="1.5" />
+      <rect x="258" y="78" width="14" height="10" rx="1.5" />
+      <rect x="330" y="150" width="14" height="10" rx="1.5" />
+      <rect x="354" y="150" width="14" height="10" rx="1.5" />
+      <rect x="330" y="238" width="14" height="10" rx="1.5" />
+      <rect x="354" y="238" width="14" height="10" rx="1.5" />
+      <rect x="58" y="118" width="14" height="10" rx="1.5" />
+      <rect x="58" y="142" width="14" height="10" rx="1.5" />
+    </g>
+
+    <!-- streets -->
+    <g stroke="#e2e9ee" stroke-width="13">
       <path d="M0 60h560M0 140h560M0 225h560M0 300h560" />
       <path d="M80 0v360M190 0v360M300 0v360M410 0v360M500 0v360" />
     </g>
-    <g stroke="#e7edf1" stroke-width="1">
-      <path d="M0 100h560M0 185h560M0 265h560M135 0v360M245 0v360M355 0v360M455 0v360" />
+    <g stroke="#ffffff" stroke-width="1.2" stroke-dasharray="5 8" opacity="0.9">
+      <path d="M0 60h560M0 140h560M0 225h560M0 300h560" />
     </g>
 
-    <!-- route line -->
+    <!-- street names -->
+    <g font-size="9.5" fill="#8ba0ad">
+      <text x="14" y="51">Maple Dr</text>
+      <text x="14" y="131">Cedar Ln</text>
+      <text x="14" y="216">Birch Ave</text>
+      <text x="14" y="291">Alder St</text>
+      <text transform="translate(76 205) rotate(-90)">3rd Ave</text>
+      <text transform="translate(506 205) rotate(-90)">9th Ave</text>
+    </g>
+
+    <!-- route line, drawn along the streets -->
     <path
       id="route-path"
       d="M80 300 L190 300 L190 225 L300 225 L300 140 L410 140 L410 60 L500 60"
       fill="none"
       stroke="#5e845e"
-      stroke-width="3.5"
+      stroke-width="4"
       stroke-linecap="round"
       stroke-linejoin="round"
-      stroke-dasharray="6 8"
     />
 
-    <!-- stops -->
+    <!-- drive time between stops -->
+    <g aria-hidden="true" font-size="9" font-weight="650">
+      <rect x="121" y="284" width="38" height="16" rx="8" fill="#eef3ee" stroke="#cfdccf" stroke-width="1" />
+      <text x="140" y="295" text-anchor="middle" fill="#4a6b4a">4 min</text>
+      <rect x="261" y="217" width="38" height="16" rx="8" fill="#eef3ee" stroke="#cfdccf" stroke-width="1" />
+      <text x="280" y="228" text-anchor="middle" fill="#4a6b4a">3 min</text>
+      <rect x="391" y="114" width="38" height="16" rx="8" fill="#eef3ee" stroke="#cfdccf" stroke-width="1" />
+      <text x="410" y="125" text-anchor="middle" fill="#4a6b4a">5 min</text>
+    </g>
+
+    <!-- labeled stops in optimized order -->
     <g id="route-stops">
-      <g class="stop" transform="translate(80,300)">
-        <circle r="11" fill="#142937" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">1</text>
+      <g class="stop">
+        <rect x="94" y="308" width="92" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="100" y="320.5" font-size="10" fill="#48606f">Kowalski · 8:05</text>
+        <g transform="translate(80,300)">
+          <circle r="11" fill="#142937" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">1</text>
+        </g>
       </g>
-      <g class="stop" transform="translate(190,262)">
-        <circle r="11" fill="#142937" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">2</text>
+      <g class="stop">
+        <rect x="202" y="254" width="132" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="208" y="266.5" font-size="10" fill="#48606f">Birchwood Ct HOA · 8:32</text>
+        <g transform="translate(190,262)">
+          <circle r="11" fill="#142937" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">2</text>
+        </g>
       </g>
-      <g class="stop" transform="translate(245,225)">
-        <circle r="11" fill="#142937" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">3</text>
+      <g class="stop">
+        <rect x="214" y="236" width="80" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="220" y="248.5" font-size="10" fill="#48606f">Nguyen · 9:10</text>
+        <g transform="translate(245,225)">
+          <circle r="11" fill="#142937" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">3</text>
+        </g>
       </g>
-      <g class="stop" transform="translate(300,182)">
-        <circle r="11" fill="#142937" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">4</text>
+      <g class="stop">
+        <rect x="314" y="174" width="84" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="320" y="186.5" font-size="10" fill="#48606f">Hartley · 9:40</text>
+        <g transform="translate(300,182)">
+          <circle r="11" fill="#142937" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">4</text>
+        </g>
       </g>
-      <g class="stop" transform="translate(410,100)">
-        <circle r="11" fill="#142937" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">5</text>
+      <g class="stop">
+        <rect x="424" y="92" width="110" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="430" y="104.5" font-size="10" fill="#48606f">Cedar Flats · 10:15</text>
+        <g transform="translate(410,100)">
+          <circle r="11" fill="#142937" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">5</text>
+        </g>
       </g>
-      <g class="stop" transform="translate(500,60)">
-        <circle r="11" fill="#5e845e" />
-        <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">6</text>
+      <g class="stop">
+        <rect x="400" y="72" width="92" height="18" rx="9" fill="#ffffff" stroke="#e7edf1" />
+        <text x="406" y="84.5" font-size="10" fill="#48606f">Alvarez · 10:50</text>
+        <g transform="translate(500,60)">
+          <circle r="11" fill="#5e845e" />
+          <text y="4.5" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">6</text>
+        </g>
       </g>
     </g>
   </svg>
   <div class="map-caption">
     <span class="badge badge-sage">Optimized</span>
-    <span>6 stops, 22 min of driving, ETAs from real drive time</span>
+    <span>Zone 2 north · 6 stops, 22 min of driving, ETAs from real drive time</span>
   </div>
 </div>
 
