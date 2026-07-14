@@ -17,12 +17,20 @@ const { variant = 'desktop', label, class: className } = Astro.props;
         <span /><span /><span />
       </div>
     ) : (
-      <div class="mock-notch" aria-hidden="true" />
+      <div class="mock-status" aria-hidden="true">
+        <span class="ms-time">9:41</span>
+        <span class="ms-island" />
+        <span class="ms-icons">
+          <span class="ms-signal"><i /><i /><i /><i /></span>
+          <span class="ms-battery" />
+        </span>
+      </div>
     )
   }
   <div class="mock-body">
     <slot />
   </div>
+  {variant === 'phone' && <div class="mock-home" aria-hidden="true" />}
 </figure>
 
 <style is:global>
@@ -36,12 +44,96 @@ const { variant = 'desktop', label, class: className } = Astro.props;
     font-size: 0.85rem;
   }
 
+  /* Phone frames keep real handset proportions: a fixed width, a
+     minimum screen height, a status bar up top and the home indicator
+     at the bottom, so a short screen reads as a phone with breathing
+     room instead of a squat card wearing a phone border. */
   .mock-phone {
-    max-width: 340px;
+    width: min(310px, 100%);
     margin-inline: auto;
-    border-radius: 28px;
-    border-width: 6px;
+    border-radius: 36px;
+    border-width: 7px;
     border-color: var(--navy);
+    display: flex;
+    flex-direction: column;
+    min-height: 580px;
+  }
+
+  .mock-phone .mock-body {
+    flex: 1;
+  }
+
+  .mock-status {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px 4px;
+  }
+
+  .ms-time {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ms-island {
+    position: absolute;
+    left: 50%;
+    top: 9px;
+    transform: translateX(-50%);
+    width: 76px;
+    height: 17px;
+    border-radius: 100px;
+    background: var(--navy);
+  }
+
+  .ms-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .ms-signal {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 1.5px;
+  }
+
+  .ms-signal i {
+    width: 2.5px;
+    background: var(--navy);
+    border-radius: 1px;
+  }
+
+  .ms-signal i:nth-child(1) { height: 4px; }
+  .ms-signal i:nth-child(2) { height: 6px; }
+  .ms-signal i:nth-child(3) { height: 8px; }
+  .ms-signal i:nth-child(4) { height: 10px; }
+
+  .ms-battery {
+    width: 20px;
+    height: 10px;
+    border: 1.5px solid var(--navy);
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .ms-battery::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px 30% 1.5px 1.5px;
+    background: var(--navy);
+    border-radius: 1px;
+  }
+
+  .mock-home {
+    height: 5px;
+    width: 38%;
+    margin: 10px auto 8px;
+    border-radius: 100px;
+    background: var(--line);
   }
 
   .mock-bar {

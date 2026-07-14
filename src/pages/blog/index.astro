@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaSection from '../../components/CtaSection.astro';
+import PostArt from '../../components/PostArt.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
@@ -29,8 +30,9 @@ const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', d
     <div class="container">
       <div class="post-list">
         {
-          posts.map((post) => (
+          posts.map((post, i) => (
             <a href={`/blog/${post.id}`} class="card reveal post-card">
+              <PostArt seed={post.id} variant={(['route', 'check', 'chat'] as const)[i % 3]} class="post-card-art" />
               <time datetime={post.data.pubDate.toISOString()}>{fmt.format(post.data.pubDate)}</time>
               <h2>{post.data.title}</h2>
               <p>{post.data.description}</p>
@@ -54,6 +56,10 @@ const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', d
     display: grid;
     gap: 20px;
     max-width: 760px;
+  }
+
+  .post-card :global(.post-card-art) {
+    margin-bottom: 16px;
   }
 
   .post-card time {

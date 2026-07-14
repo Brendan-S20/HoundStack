@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Icon from '../../components/Icon.astro';
+import MockFrame from '../../components/MockFrame.astro';
 import { COMPETITORS } from '../../lib/competitors';
 
 export function getStaticPaths() {
@@ -153,19 +154,68 @@ const migrationSteps = [
         {c.name} has a named, dedicated import tool in HoundStack. Four steps, and nothing is
         written to your account until you have seen a dry run summary.
       </p>
-      <ol class="steps">
-        {
-          migrationSteps.map((s, i) => (
-            <li class="reveal">
-              <span class="step-num">{i + 1}</span>
+      <div class="migration-split">
+        <ol class="steps">
+          {
+            migrationSteps.map((s, i) => (
+              <li class="reveal">
+                <span class="step-num">{i + 1}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="reveal">
+          <MockFrame label={`The ${c.name} importer's dry run summary showing what would be created, changed, and flagged before anything is written`}>
+            <div class="mk-head">
               <div>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
+                <span class="mk-title">{c.name} import &middot; dry run</span>
+                <div class="mk-sub">trial pass, nothing written yet</div>
               </div>
-            </li>
-          ))
-        }
-      </ol>
+              <span class="mk-pill neutral">step 3 of 4</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-cell">
+                <span class="mk-strong">Clients</span>
+                <span class="mk-faint">with properties, gate codes, and notes</span>
+              </span>
+              <span class="mk-num">214</span>
+              <span class="mk-pill positive">ready</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-cell">
+                <span class="mk-strong">Dogs</span>
+                <span class="mk-faint">names, breeds, and per dog pricing</span>
+              </span>
+              <span class="mk-num">412</span>
+              <span class="mk-pill positive">ready</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-cell">
+                <span class="mk-strong">Schedules and balances</span>
+                <span class="mk-faint">recurring visits and open invoices</span>
+              </span>
+              <span class="mk-num">198</span>
+              <span class="mk-pill positive">ready</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-cell">
+                <span class="mk-strong">Flagged for review</span>
+                <span class="mk-faint">3 clients missing a zip, 1 duplicate email</span>
+              </span>
+              <span class="mk-num">4</span>
+              <span class="mk-pill warning">review</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-faint">Confirm to run the real import, or fix the flags first</span>
+              <span class="mk-btn">Confirm import</span>
+            </div>
+          </MockFrame>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -295,6 +345,21 @@ const migrationSteps = [
   table.data th[scope='row'] {
     font-weight: 600;
     color: var(--navy);
+  }
+
+  .migration-split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .migration-split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
   }
 
   .steps {

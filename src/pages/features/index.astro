@@ -48,46 +48,61 @@ const cards = [
   },
 ];
 
+// Every one of these is a real, first-class part of the product. The
+// ones with an href open the page where the deep dive lives.
 const extras = [
   {
     icon: 'users',
     title: 'Leads',
     body: 'A lead inbox with its own pipeline: capture from your website form, quote from real zone pricing, convert to a scheduled client in one click.',
+    href: '/features/scheduling-and-routes',
   },
   {
     icon: 'route',
     title: 'Weather board',
     body: 'The forecast laid over the schedule, with every visit a storm will hit flagged before the morning it happens.',
+    href: '/features/scheduling-and-routes',
   },
   {
     icon: 'chart',
     title: 'Concerns',
     body: 'Client complaints tracked to resolution with an owner-visible queue, so nothing dies in a text thread.',
+    href: '/features/neighbor-referrals',
   },
   {
     icon: 'card',
     title: 'Promotions',
     body: 'Discount codes and seasonal specials that apply themselves on the invoice instead of living in a sticky note.',
+    href: '/features/billing',
+  },
+  {
+    icon: 'card',
+    title: 'Client portal',
+    body: 'Clients view and pay invoices, see visit history and photos, and update their card without calling you.',
+    href: '/features/billing',
   },
   {
     icon: 'box',
     title: 'Inventory',
-    body: 'Track bags, deodorizer, and gear per tech with low stock alerts.',
+    body: 'Track bags, deodorizer, and gear per tech with low stock alerts before someone runs out mid route.',
+    href: '/features/field-app',
   },
   {
     icon: 'users',
-    title: 'Roles',
-    body: 'Owner, office manager, dispatcher, and tech each see only what their job needs.',
+    title: 'Roles and permissions',
+    body: 'Owner, office manager, dispatcher, and tech each see only what their job needs, with custom sets on Scale.',
   },
   {
     icon: 'network',
     title: 'Franchise',
     body: 'Multi location rollup, automatic royalty billing, and a franchisor dashboard.',
+    href: '/for/franchise-owners',
   },
   {
     icon: 'import',
     title: 'Imports',
     body: 'Named importers for five competitors plus CSV, each with a mapping preview and dry run.',
+    href: '/switch',
   },
 ];
 ---
@@ -124,17 +139,31 @@ const extras = [
       </div>
 
       <h2 class="extras-heading reveal">And the parts nobody puts on a homepage</h2>
-      <div class="grid-2">
+      <p class="lede reveal">
+        These are not fine print. Each one is a full feature in the product; the linked ones
+        open the page that covers them in depth.
+      </p>
+      <div class="grid-3 extras-grid">
         {
-          extras.map((c) => (
-            <div class="card reveal">
-              <span class="card-icon">
-                <Icon name={c.icon as any} />
-              </span>
-              <h3>{c.title}</h3>
-              <p>{c.body}</p>
-            </div>
-          ))
+          extras.map((c) =>
+            c.href ? (
+              <a href={c.href} class="card reveal">
+                <span class="card-icon">
+                  <Icon name={c.icon as any} />
+                </span>
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </a>
+            ) : (
+              <div class="card reveal">
+                <span class="card-icon">
+                  <Icon name={c.icon as any} />
+                </span>
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </div>
+            )
+          )
         }
       </div>
     </div>
@@ -151,5 +180,9 @@ const extras = [
 
   .extras-heading {
     margin-top: 56px;
+  }
+
+  .extras-grid {
+    margin-top: 28px;
   }
 </style>
