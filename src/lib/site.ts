@@ -12,7 +12,7 @@ export const SITE = {
 // Pricing model: complexity tiers with an included employee allowance.
 // The estimator, the plan comparison, and the Offer schema all read from
 // this single source so the numbers cannot drift apart.
-export const TRIAL_DAYS = 60;
+export const TRIAL_DAYS = 14;
 export const OVERAGE_RATE = 10; // per additional active employee per month
 export const ANNUAL_DISCOUNT = 0.15;
 
