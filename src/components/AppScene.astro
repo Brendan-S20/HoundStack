@@ -1,0 +1,834 @@
+---
+// The homepage hero scene: a faithful recreation of the real product,
+// composed from the app's actual screens (the /dashboard route and the
+// My Day field view, sidebar groups and labels included). Three layers:
+// the dashboard in a browser frame, the My Day phone floating over its
+// corner, and an AI-receptionist toast sliding in up top. Every label
+// here exists in the product — this is a recreation, not a concept.
+---
+
+<div class="scene" id="app-scene">
+  <figure
+    class="app-frame"
+    role="img"
+    aria-label="The HoundStack dashboard: active clients, month-to-date revenue, open receivables, today's visit count, a live route map, and per-technician progress"
+  >
+    <div class="af-bar" aria-hidden="true">
+      <span class="af-dot"></span><span class="af-dot"></span><span class="af-dot"></span>
+      <span class="af-url">app.houndstack.com/dashboard</span>
+    </div>
+    <div class="af-body" aria-hidden="true">
+      <aside class="af-side">
+        <div class="af-logo">
+          <img src="/logo-mark.svg" alt="" width="14" height="14" />
+          <span>HoundStack</span>
+        </div>
+        <div class="af-group">
+          <span class="af-label">Overview</span>
+          <span class="af-item is-active">Dashboard</span>
+          <span class="af-item">Leads</span>
+        </div>
+        <div class="af-group">
+          <span class="af-label">Operations</span>
+          <span class="af-item">Clients</span>
+          <span class="af-item">Zones</span>
+          <span class="af-item">Routes</span>
+          <span class="af-item">Weather</span>
+        </div>
+        <div class="af-group">
+          <span class="af-label">Field</span>
+          <span class="af-item">My day</span>
+          <span class="af-item">Messages</span>
+          <span class="af-item">DNA compliance</span>
+        </div>
+        <div class="af-group">
+          <span class="af-label">Billing</span>
+          <span class="af-item">Invoices</span>
+          <span class="af-item">Payments</span>
+        </div>
+        <div class="af-group">
+          <span class="af-label">Insights</span>
+          <span class="af-item">Reports</span>
+          <span class="af-item">Analytics</span>
+        </div>
+      </aside>
+      <div class="af-main">
+        <div class="af-head">
+          <div>
+            <div class="af-org">Cedar &amp; Pine Scooping</div>
+            <div class="af-sub">Signed in as owner</div>
+          </div>
+          <div class="af-actions">
+            <span class="af-btn">Today's routes</span>
+            <span class="af-btn">Clients</span>
+          </div>
+        </div>
+        <div class="af-alerts">
+          <span class="af-chip">2 unassigned visits today</span>
+          <span class="af-chip">1 weather-flagged visit</span>
+        </div>
+        <div class="af-kpis">
+          <div class="af-kpi">
+            <span class="af-kpi-label">Active clients</span>
+            <span class="af-kpi-value">214</span>
+            <span class="af-kpi-hint">On the Growth plan</span>
+          </div>
+          <div class="af-kpi">
+            <span class="af-kpi-label">MTD revenue</span>
+            <span class="af-kpi-value">$18,240.50</span>
+            <span class="af-kpi-hint">June: $16,905.00</span>
+          </div>
+          <div class="af-kpi">
+            <span class="af-kpi-label">AR open</span>
+            <span class="af-kpi-value">$1,285.00</span>
+            <span class="af-kpi-hint is-danger">3 overdue</span>
+          </div>
+          <div class="af-kpi">
+            <span class="af-kpi-label">Visits today</span>
+            <span class="af-kpi-value">41 / 57</span>
+            <span class="af-kpi-hint">72% done</span>
+          </div>
+        </div>
+        <div class="af-panels">
+          <div class="af-col">
+            <div class="af-panel">
+              <div class="af-panel-head"><span>Techs today</span></div>
+              <div class="af-tech">
+                <span class="af-tech-name"><i style="background:#5e845e"></i>Marcus T.</span>
+                <span class="af-tech-count">14/18</span>
+              </div>
+              <div class="af-track"><div class="af-fill" style="--w:78%; background:#5e845e"></div></div>
+              <div class="af-tech">
+                <span class="af-tech-name"><i style="background:#4a7fa5"></i>Dana R.</span>
+                <span class="af-tech-count">16/21</span>
+              </div>
+              <div class="af-track"><div class="af-fill" style="--w:76%; background:#4a7fa5"></div></div>
+              <div class="af-tech">
+                <span class="af-tech-name"><i style="background:#b07d2e"></i>Priya K.</span>
+                <span class="af-tech-count">11/16</span>
+              </div>
+              <div class="af-track"><div class="af-fill" style="--w:69%; background:#b07d2e"></div></div>
+            </div>
+            <div class="af-panel">
+              <div class="af-panel-head">
+                <span>Overdue invoices</span>
+                <span class="af-link">All →</span>
+              </div>
+              <div class="af-inv"><span>Hartley residence</span><span>$96.00</span></div>
+              <div class="af-inv"><span>Cedar Flats Apartments</span><span>$310.00</span></div>
+            </div>
+          </div>
+          <div class="af-panel af-map">
+            <div class="af-panel-head">
+              <span>Today's map</span>
+              <span class="af-link">Open routes →</span>
+            </div>
+            <svg viewBox="0 0 300 158" class="af-mapsvg">
+              <g stroke="#e2e9ee" stroke-width="7">
+                <path d="M0 36h300M0 82h300M0 126h300" />
+                <path d="M52 0v158M126 0v158M204 0v158M262 0v158" />
+              </g>
+              <rect x="212" y="90" width="42" height="28" rx="4" fill="#eef3ee" />
+              <path class="af-route r1" d="M22 126 L52 126 L52 82 L126 82 L126 36 L204 36" fill="none" stroke="#5e845e" stroke-width="2.6" stroke-linecap="round" />
+              <path class="af-route r2" d="M52 148 L126 148 L126 126 L204 126 L204 82 L262 82" fill="none" stroke="#4a7fa5" stroke-width="2.6" stroke-linecap="round" />
+              <path class="af-route r3" d="M126 14 L204 14 L204 36 L262 36 L262 14 L292 14" fill="none" stroke="#b07d2e" stroke-width="2.6" stroke-linecap="round" />
+              <circle cx="22" cy="126" r="5" fill="#5e845e" />
+              <circle cx="204" cy="36" r="5" fill="#5e845e" />
+              <circle cx="52" cy="148" r="5" fill="#4a7fa5" />
+              <circle cx="262" cy="82" r="5" fill="#4a7fa5" />
+              <circle cx="126" cy="14" r="5" fill="#b07d2e" />
+              <circle cx="292" cy="14" r="5" fill="#b07d2e" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+  <figure
+    class="phone-frame"
+    role="img"
+    aria-label="The My Day field view on a phone: route progress, an in-progress visit with gate code and hazard warning, and one-tap navigate, call, and complete actions"
+  >
+    <div class="pf-notch" aria-hidden="true"></div>
+    <div class="pf-body" aria-hidden="true">
+      <div class="pf-head">
+        <div>
+          <div class="pf-title">My day</div>
+          <div class="pf-sub">Marcus T. · tech</div>
+        </div>
+        <span class="pf-date">Jul 14</span>
+      </div>
+      <div class="pf-progress">
+        <div class="pf-progress-row"><span>2 of 5 done</span><span>40%</span></div>
+        <div class="pf-track"><div class="pf-fill"></div></div>
+      </div>
+      <div class="pf-visit">
+        <div class="pf-hazard">⚠ Invisible fence · Dog in yard during service</div>
+        <div class="pf-meta">#3 · Zone 2 north <span class="pf-status">in progress</span> <span class="pf-timer">6:42</span></div>
+        <div class="pf-client">Nguyen residence</div>
+        <div class="pf-addr">1418 Alder St, 55407</div>
+        <div class="pf-codes"><span>Gate: <b>4182</b></span><span>Yard: back only</span></div>
+        <div class="pf-row">
+          <span class="pf-btn ghost">Navigate</span>
+          <span class="pf-btn ghost">Call</span>
+        </div>
+        <div class="pf-row">
+          <span class="pf-btn solid">Complete</span>
+          <span class="pf-btn ghost">Skip</span>
+          <span class="pf-btn ghost">+ Add-on</span>
+        </div>
+        <div class="pf-note">Take a completion photo to finish this visit.</div>
+      </div>
+      <div class="pf-next">
+        <div>
+          <span class="pf-next-label">Next up · #4</span>
+          <span class="pf-next-client">Hartley residence</span>
+        </div>
+        <span class="pf-jump">Jump ↓</span>
+      </div>
+    </div>
+  </figure>
+
+  <div class="toast-card" role="img" aria-label="A live notification: the AI receptionist booked a new weekly client and it is already on the dispatch board" aria-hidden="false">
+    <span class="toast-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+    </span>
+    <div aria-hidden="true">
+      <div class="toast-title">AI receptionist booked Alvarez residence</div>
+      <div class="toast-sub">Weekly from Thursday · already on the dispatch board</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scene {
+    position: relative;
+    font-family: var(--font-sans);
+  }
+
+  /* ------- Desktop app frame ------- */
+  .app-frame {
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px rgba(20, 41, 55, 0.18);
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .af-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .af-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+
+  .af-url {
+    margin-left: 8px;
+    padding: 2px 10px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: 100px;
+    color: var(--ink-faint);
+    font-size: 8.5px;
+  }
+
+  .af-body {
+    display: grid;
+    grid-template-columns: 108px 1fr;
+  }
+
+  .af-side {
+    background: #f7f9fa;
+    border-right: 1px solid var(--line-soft);
+    padding: 10px 8px;
+  }
+
+  .af-logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    font-size: 10.5px;
+    color: var(--navy);
+    padding: 2px 6px 10px;
+  }
+
+  .af-group {
+    margin-bottom: 8px;
+  }
+
+  .af-label {
+    display: block;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 6px 3px;
+  }
+
+  .af-item {
+    display: block;
+    padding: 3px 6px;
+    border-radius: 5px;
+    color: var(--ink-muted);
+    font-size: 9px;
+  }
+
+  .af-item.is-active {
+    background: var(--sage-wash);
+    color: var(--sage-dark);
+    font-weight: 650;
+  }
+
+  .af-main {
+    padding: 12px 14px;
+    background: #fcfdfe;
+  }
+
+  .af-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .af-org {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy);
+  }
+
+  .af-sub {
+    color: var(--ink-faint);
+    font-size: 8.5px;
+  }
+
+  .af-actions {
+    display: flex;
+    gap: 5px;
+  }
+
+  .af-btn {
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: #ffffff;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 8.5px;
+  }
+
+  .af-alerts {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .af-chip {
+    padding: 2.5px 8px;
+    border: 1px solid rgba(176, 125, 46, 0.4);
+    background: rgba(176, 125, 46, 0.1);
+    color: var(--amber);
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 8.5px;
+  }
+
+  .af-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    margin-top: 9px;
+  }
+
+  .af-kpi {
+    display: grid;
+    gap: 1px;
+    padding: 8px 9px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: 7px;
+  }
+
+  .af-kpi-label {
+    font-size: 7px;
+    font-weight: 650;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .af-kpi-value {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .af-kpi-hint {
+    font-size: 7.5px;
+    color: var(--ink-faint);
+  }
+
+  .af-kpi-hint.is-danger {
+    color: var(--red);
+    font-weight: 650;
+  }
+
+  /* Tech progress on the left, map on the right: the floating My Day
+     phone overlaps the frame's bottom-right corner, so the map (which
+     tolerates being partially covered) sits under it, not the lists. */
+  .af-panels {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 7px;
+    margin-top: 8px;
+  }
+
+  .af-panel {
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-radius: 7px;
+    padding: 8px 9px;
+  }
+
+  .af-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 9px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .af-link {
+    color: var(--sage-dark);
+    font-weight: 600;
+    font-size: 8px;
+  }
+
+  .af-mapsvg {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #f8fafb;
+    border-radius: 5px;
+  }
+
+  .af-col {
+    display: grid;
+    gap: 7px;
+    align-content: start;
+  }
+
+  .af-tech {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    color: var(--ink);
+    margin-top: 5px;
+  }
+
+  .af-tech-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+  }
+
+  .af-tech-name i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  .af-tech-count {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    border: 1px solid var(--line-soft);
+    border-radius: 100px;
+    padding: 0 5px;
+    font-size: 8px;
+  }
+
+  .af-track {
+    height: 4px;
+    border-radius: 100px;
+    background: var(--bg-alt);
+    overflow: hidden;
+    margin-top: 3px;
+  }
+
+  .af-fill {
+    height: 100%;
+    border-radius: 100px;
+    width: var(--w);
+  }
+
+  .af-inv {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--ink-muted);
+    padding: 3px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .af-inv:last-child {
+    border-bottom: none;
+  }
+
+  .af-inv span:last-child {
+    font-variant-numeric: tabular-nums;
+    color: var(--navy);
+    font-weight: 650;
+  }
+
+  /* ------- Floating phone: My Day ------- */
+  .phone-frame {
+    position: absolute;
+    right: -14px;
+    bottom: -46px;
+    width: 198px;
+    margin: 0;
+    background: #ffffff;
+    border: 5px solid var(--navy);
+    border-radius: 22px;
+    box-shadow: 0 24px 50px rgba(20, 41, 55, 0.3);
+    overflow: hidden;
+    font-size: 9px;
+    line-height: 1.4;
+    z-index: 2;
+  }
+
+  .pf-notch {
+    height: 14px;
+    background: var(--navy);
+    border-radius: 0 0 10px 10px;
+    width: 46%;
+    margin: 0 auto;
+  }
+
+  .pf-body {
+    padding: 8px 9px 0;
+  }
+
+  .pf-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .pf-title {
+    font-weight: 700;
+    font-size: 11.5px;
+    color: var(--navy);
+  }
+
+  .pf-sub {
+    color: var(--ink-faint);
+    font-size: 7.5px;
+  }
+
+  .pf-date {
+    font-size: 7.5px;
+    color: var(--ink-muted);
+    border: 1px solid var(--line-soft);
+    border-radius: 5px;
+    padding: 2px 5px;
+  }
+
+  .pf-progress {
+    margin-top: 6px;
+  }
+
+  .pf-progress-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5px;
+    font-weight: 650;
+    color: var(--ink-muted);
+  }
+
+  .pf-track {
+    height: 4px;
+    border-radius: 100px;
+    background: var(--bg-alt);
+    overflow: hidden;
+    margin-top: 3px;
+  }
+
+  .pf-fill {
+    height: 100%;
+    width: 40%;
+    border-radius: 100px;
+    background: var(--sage);
+  }
+
+  .pf-visit {
+    margin-top: 7px;
+    border: 1px solid var(--line-soft);
+    border-radius: 9px;
+    padding: 7px 8px;
+    box-shadow: 0 0 0 2px rgba(74, 127, 165, 0.25);
+  }
+
+  .pf-hazard {
+    background: rgba(176, 125, 46, 0.12);
+    border: 1px solid rgba(176, 125, 46, 0.4);
+    color: var(--amber);
+    border-radius: 5px;
+    font-size: 7px;
+    font-weight: 650;
+    padding: 3px 5px;
+    margin-bottom: 5px;
+  }
+
+  .pf-meta {
+    font-size: 7.5px;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .pf-status {
+    background: rgba(74, 127, 165, 0.15);
+    color: #38648a;
+    border-radius: 100px;
+    padding: 0.5px 6px;
+    font-weight: 650;
+  }
+
+  .pf-timer {
+    color: #38648a;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pf-client {
+    font-weight: 700;
+    font-size: 10.5px;
+    color: var(--navy);
+    margin-top: 2px;
+  }
+
+  .pf-addr {
+    color: var(--ink-muted);
+    font-size: 8px;
+  }
+
+  .pf-codes {
+    display: flex;
+    gap: 8px;
+    font-size: 7.5px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+  }
+
+  .pf-codes b {
+    font-family: ui-monospace, monospace;
+    color: var(--navy);
+  }
+
+  .pf-row {
+    display: flex;
+    gap: 4px;
+    margin-top: 5px;
+  }
+
+  .pf-btn {
+    flex: 1;
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 6px;
+    font-size: 8px;
+    font-weight: 650;
+  }
+
+  .pf-btn.ghost {
+    border: 1px solid var(--line);
+    background: #ffffff;
+    color: var(--navy);
+  }
+
+  .pf-btn.solid {
+    background: var(--navy);
+    color: #ffffff;
+  }
+
+  .pf-note {
+    font-size: 7px;
+    color: var(--ink-faint);
+    margin-top: 4px;
+  }
+
+  .pf-next {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin: 7px -9px 0;
+    padding: 6px 9px 8px;
+    border-top: 1px solid var(--line-soft);
+    background: rgba(244, 247, 249, 0.9);
+  }
+
+  .pf-next-label {
+    display: block;
+    font-size: 6.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .pf-next-client {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .pf-jump {
+    background: var(--sage);
+    color: #ffffff;
+    border-radius: 100px;
+    padding: 4px 9px;
+    font-size: 8px;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  /* ------- AI toast ------- */
+  .toast-card {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    max-width: 250px;
+    background: #ffffff;
+    border: 1px solid var(--line-soft);
+    border-left: 3px solid var(--sage);
+    border-radius: 10px;
+    box-shadow: 0 14px 34px rgba(20, 41, 55, 0.18);
+    padding: 9px 12px;
+    z-index: 3;
+  }
+
+  .toast-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--sage-wash);
+    color: var(--sage-dark);
+    flex-shrink: 0;
+  }
+
+  .toast-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .toast-sub {
+    font-size: 8.5px;
+    color: var(--ink-faint);
+    margin-top: 1px;
+  }
+
+  /* ------- Motion (all gated on reduced-motion) ------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .phone-frame {
+      animation: pf-float 7s ease-in-out infinite;
+    }
+
+    @keyframes pf-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .toast-card {
+      opacity: 0;
+      animation: toast-in 600ms cubic-bezier(0.2, 1, 0.4, 1) 1s forwards;
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .af-fill {
+      width: 0;
+      animation: fill-in 1.1s ease-out 400ms forwards;
+    }
+
+    @keyframes fill-in {
+      to { width: var(--w); }
+    }
+
+    .af-route {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: route-draw 2s ease-out forwards;
+    }
+
+    .af-route.r2 { animation-delay: 300ms; }
+    .af-route.r3 { animation-delay: 600ms; }
+
+    @keyframes route-draw {
+      to { stroke-dashoffset: 0; }
+    }
+  }
+
+  /* ------- Responsive ------- */
+  @media (max-width: 1100px) {
+    .toast-card { left: -8px; }
+    .phone-frame { right: -8px; }
+  }
+
+  @media (max-width: 900px) {
+    .scene {
+      max-width: 640px;
+      margin-inline: auto;
+      padding-bottom: 26px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .af-side { display: none; }
+    .af-body { grid-template-columns: 1fr; }
+    .af-kpis { grid-template-columns: repeat(2, 1fr); }
+    .af-panels { grid-template-columns: 1fr; }
+    .toast-card { display: none; }
+
+    .phone-frame {
+      width: 172px;
+      right: 2px;
+      bottom: -22px;
+    }
+  }
+</style>
