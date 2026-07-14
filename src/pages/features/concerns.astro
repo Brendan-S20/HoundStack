@@ -1,0 +1,136 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'One queue for every complaint',
+    body: 'Missed area, gate left open, billing question. However it arrives, it becomes a concern with an owner-visible state instead of a text that scrolls away.',
+  },
+  {
+    title: 'Linked to the visit and its photos',
+    body: 'A concern attaches to the specific visit, so the completion photos are right there. Most missed-yard calls end at the photo.',
+  },
+  {
+    title: 'Assigned, worked, resolved',
+    body: 'Every concern has an assignee and a state. The owner dashboard flags anything open, so nothing quietly ages out.',
+  },
+  {
+    title: 'Resolutions that touch billing correctly',
+    body: 'If the resolution is a credit or a redo visit, it happens through billing and scheduling directly from the concern, not as a side promise.',
+  },
+  {
+    title: 'Patterns you can act on',
+    body: 'Concerns per tech, per zone, and per reason feed reporting. Three gate complaints on one route is a coaching conversation, not a coincidence.',
+  },
+  {
+    title: 'The blog has the script',
+    body: 'How to handle the missed-yard call calmly and keep it from repeating is written up on the blog, from the operators who take these calls.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Client complaint tracking for service businesses | HoundStack"
+  metaDescription="Concerns in HoundStack: every client complaint tracked to resolution, linked to the visit and its photos, with billing-correct outcomes and per-tech and per-zone patterns in reporting."
+  h1="Client concerns tracked to resolution, not lost in texts"
+  eyebrow="Concerns"
+  intro="The complaint you lose is the client you lose. Concerns give every complaint a record, an assignee, and a state, link it to the visit and its photos, and make the resolution touch billing and scheduling correctly."
+  crumbLabel="Concerns"
+  switchHref="/switch/from-time-to-pet"
+  switchText="switching from Time To Pet"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>The complaint has a home now</h2>
+        <p class="lede">
+          The concerns queue shows what is open, who owns it, and how long it has been waiting.
+          The owner sees the same list, so accountability is built in.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Proof is one tap away.</strong> The linked visit carries the before and after photos that settle most disputes.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>The fix is real.</strong> Credits and redo visits happen in billing and scheduling, from the concern itself.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="The concerns queue showing an open complaint linked to a visit with photos, an assigned owner, and a resolved concern with a credit">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Concerns &middot; open</span>
+              <div class="mk-sub">2 open &middot; average time to resolve 1.4 days</div>
+            </div>
+            <span class="mk-pill warning">2 open</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Hartley residence &middot; missed side yard</span>
+              <span class="mk-faint">linked to Tuesday's visit &middot; 2 photos attached</span>
+            </span>
+            <span class="mk-pill warning">assigned: Dana</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Cedar Flats unit 12 &middot; gate left open</span>
+              <span class="mk-faint">reported by text &middot; awaiting tech response</span>
+            </span>
+            <span class="mk-pill warning">open</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Nguyen residence &middot; billing question</span>
+              <span class="mk-faint">resolved yesterday &middot; $12 credit applied</span>
+            </span>
+            <span class="mk-pill positive">resolved</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Concerns per tech and per zone feed the reporting suite</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in concerns</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

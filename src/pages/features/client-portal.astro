@@ -1,0 +1,144 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Invoices they can pay at 9pm',
+    body: 'Clients view and pay invoices in the portal on their own schedule. Payments run through your Stripe account with no markup.',
+  },
+  {
+    title: 'Visit history with the photos',
+    body: 'Every completed visit shows its date, tech, and completion photos. The "did anyone actually come?" call answers itself.',
+  },
+  {
+    title: 'Card updates without a phone call',
+    body: 'An expired card is the top cause of failed payments. Clients update their own card in the portal and the next charge just works.',
+  },
+  {
+    title: 'Sign-in codes by text, no passwords',
+    body: 'Clients sign in with a one-time code sent to their phone. Nothing to forget, nothing for you to reset.',
+  },
+  {
+    title: 'Notification preferences they control',
+    body: 'Visit reminders, on-my-way texts, and completion notices, each one a toggle the client sets themselves.',
+  },
+  {
+    title: 'Concerns start here too',
+    body: 'A client can raise an issue from the portal, and it lands in your concerns queue linked to the right visit.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Client portal for pet waste removal businesses | HoundStack"
+  metaDescription="The HoundStack client portal: pay invoices online, see visit history with photos, update cards without calling, passwordless text sign-in, and notification preferences clients set themselves."
+  h1="A client portal that answers before they call"
+  eyebrow="Client portal"
+  intro="Half of office time in this trade is answering questions the client could answer themselves: did you come, what do I owe, can you charge the new card. The portal gives clients those answers directly, and your phone goes quieter."
+  crumbLabel="Client portal"
+  switchHref="/switch/from-gorilladesk"
+  switchText="switching from GorillaDesk"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>Self serve, in the honest sense</h2>
+        <p class="lede">
+          The portal is the client's view of the same records you run on: their visits, their
+          photos, their invoices, their card. When they check it, the office does not hear the
+          question.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Payments land in your Stripe.</strong> Your own key, zero markup, payouts settle to you directly.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Photos end disputes.</strong> The completion photos your techs already take are the proof clients see.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame variant="phone" label="The client portal on a phone showing an invoice due with a pay button, recent visits with photos, and card update">
+          <div class="mk-head">
+            <div class="mk-cell">
+              <span class="mk-title">Kowalski residence</span>
+              <span class="mk-sub">client portal &middot; signed in by text code</span>
+            </div>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Invoice &middot; June</span>
+              <span class="mk-faint">4 visits &middot; 2 dogs, weekly</span>
+            </span>
+            <span class="mk-num">$89</span>
+            <span class="mk-pill warning">due Jul 20</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Pay with card on file, or update it first</span>
+            <span class="mk-btn sage">Pay $89</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Thursday's visit</span>
+              <span class="mk-faint">completed 9:42 am by Marcus &middot; 2 photos</span>
+            </span>
+            <span class="mk-pill positive">done</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Notifications</span>
+              <span class="mk-faint">reminder night before &middot; on-my-way text &middot; completion</span>
+            </span>
+            <span class="mk-pill neutral">3 on</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Card on file</span>
+              <span class="mk-faint">Visa ending 4242 &middot; update anytime</span>
+            </span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in the portal</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

@@ -1,0 +1,143 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Four roles that match real jobs',
+    body: 'Owner, office manager, dispatcher, tech. Each role opens to the screens that job touches and nothing else.',
+  },
+  {
+    title: 'Financials gated at the server',
+    body: 'Revenue and receivables are computed only for roles allowed to see them. A tech literally cannot load your MTD number.',
+  },
+  {
+    title: 'Dispatchers schedule, techs perform',
+    body: 'A dispatcher can build routes and move visits but cannot start or complete field work, so the record of who did what stays true.',
+  },
+  {
+    title: 'Custom permission sets on Scale',
+    body: 'Past the standard four, Scale and Enterprise let you shape permission sets to your org: a bookkeeper role, a regional lead, a read-only auditor.',
+  },
+  {
+    title: 'Invites that carry the role',
+    body: 'Invite a teammate by email with their role attached. They land in the right experience on first sign-in.',
+  },
+  {
+    title: 'Billing follows activity, not seats',
+    body: 'An active employee is anyone who signed in during the billing period. Dormant accounts cost nothing; active ones are $10 a month past your allowance.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Roles and permissions for field service teams | HoundStack"
+  metaDescription="Roles in HoundStack: owner, office manager, dispatcher, and tech, financials gated at the server, custom permission sets on Scale, and activity-based employee billing."
+  h1="Four roles, each seeing exactly their job"
+  eyebrow="Roles and permissions"
+  intro="A tech does not need your revenue, and a dispatcher should not complete field visits. Roles here are enforced at the server, so what a teammate cannot see was never sent to their screen in the first place."
+  crumbLabel="Roles and permissions"
+  switchHref="/switch/from-jobber"
+  switchText="switching from Jobber"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <MockFrame label="The users screen showing four teammates with their roles and what each role can access">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Users &middot; Cedar &amp; Pine Scooping</span>
+              <div class="mk-sub">5 active employees this period</div>
+            </div>
+            <span class="mk-btn sage">Invite teammate</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Brendan S.</span>
+              <span class="mk-faint">full access, billing and reports included</span>
+            </span>
+            <span class="mk-pill neutral">owner</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Alicia M.</span>
+              <span class="mk-faint">clients, billing, concerns &middot; no org settings</span>
+            </span>
+            <span class="mk-pill neutral">office manager</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Ray D.</span>
+              <span class="mk-faint">routes and scheduling &middot; no financials</span>
+            </span>
+            <span class="mk-pill neutral">dispatcher</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Marcus T.</span>
+              <span class="mk-faint">My Day, visits, photos &middot; field only</span>
+            </span>
+            <span class="mk-pill neutral">tech</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Custom permission sets are available on Scale</span>
+          </div>
+        </MockFrame>
+      </div>
+      <div class="reveal">
+        <h2>Least access, without the lecture</h2>
+        <p class="lede">
+          Every screen, query, and export respects the role. That is a security posture, but it
+          is also just a better workday: nobody wades through screens their job never touches.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Server-side, not hidden buttons.</strong> Data a role cannot see is never computed for them, let alone sent and hidden.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Grows with you.</strong> The standard four cover most operations; custom sets arrive when your org chart outgrows them.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in roles</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

@@ -214,14 +214,58 @@ export const PRICING_FAQS = [
 ];
 
 export const NAV = {
+  // Grouped for the features mega menu; the footer flattens the groups.
+  featureGroups: [
+    {
+      label: 'Run the day',
+      items: [
+        { href: '/features/scheduling-and-routes', label: 'Scheduling and routes' },
+        { href: '/features/field-app', label: 'Field app' },
+        { href: '/features/weather', label: 'Weather' },
+        { href: '/features/inventory', label: 'Inventory' },
+      ],
+    },
+    {
+      label: 'Get paid',
+      items: [
+        { href: '/features/billing', label: 'Billing and payments' },
+        { href: '/features/client-portal', label: 'Client portal' },
+        { href: '/features/promotions', label: 'Promotions' },
+        { href: '/features/commercial-and-hoa', label: 'Commercial and HOA' },
+      ],
+    },
+    {
+      label: 'Grow',
+      items: [
+        { href: '/features/leads', label: 'Leads' },
+        { href: '/features/neighbor-referrals', label: 'Neighbors and referrals' },
+        { href: '/features/ai-tools', label: 'AI tools' },
+      ],
+    },
+    {
+      label: 'Understand',
+      items: [
+        { href: '/features/reporting', label: 'Reporting' },
+        { href: '/features/concerns', label: 'Concerns' },
+        { href: '/features/roles-and-permissions', label: 'Roles and permissions' },
+      ],
+    },
+  ],
   features: [
     { href: '/features/scheduling-and-routes', label: 'Scheduling and routes' },
     { href: '/features/field-app', label: 'Field app' },
+    { href: '/features/weather', label: 'Weather' },
+    { href: '/features/inventory', label: 'Inventory' },
     { href: '/features/billing', label: 'Billing and payments' },
+    { href: '/features/client-portal', label: 'Client portal' },
+    { href: '/features/promotions', label: 'Promotions' },
     { href: '/features/commercial-and-hoa', label: 'Commercial and HOA' },
+    { href: '/features/leads', label: 'Leads' },
     { href: '/features/neighbor-referrals', label: 'Neighbors and referrals' },
     { href: '/features/ai-tools', label: 'AI tools' },
     { href: '/features/reporting', label: 'Reporting' },
+    { href: '/features/concerns', label: 'Concerns' },
+    { href: '/features/roles-and-permissions', label: 'Roles and permissions' },
   ],
   switch: [
     { href: '/switch/from-sweep-and-go', label: 'From Sweep&Go' },

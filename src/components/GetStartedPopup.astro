@@ -1,0 +1,161 @@
+---
+// A single, polite get-started prompt: appears once per visitor after
+// they have actually read (half the page or ~25 seconds), never again
+// after dismissal, and never on legal or form pages (BaseLayout skips
+// rendering it there). Escape, the X, and the backdrop all close it.
+import { SITE, TRIAL_DAYS } from '../lib/site';
+---
+
+<div class="gsp" id="gsp" role="dialog" aria-modal="true" aria-labelledby="gsp-title" hidden>
+  <div class="gsp-backdrop" data-gsp-close></div>
+  <div class="gsp-card">
+    <button class="gsp-x" type="button" aria-label="Close" data-gsp-close>&times;</button>
+    <span class="eyebrow">Try it on a real route</span>
+    <h2 id="gsp-title">Put HoundStack on one truck this week</h2>
+    <p>
+      {TRIAL_DAYS} days free, no credit card, and named importers if you are coming from another
+      tool. Judge it on your own clients, not a demo.
+    </p>
+    <div class="gsp-actions">
+      <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
+      <a href="/contact" class="btn btn-ghost">Book a demo</a>
+    </div>
+    <p class="gsp-note">Your first 3 teammates are included on every plan.</p>
+  </div>
+</div>
+
+<style>
+  .gsp {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  /* display:flex would silently defeat the hidden attribute, leaving an
+     invisible full-screen overlay that eats every click on the page. */
+  .gsp[hidden] {
+    display: none;
+  }
+
+  .gsp-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 41, 55, 0.45);
+  }
+
+  .gsp-card {
+    position: relative;
+    max-width: 460px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 80px rgba(20, 41, 55, 0.35);
+    padding: 34px 36px 28px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gsp-card {
+      animation: gsp-in 260ms cubic-bezier(0.2, 1, 0.4, 1);
+    }
+
+    @keyframes gsp-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  .gsp-x {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--ink-faint);
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  .gsp-x:hover {
+    color: var(--navy);
+  }
+
+  .gsp-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .gsp-card p {
+    color: var(--ink-muted);
+  }
+
+  .gsp-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+
+  .gsp-note {
+    margin: 14px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+</style>
+
+<script>
+  const gsp = document.getElementById('gsp');
+  if (gsp) {
+    const KEY = 'hs-gsp-seen';
+    let shown = false;
+
+    const seen = () => {
+      try {
+        return localStorage.getItem(KEY) === '1';
+      } catch {
+        return true; // no storage, never show rather than show every view
+      }
+    };
+
+    const close = () => {
+      gsp.hidden = true;
+      document.removeEventListener('keydown', onKey);
+      try {
+        localStorage.setItem(KEY, '1');
+      } catch {}
+    };
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close();
+    };
+
+    const open = () => {
+      if (shown || seen()) return;
+      shown = true;
+      gsp.hidden = false;
+      document.addEventListener('keydown', onKey);
+      if (window.plausible) window.plausible('Popup Shown');
+    };
+
+    gsp.querySelectorAll('[data-gsp-close]').forEach((el) => el.addEventListener('click', close));
+    gsp.querySelectorAll('a').forEach((el) => el.addEventListener('click', () => close()));
+
+    if (!seen()) {
+      const timer = setTimeout(open, 25_000);
+      const onScroll = () => {
+        const depth = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
+        if (depth > 0.55) {
+          clearTimeout(timer);
+          window.removeEventListener('scroll', onScroll);
+          open();
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  }
+</script>
