@@ -36,6 +36,7 @@ const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', d
               <time datetime={post.data.pubDate.toISOString()}>{fmt.format(post.data.pubDate)}</time>
               <h2>{post.data.title}</h2>
               <p>{post.data.description}</p>
+              <span class="post-more">Read the post →</span>
             </a>
           ))
         }
@@ -54,8 +55,30 @@ const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', d
 
   .post-list {
     display: grid;
-    gap: 20px;
-    max-width: 760px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  @media (max-width: 960px) {
+    .post-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .post-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card p {
+    flex: 1;
   }
 
   .post-card :global(.post-card-art) {
@@ -68,7 +91,14 @@ const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', d
   }
 
   .post-card h2 {
-    font-size: 1.4rem;
+    font-size: 1.15rem;
     margin: 8px 0;
+  }
+
+  .post-more {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    font-weight: 650;
+    color: var(--sage-dark);
   }
 </style>

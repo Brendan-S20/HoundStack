@@ -157,7 +157,7 @@ const yearlyMonthly = (price: number) => {
                 ))}
               </ul>
               <details class="plan-features">
-                <summary>See all {p.name} features</summary>
+                <summary>See all features</summary>
                 {TIER_FEATURE_GROUPS.map((g) => {
                   const feats = g.features.filter((f) => f.tiers[i] !== false);
                   return feats.length ? (
@@ -526,6 +526,17 @@ const yearlyMonthly = (price: number) => {
   // Monthly/yearly billing toggle: swaps the rendered price on each
   // tier card. Both prices are rendered server-side; this only flips
   // which one is visible.
+  // "See all features" opens every plan's list together, so the four
+  // tiers stay comparable side by side instead of one card growing alone.
+  const featureLists = document.querySelectorAll<HTMLDetailsElement>('details.plan-features');
+  featureLists.forEach((d) => {
+    d.querySelector('summary')!.addEventListener('click', (e) => {
+      e.preventDefault();
+      const open = !d.open;
+      featureLists.forEach((x) => (x.open = open));
+    });
+  });
+
   const grid = document.getElementById('plan-grid')!;
   const opts = document.querySelectorAll<HTMLButtonElement>('[data-billing-opt]');
   opts.forEach((btn) =>

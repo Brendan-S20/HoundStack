@@ -292,3 +292,13 @@ export const COMPETITORS: Competitor[] = [
     ],
   },
 ];
+
+// Monogram tiles stand in for competitor logos on switch surfaces:
+// distinct, tidy, and no trademark art to license.
+export const SWITCH_MARKS: Record<string, { mark: string; bg: string; fg: string; line: string }> = {
+  'from-sweep-and-go': { mark: 'SG', bg: '#eef3f8', fg: '#33566e', line: '#d4e0ea' },
+  'from-jobber': { mark: 'J', bg: '#f3efe6', fg: '#7a5f22', line: '#e6dcc4' },
+  'from-housecall-pro': { mark: 'HP', bg: '#f0eef6', fg: '#544a7d', line: '#dcd7ea' },
+  'from-time-to-pet': { mark: 'TP', bg: '#eaf4f0', fg: '#2f6b52', line: '#cfe4da' },
+  'from-gorilladesk': { mark: 'GD', bg: '#f6eeee', fg: '#7a3d3d', line: '#e8d4d4' },
+};
