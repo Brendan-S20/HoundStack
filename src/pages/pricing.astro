@@ -4,7 +4,15 @@ import PricingEstimator from '../components/PricingEstimator.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import CtaSection from '../components/CtaSection.astro';
 import Icon from '../components/Icon.astro';
-import { PLANS, SITE, TRIAL_DAYS, OVERAGE_RATE, PRICING_FAQS } from '../lib/site';
+import {
+  PLANS,
+  SITE,
+  TRIAL_DAYS,
+  OVERAGE_RATE,
+  ANNUAL_DISCOUNT,
+  PRICING_FAQS,
+  TIER_FEATURE_GROUPS,
+} from '../lib/site';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -22,33 +30,27 @@ const softwareSchema = {
   })),
 };
 
-const alwaysIncluded = [
-  'Unlimited customers, dogs, jobs, and routes',
-  'Unlimited zones, cities, and territories',
-  'Scheduling, recurring services, and route optimization',
-  'Estimates, invoicing, payments, and the client portal',
-  'The mobile field app with offline support and photos',
-  'Work orders, notifications, GPS navigation, and reporting',
-];
-
+// Add-on detail blurbs. Availability itself lives in TIER_FEATURE_GROUPS
+// (rendered inside every tier card); this section only explains what
+// each add-on does.
 const addons = [
   {
     icon: 'spark',
     name: 'AI Receptionist',
     body: 'Answers client texts about pricing and availability and books straight into the calendar. Texts today; voice calls are on the roadmap and will be labeled when live.',
-    availability: 'Available on every plan',
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'chart',
     name: 'AI Business Advisor',
     body: 'The weekly digest: revenue, completed visits, at risk clients, and one recommended action, computed from your real numbers and delivered every week.',
-    availability: 'Available on every plan',
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'users',
     name: 'Referral Programs',
     body: 'Referral codes with credit applied automatically to both the referrer and the new client. Built for the two doors down growth this trade actually runs on.',
-    availability: 'Available on every plan',
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'network',
@@ -59,6 +61,14 @@ const addons = [
 ];
 
 const faqs = PRICING_FAQS;
+
+const discountPct = Math.round(ANNUAL_DISCOUNT * 100);
+
+/** Per-month price under yearly billing, formatted without trailing .00 */
+const yearlyMonthly = (price: number) => {
+  const v = price * (1 - ANNUAL_DISCOUNT);
+  return Number.isInteger(v) ? String(v) : v.toFixed(2);
+};
 ---
 
 <BaseLayout
@@ -81,30 +91,40 @@ const faqs = PRICING_FAQS;
 
   <section class="section-alt">
     <div class="container">
-      <div class="reveal">
-        <PricingEstimator />
+      <div class="tiers-head reveal">
+        <div>
+          <h2>Four tiers, one ladder</h2>
+          <p class="lede">
+            Every plan runs the full core ERP with nothing held back. What changes as you move up
+            is the tooling a more complex operation actually needs.
+          </p>
+        </div>
+        <div class="billing-toggle" role="group" aria-label="Billing period" id="billing-toggle">
+          <button type="button" class="bt-opt is-active" data-billing-opt="monthly" aria-pressed="true">
+            Monthly
+          </button>
+          <button type="button" class="bt-opt" data-billing-opt="yearly" aria-pressed="false">
+            Yearly &middot; save {discountPct}%
+          </button>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2 class="reveal">Four tiers, one ladder</h2>
-      <p class="lede reveal">
-        Every plan runs the full core ERP with nothing held back. What changes as you move up is
-        the tooling a more complex operation actually needs.
-      </p>
-      <div class="plan-grid">
+      <div class="plan-grid" id="plan-grid">
         {
-          PLANS.map((p) => (
+          PLANS.map((p, i) => (
             <div class={`card plan-card reveal ${p.popular ? 'plan-popular' : ''}`}>
               {p.popular && <span class="badge badge-sage popular-badge">Most popular</span>}
               <h3>{p.name}</h3>
               <p class="plan-price">
                 {p.price !== null ? (
                   <>
-                    <span class="plan-amount">${p.price}</span>
-                    <span class="plan-suffix">/mo</span>
+                    <span class="price-monthly">
+                      <span class="plan-amount">${p.price}</span>
+                      <span class="plan-suffix">/mo</span>
+                    </span>
+                    <span class="price-yearly">
+                      <span class="plan-amount">${yearlyMonthly(p.price)}</span>
+                      <span class="plan-suffix">/mo billed yearly</span>
+                    </span>
                   </>
                 ) : (
                   <span class="plan-amount plan-custom">By contract</span>
@@ -116,6 +136,19 @@ const faqs = PRICING_FAQS;
                   : 'Custom employee allowance'}
               </p>
               <p class="plan-blurb">{p.audience}</p>
+              {p.price !== null ? (
+                <a
+                  href={SITE.signupUrl}
+                  class={`btn plan-cta ${p.popular ? 'btn-secondary' : 'btn-ghost'}`}
+                  data-app-link
+                >
+                  Choose {p.name}
+                </a>
+              ) : (
+                <a href="/contact" class="btn btn-ghost plan-cta">
+                  Talk to sales
+                </a>
+              )}
               <ul class="plan-ladder">
                 {p.ladder.map((item) => (
                   <li>
@@ -123,45 +156,62 @@ const faqs = PRICING_FAQS;
                   </li>
                 ))}
               </ul>
+              <details class="plan-features">
+                <summary>See all {p.name} features</summary>
+                {TIER_FEATURE_GROUPS.map((g) => {
+                  const feats = g.features.filter((f) => f.tiers[i] !== false);
+                  return feats.length ? (
+                    <div class="pf-group">
+                      <h4>{g.category}</h4>
+                      <ul>
+                        {feats.map((f) => (
+                          <li>
+                            <Icon name="check" size={14} />
+                            <span>
+                              {f.label}
+                              {typeof f.tiers[i] === 'string' && <em> &middot; {f.tiers[i]}</em>}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null;
+                })}
+              </details>
             </div>
           ))
         }
       </div>
       <p class="plan-note reveal">
         Additional active employees are ${OVERAGE_RATE} per month flat on Launch, Growth, and
-        Scale. Yearly billing takes 15% off the plan price. API access will be an add-on on
-        Growth and included on Scale and Enterprise; it is coming soon and will be marked live
-        here when it ships, not before.
-      </p>
-    </div>
-  </section>
-
-  <section class="section-navy always-strip">
-    <div class="container reveal">
-      <h2>Always unlimited, on every plan</h2>
-      <div class="always-grid">
-        {
-          alwaysIncluded.map((item) => (
-            <div class="always-item">
-              <Icon name="check" size={18} />
-              <span>{item}</span>
-            </div>
-          ))
-        }
-      </div>
-      <p class="always-note">
-        Operating across three cities costs the same as operating across one street. Zones and
-        territories are structure, not a meter.
+        Scale. Operating across three cities costs the same as operating across one street: zones
+        and territories are structure, not a meter.
       </p>
     </div>
   </section>
 
   <section>
     <div class="container">
-      <h2 class="reveal">Add-ons</h2>
+      <div class="reveal est-head">
+        <h2>Put your own numbers in</h2>
+        <p class="lede">
+          Pick the shape of your operation and drag the team size; the totals update live across
+          every published tier.
+        </p>
+      </div>
+      <div class="reveal">
+        <PricingEstimator />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <h2 class="reveal">What the add-ons actually do</h2>
       <p class="lede reveal">
-        Optional tools that install on top of any plan. Everything listed here is live in the
-        product today; more are in development and will appear when they ship.
+        Each tier card above lists which add-ons it can install; this is what they are. Everything
+        listed here is live in the product today; more are in development and will appear when
+        they ship.
       </p>
       <div class="grid-2 addon-grid">
         {
@@ -180,7 +230,7 @@ const faqs = PRICING_FAQS;
     </div>
   </section>
 
-  <section class="section-alt">
+  <section>
     <div class="container reveal enterprise-block">
       <span class="eyebrow">Enterprise</span>
       <h2>For franchise and multi-brand parents</h2>
@@ -194,7 +244,7 @@ const faqs = PRICING_FAQS;
     </div>
   </section>
 
-  <section>
+  <section class="section-alt">
     <div class="container reveal">
       <FaqBlock faqs={faqs} heading="Pricing questions, answered straight" />
     </div>
@@ -212,11 +262,47 @@ const faqs = PRICING_FAQS;
     padding-bottom: clamp(32px, 5vw, 56px);
   }
 
+  .tiers-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .billing-toggle {
+    display: inline-flex;
+    border: 1.5px solid var(--line);
+    border-radius: 100px;
+    padding: 3px;
+    background: #ffffff;
+    flex-shrink: 0;
+  }
+
+  .bt-opt {
+    border: none;
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+    color: var(--ink-muted);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .bt-opt.is-active {
+    background: var(--navy);
+    color: #ffffff;
+  }
+
   .plan-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
     margin-top: 32px;
+    align-items: start;
   }
 
   @media (max-width: 1020px) {
@@ -265,6 +351,19 @@ const faqs = PRICING_FAQS;
     margin-bottom: 4px;
   }
 
+  /* The billing toggle swaps which price rendering is shown */
+  .price-yearly {
+    display: none;
+  }
+
+  .plan-grid.billing-yearly .price-yearly {
+    display: inline;
+  }
+
+  .plan-grid.billing-yearly .price-monthly {
+    display: none;
+  }
+
   .plan-amount {
     font-size: 1.9rem;
     font-weight: 800;
@@ -294,6 +393,12 @@ const faqs = PRICING_FAQS;
     font-size: 0.92rem;
   }
 
+  .plan-cta {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+
   .plan-ladder {
     list-style: none;
     padding: 0;
@@ -316,45 +421,92 @@ const faqs = PRICING_FAQS;
     margin-top: 3px;
   }
 
+  /* Complete per-tier feature list, collapsed by default */
+  .plan-features {
+    margin-top: 16px;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 12px;
+  }
+
+  .plan-features summary {
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 650;
+    color: var(--sage-dark);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .plan-features summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .plan-features summary::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 160ms ease;
+    margin-top: -3px;
+  }
+
+  .plan-features[open] summary::after {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+  }
+
+  .pf-group {
+    margin-top: 14px;
+  }
+
+  .pf-group h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .pf-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 7px;
+    font-size: 0.84rem;
+    color: var(--ink-muted);
+  }
+
+  .pf-group li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .pf-group li svg {
+    color: var(--sage-dark);
+    margin-top: 3px;
+  }
+
+  .pf-group em {
+    font-style: normal;
+    color: var(--ink-faint);
+  }
+
   .plan-note {
     margin-top: 28px;
     color: var(--ink-muted);
     max-width: 52em;
   }
 
-  .always-strip h2 {
-    margin-bottom: 24px;
-  }
-
-  .always-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px 32px;
-    max-width: 880px;
-  }
-
-  @media (max-width: 700px) {
-    .always-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .always-item {
-    display: flex;
-    gap: 10px;
-    align-items: start;
-  }
-
-  .always-item svg {
-    color: #9dbb9d;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  .always-note {
-    margin-top: 24px;
-    color: #b9c9d3;
-    max-width: 44em;
+  .est-head {
+    margin-bottom: 28px;
   }
 
   .addon-grid {
@@ -369,3 +521,21 @@ const faqs = PRICING_FAQS;
     max-width: 52em;
   }
 </style>
+
+<script>
+  // Monthly/yearly billing toggle: swaps the rendered price on each
+  // tier card. Both prices are rendered server-side; this only flips
+  // which one is visible.
+  const grid = document.getElementById('plan-grid')!;
+  const opts = document.querySelectorAll<HTMLButtonElement>('[data-billing-opt]');
+  opts.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      grid.classList.toggle('billing-yearly', btn.dataset.billingOpt === 'yearly');
+      opts.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+    })
+  );
+</script>

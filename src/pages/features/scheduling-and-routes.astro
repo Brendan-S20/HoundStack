@@ -94,23 +94,43 @@ const features = [
           <svg
             viewBox="0 0 560 320"
             role="img"
-            aria-label="Property map with a service boundary drawn around the back yard of a client's lot"
+            aria-label="Property map of 1423 Alder St with a service boundary drawn around the back yard and the east side strip, showing the house, driveway, gate on the east side, and the address pin for contrast"
           >
-            <g stroke="#dde5ea" stroke-width="1.5">
-              <path d="M0 90h560M0 230h560" />
-              <path d="M120 0v320M420 0v320" />
-            </g>
-            <g stroke="#e7edf1" stroke-width="1">
-              <path d="M0 160h560M270 0v320" />
-            </g>
-            <!-- lot -->
-            <rect x="170" y="110" width="200" height="150" fill="#f0f4f2" stroke="#c9d6cd" stroke-width="1.5" />
-            <!-- house footprint -->
-            <rect x="195" y="128" width="90" height="58" fill="#dde5ea" stroke="#b7c5cf" stroke-width="1.5" />
-            <!-- drawn service boundary -->
+            <!-- neighboring lots -->
+            <rect x="16" y="40" width="118" height="234" fill="#f3f6f4" />
+            <rect x="426" y="40" width="118" height="234" fill="#f3f6f4" />
+            <rect x="40" y="180" width="70" height="56" fill="#e7edf1" stroke="#d5dee4" stroke-width="1" />
+            <rect x="452" y="180" width="70" height="56" fill="#e7edf1" stroke="#d5dee4" stroke-width="1" />
+
+            <!-- client lot -->
+            <rect x="150" y="40" width="260" height="234" fill="#f0f4f2" stroke="#c9d6cd" stroke-width="1.5" />
+
+            <!-- sidewalk and street -->
+            <rect x="0" y="274" width="560" height="8" fill="#eef1f4" />
+            <rect x="0" y="282" width="560" height="26" fill="#e2e9ee" />
+            <path d="M0 295h560" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="5 8" opacity="0.9" />
+            <text x="478" y="299" font-size="10" fill="#8ba0ad">Alder St</text>
+
+            <!-- back yard trees and patio -->
+            <circle cx="190" cy="86" r="13" fill="#dce8dc" stroke="#b9cdb9" stroke-width="1.5" />
+            <circle cx="350" cy="72" r="10" fill="#dce8dc" stroke="#b9cdb9" stroke-width="1.5" />
+            <rect x="232" y="136" width="36" height="20" fill="#e7edf1" />
+
+            <!-- house, door, front walk, driveway -->
+            <rect x="205" y="170" width="150" height="80" fill="#dde5ea" stroke="#b7c5cf" stroke-width="1.5" />
+            <path d="M205 210h150" stroke="#cbd7de" stroke-width="1" />
+            <rect x="272" y="232" width="16" height="18" fill="#b7c5cf" />
+            <rect x="276" y="250" width="8" height="24" fill="#e7edf1" />
+            <rect x="318" y="250" width="34" height="24" fill="#e7edf1" />
+
+            <!-- gate in the east fence -->
+            <rect x="404" y="196" width="12" height="26" fill="#ffffff" stroke="#5e845e" stroke-width="2" />
+            <text x="420" y="213" font-size="10" fill="#48606f">gate</text>
+
+            <!-- drawn service boundary: back yard plus east side strip -->
             <path
               id="boundary-path"
-              d="M188 196 L352 196 L352 246 L188 246 Z"
+              d="M160 50 L400 50 L400 255 L358 255 L358 160 L160 160 Z"
               fill="rgba(94, 132, 94, 0.14)"
               stroke="#5e845e"
               stroke-width="3"
@@ -118,22 +138,25 @@ const features = [
               stroke-dasharray="7 6"
             />
             <g id="boundary-handles" fill="#ffffff" stroke="#5e845e" stroke-width="2">
-              <rect x="183" y="191" width="10" height="10" />
-              <rect x="347" y="191" width="10" height="10" />
-              <rect x="347" y="241" width="10" height="10" />
-              <rect x="183" y="241" width="10" height="10" />
+              <rect x="155" y="45" width="10" height="10" />
+              <rect x="395" y="45" width="10" height="10" />
+              <rect x="395" y="250" width="10" height="10" />
+              <rect x="353" y="250" width="10" height="10" />
+              <rect x="353" y="155" width="10" height="10" />
+              <rect x="155" y="155" width="10" height="10" />
             </g>
+            <text x="280" y="110" text-anchor="middle" font-size="12" font-weight="650" fill="#4a6b4a">service area</text>
+
             <!-- address pin, for contrast -->
-            <g transform="translate(240,96)">
+            <g transform="translate(280,232)">
               <path d="M0 22 C-9 10 -11 6 -11 -1 A11 11 0 1 1 11 -1 C11 6 9 10 0 22 Z" fill="#142937" />
               <circle cy="-1" r="4" fill="#ffffff" />
             </g>
-            <text x="258" y="104" font-family="inherit" font-size="12" fill="#48606f">address pin</text>
-            <text x="240" y="232" font-family="inherit" font-size="12" font-weight="650" fill="#4a6b4a">service area</text>
+            <text x="264" y="224" text-anchor="end" font-size="12" fill="#48606f">address pin</text>
           </svg>
           <div class="sketch-caption">
             <span class="badge badge-sage">Boundary drawn</span>
-            <span>Back yard only, gate on the east side</span>
+            <span>1423 Alder St &middot; back yard plus the east side strip, gate on the east</span>
           </div>
         </div>
       </div>
@@ -218,7 +241,7 @@ const features = [
   .boundary-sketch.will-animate #boundary-path {
     opacity: 0;
     transform: scale(0.9);
-    transform-origin: 270px 221px;
+    transform-origin: 280px 152px;
     transform-box: view-box;
   }
 
