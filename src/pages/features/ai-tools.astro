@@ -105,6 +105,68 @@ const faqs = [
   </section>
 
   <section>
+    <div class="container split">
+      <div class="reveal">
+        <MockFrame label="The AI weekly digest showing revenue, completed visits, at-risk clients, and one recommended action">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">AI: weekly digest</span>
+              <div class="mk-sub">last 7 days &middot; delivered Monday 7am</div>
+            </div>
+            <span class="mk-pill positive">1 action</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Revenue</span>
+              <span class="mk-faint">vs. $3,990 the week before</span>
+            </span>
+            <span class="mk-num">$4,310</span>
+            <span class="mk-pill positive">up 8%</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Visits completed</span>
+              <span class="mk-faint">7 skipped: 5 weather, 2 locked gate</span>
+            </span>
+            <span class="mk-num">212 / 219</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">At-risk clients</span>
+              <span class="mk-faint">Hartley, Okafor, Cedar Flats unit 12</span>
+            </span>
+            <span class="mk-pill warning">3 flagged</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Recommended action</span>
+              <span class="mk-faint">Zone 5 east drive time is creeping up. Moving Tuesday's two Fairmont stops to Dana saves 22 minutes.</span>
+            </span>
+          </div>
+        </MockFrame>
+      </div>
+      <div class="reveal">
+        <h2>A business review you actually read</h2>
+        <p class="lede">
+          Every Monday the AI Business Advisor reads your week — revenue, completed visits,
+          skips and why, churn scores — and sends one digest with exactly one recommended
+          action, computed from your real numbers. Not a dashboard to check: an answer.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Churn scores name names.</strong> The quietly unhappy clients get flagged before the cancellation text arrives.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Marketing drafts on tap.</strong> Social posts, email blasts, and review responses generated from your actual services and prices.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
     <div class="container">
       <h2 class="reveal">The whole AI layer</h2>
       <div class="grid-2 detail-grid">
@@ -120,7 +182,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section-alt">
+  <section>
     <div class="container reveal">
       <FaqBlock faqs={faqs} heading="Fair questions about the AI" />
     </div>

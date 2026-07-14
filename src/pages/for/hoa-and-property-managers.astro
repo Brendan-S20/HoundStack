@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaSection from '../../components/CtaSection.astro';
+import MockFrame from '../../components/MockFrame.astro';
 import Icon from '../../components/Icon.astro';
 ---
 
@@ -81,8 +82,56 @@ import Icon from '../../components/Icon.astro';
   </section>
 
   <section>
+    <div class="container split">
+      <div class="reveal">
+        <h2>The other half: stations that actually get serviced</h2>
+        <p class="lede">
+          Every station visit is logged from the tech's stop card: bags collected, liner
+          replaced, refill bags added. The service history becomes a report you can forward to
+          the board without editing anything.
+        </p>
+      </div>
+      <div class="reveal">
+        <MockFrame variant="phone" label="A station service log on the tech's stop card showing bags collected, liner replaced, and refill bags added per station">
+          <div class="mk-head">
+            <div class="mk-cell">
+              <span class="mk-title">Station service log</span>
+              <span class="mk-sub">Birchwood Court HOA &middot; Tuesday</span>
+            </div>
+            <span class="mk-pill positive">3 of 3</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Station 1 &middot; dog park entrance</span>
+              <span class="mk-faint">2 bags collected &middot; liner replaced &middot; +40 refill</span>
+            </span>
+            <span class="mk-pill positive">saved</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Station 2 &middot; clubhouse path</span>
+              <span class="mk-faint">1 bag collected &middot; +20 refill</span>
+            </span>
+            <span class="mk-pill positive">saved</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Station 3 &middot; north trail</span>
+              <span class="mk-faint">post leaning, photo attached for the board</span>
+            </span>
+            <span class="mk-pill warning">issue noted</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Logged 2:14 pm by Priya K. &middot; on the monthly report</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
     <div class="container">
-      <h2 class="reveal">The other half: stations that actually get serviced</h2>
+      <h2 class="reveal">Built for how communities buy</h2>
       <div class="grid-3">
         <div class="card reveal">
           <span class="card-icon"><Icon name="route" /></span>
@@ -127,6 +176,20 @@ import Icon from '../../components/Icon.astro';
   .page-hero {
     padding-top: clamp(40px, 6vw, 72px);
     padding-bottom: clamp(32px, 5vw, 56px);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
   }
 
   .steps {
