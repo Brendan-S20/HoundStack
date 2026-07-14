@@ -42,10 +42,10 @@ const personSchema = {
           so per dog pricing, rain day billing, and gate codes all live in workarounds.
         </p>
         <p>
-          So HoundStack is built from the route up for this trade alone. Pricing follows the
-          complexity of the operation, with your first teammates included instead of metered.
-          The billing understands why a visit was skipped. The field app assumes a truck, a gate,
-          and sometimes no signal. None of that is adaptation. It is the starting point.
+          So HoundStack is built from the route up for this trade alone. Pricing stays
+          predictable: your first teammates are included, and each one after is a flat $10 a
+          month. The billing understands why a visit was skipped. The field app assumes a truck,
+          a gate, and sometimes no signal. None of that is adaptation. It is the starting point.
         </p>
         <p>
           If that sounds like software made by people who paid attention, that is the whole
@@ -112,10 +112,13 @@ const personSchema = {
     color: var(--navy);
   }
 
+  /* Centered sign-off mark under the founder card, not an orphaned
+     image floating at the content edge. */
   .about-logo {
     display: block;
-    margin-top: 48px;
-    width: 220px;
+    margin: 56px auto 0;
+    width: 170px;
     height: auto;
+    opacity: 0.9;
   }
 </style>
