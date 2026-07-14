@@ -5,14 +5,14 @@ interface Props {
   heading?: string;
   body?: string;
   /** Pages where the sale starts with a conversation (e.g. HOA programs)
-      lead with the demo button instead of self-serve signup. */
-  leadWithDemo?: boolean;
+      lead with the contact button instead of self-serve signup. */
+  leadWithContact?: boolean;
 }
 
 const {
   heading = 'Try it on your own route',
   body = 'Every account starts with a 14 day free trial, no credit card. Your first 3 teammates are included on every plan, and named import tools are ready if you are coming from somewhere else.',
-  leadWithDemo = false,
+  leadWithContact = false,
 } = Astro.props;
 ---
 
@@ -22,15 +22,15 @@ const {
     <p class="lede cta-lede">{body}</p>
     <div class="cta-buttons">
       {
-        leadWithDemo ? (
+        leadWithContact ? (
           <>
-            <a href="/contact" class="btn btn-secondary">Book a demo</a>
+            <a href="/contact" class="btn btn-secondary">Talk to us</a>
             <a href={SITE.signupUrl} class="btn btn-ghost" data-app-link>Start free</a>
           </>
         ) : (
           <>
             <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
-            <a href="/contact" class="btn btn-ghost">Book a demo</a>
+            <a href="/contact" class="btn btn-ghost">Talk to us</a>
           </>
         )
       }
