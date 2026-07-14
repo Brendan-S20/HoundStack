@@ -1,0 +1,136 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Discount codes that apply themselves',
+    body: 'A code entered at signup or added by the office lands on the invoice automatically, correctly, every billing cycle it covers.',
+  },
+  {
+    title: 'Seasonal specials with an end date',
+    body: 'Spring cleanup, first month off, new-neighborhood pricing. Set the window and the discount retires itself when the season ends.',
+  },
+  {
+    title: 'Referral credits, both sides',
+    body: 'Referral codes credit the referrer and the new client automatically. Nobody mails anyone a gift card, and nobody forgets.',
+  },
+  {
+    title: 'Guardrails on the discount',
+    body: 'Caps, one-per-client rules, and plan restrictions keep a promotion from quietly becoming permanent pricing.',
+  },
+  {
+    title: 'Redemptions you can count',
+    body: 'Every code shows redemptions and revenue impact, so you know whether the spring special filled routes or just discounted ones you already had.',
+  },
+  {
+    title: 'Plays fair with billing',
+    body: 'Promotions respect prepaid credit ledgers and postpaid invoices alike, and they show as their own line so clients see the deal they got.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Promotions and discount codes for service businesses | HoundStack"
+  metaDescription="Promotions in HoundStack: discount codes that apply themselves on invoices, seasonal specials with end dates, two-sided referral credits, guardrails, and redemption reporting."
+  h1="Promotions that apply themselves on the invoice"
+  eyebrow="Promotions"
+  intro="A discount that lives in a sticky note becomes a billing dispute in three months. Promotions here are codes with rules: they apply themselves, they respect their end date, and they report what they actually earned you."
+  crumbLabel="Promotions"
+  switchHref="/switch/from-housecall-pro"
+  switchText="switching from Housecall Pro"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <MockFrame label="The promotions screen showing an active seasonal code with redemptions, a referral code, and an expired special">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Promotions</span>
+              <div class="mk-sub">2 active &middot; 1 ended this month</div>
+            </div>
+            <span class="mk-btn sage">New promotion</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">SPRING25 &middot; 25% off first month</span>
+              <span class="mk-faint">41 redemptions &middot; ends May 31 &middot; one per client</span>
+            </span>
+            <span class="mk-pill positive">active</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">KOWA10 &middot; referral credit</span>
+              <span class="mk-faint">$10 to referrer and new client, applied automatically</span>
+            </span>
+            <span class="mk-pill positive">active</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">WINTERHOLD &middot; pause protection</span>
+              <span class="mk-faint">ended Mar 1 &middot; retired itself on schedule</span>
+            </span>
+            <span class="mk-pill neutral">ended</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Each code shows redemptions and revenue impact</span>
+          </div>
+        </MockFrame>
+      </div>
+      <div class="reveal">
+        <h2>Run the special without the cleanup</h2>
+        <p class="lede">
+          Set the code, the discount, the window, and the rules once. Every invoice it touches
+          comes out right, and the code retires itself on schedule.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Clients see the deal.</strong> The promotion is its own line on the invoice, so the discount you gave is the discount they see.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>You see the return.</strong> Redemptions and revenue impact per code, so next season's special is a decision, not a hunch.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in promotions</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

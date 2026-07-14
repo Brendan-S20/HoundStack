@@ -47,12 +47,28 @@ const {
 
   <section class="closing-links">
     <div class="container">
-      <p class="closing-line reveal">
-        See what this costs on the <a href="/pricing">pricing page</a> (short answer: plans start
-        at $79 with your first 3 teammates included, and one more is $10 flat). {switchText.length > 0 && (
-          <>Coming from somewhere else? Read the <a href={switchHref}>{switchText}</a> guide.</>
-        )}
-      </p>
+      <div class="closing-grid">
+        <a href="/pricing" class="card closing-card reveal">
+          <span class="eyebrow">What it costs</span>
+          <h3>Plans start at $79 a month</h3>
+          <p>
+            Your first 3 teammates are included on every plan, and each additional active
+            employee is $10 a month flat. See every tier side by side.
+          </p>
+        </a>
+        {
+          switchText.length > 0 && (
+            <a href={switchHref} class="card closing-card reveal">
+              <span class="eyebrow">Coming from somewhere else?</span>
+              <h3>{switchText.charAt(0).toUpperCase() + switchText.slice(1)}</h3>
+              <p>
+                A named importer with a field mapping preview and a dry run, so nothing is
+                written to your account until you have approved it.
+              </p>
+            </a>
+          )
+        }
+      </div>
     </div>
   </section>
 
@@ -69,9 +85,19 @@ const {
     padding-block: 0 64px;
   }
 
-  .closing-line {
-    font-size: 1.1rem;
-    color: var(--ink-muted);
-    max-width: 46em;
+  .closing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 720px) {
+    .closing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .closing-card h3 {
+    margin-bottom: 6px;
   }
 </style>

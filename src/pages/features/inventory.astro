@@ -1,0 +1,137 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'Stock tracked per tech, not per shelf',
+    body: 'Bags, deodorizer, liners, and gear live on the truck. Inventory follows the tech, so you know what each truck is actually carrying.',
+  },
+  {
+    title: 'Low stock alerts before the route',
+    body: 'Thresholds per item flag a truck before it leaves short. The alert lands before someone is out of bags at stop 14.',
+  },
+  {
+    title: 'Usage flows from the work itself',
+    body: 'Station restocks and deodorizer add-ons logged in the field draw down inventory automatically. Counting happens as a check, not a chore.',
+  },
+  {
+    title: 'Restock runs with a paper trail',
+    body: 'Restocks are recorded per tech with date and quantity, so shrinkage questions have an answer other than a shrug.',
+  },
+  {
+    title: 'HOA station supplies included',
+    body: 'Refill bags added at waste stations come out of truck inventory, tying community service work to real supply costs.',
+  },
+  {
+    title: 'Costs land in reporting',
+    body: 'Supply usage per zone and per tech feeds the reporting suite, so margin numbers include the bags, not just the labor.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Inventory tracking for field service trucks | HoundStack"
+  metaDescription="Truck inventory for pet waste removal: bags, deodorizer, and gear tracked per tech, low stock alerts before the route, usage drawn from field work, and supply costs in reporting."
+  h1="Inventory that keeps trucks stocked and margins honest"
+  eyebrow="Inventory"
+  intro="Running out of bags mid route costs a visit; not knowing your supply spend costs your margin math. Inventory here rides on the truck, alerts before someone leaves short, and draws down from the field work your techs already log."
+  crumbLabel="Inventory"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>The truck knows what it is carrying</h2>
+        <p class="lede">
+          Each tech's stock is a live count: what they left with, what the day's work used, and
+          what needs a restock before tomorrow.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Alerts beat outages.</strong> Thresholds you set flag the shortfall the night before, not at the yard.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Usage is automatic.</strong> Station refills and field add-ons draw down stock without a separate count.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="Per-tech truck inventory showing bag and deodorizer counts with a low stock alert and restock action">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Inventory &middot; by truck</span>
+              <div class="mk-sub">3 trucks &middot; updated from today's visits</div>
+            </div>
+            <span class="mk-pill warning">1 low</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Marcus T.</span>
+              <span class="mk-faint">bags 140 &middot; deodorizer 6 &middot; liners 12</span>
+            </span>
+            <span class="mk-pill positive">stocked</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Dana R.</span>
+              <span class="mk-faint">bags 35 &middot; below the 50 threshold</span>
+            </span>
+            <span class="mk-pill warning">low: bags</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Priya K.</span>
+              <span class="mk-faint">bags 90 &middot; deodorizer 4 &middot; station refills 60</span>
+            </span>
+            <span class="mk-pill positive">stocked</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Restock Dana before Tuesday's HOA route</span>
+            <span class="mk-btn sage">Log restock</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in inventory</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

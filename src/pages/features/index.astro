@@ -3,121 +3,119 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Icon from '../../components/Icon.astro';
 
+// One flat catalog: every feature area is first class and every card
+// opens its own deep-dive page.
 const cards = [
   {
     href: '/features/scheduling-and-routes',
     icon: 'route',
     title: 'Scheduling and routes',
-    body: 'Recurring visits with preferred weekdays, blackout dates that bump forward on their own, zone pricing by postal prefix, a multi tech dispatch board, one click route optimization, and weather aware rescheduling.',
+    body: 'Recurring visits with preferred weekdays, blackout dates that bump forward on their own, zone pricing by postal prefix, a multi tech dispatch board, and one click route optimization.',
   },
   {
     href: '/features/field-app',
     icon: 'phone',
     title: 'The field app',
-    body: 'A mobile My Day view built for the truck. Works fully offline, queues photos until signal returns, requires completion photos, and puts safety hazards and gate codes in front of the tech before the gate.',
+    body: 'A mobile My Day view built for the truck. Works fully offline, queues photos until signal returns, requires completion photos, and puts hazards and gate codes in front of the tech.',
+  },
+  {
+    href: '/features/weather',
+    icon: 'route',
+    title: 'Weather',
+    body: 'The forecast laid over the schedule, storm-flagged visits, automatic rescheduling under your skip rules, and client notifications that go out on their own.',
   },
   {
     href: '/features/billing',
     icon: 'card',
     title: 'Billing and payments',
-    body: 'Prepaid credit ledgers or postpaid invoicing, Stripe with your own key and no markup, automatic overdue reminders, skip reason billing rules, and a client portal for paying invoices.',
+    body: 'Prepaid credit ledgers or postpaid invoicing, Stripe with your own key and no markup, automatic overdue reminders, and skip reason billing rules.',
+  },
+  {
+    href: '/features/client-portal',
+    icon: 'card',
+    title: 'Client portal',
+    body: 'Clients pay invoices online, see visit history with photos, update their card without calling, and sign in with a text code instead of a password.',
+  },
+  {
+    href: '/features/promotions',
+    icon: 'card',
+    title: 'Promotions',
+    body: 'Discount codes and seasonal specials that apply themselves on the invoice, retire on schedule, and report their redemptions and revenue impact.',
   },
   {
     href: '/features/commercial-and-hoa',
     icon: 'building',
     title: 'Commercial and HOA',
-    body: 'Per unit monthly billing for complexes and communities, pet waste station service routes, and DNA compliance tooling with chain of custody tracking and per dog registry IDs.',
+    body: 'Per unit monthly billing for complexes and communities, pet waste station service routes, and DNA compliance tooling with chain of custody tracking.',
+  },
+  {
+    href: '/features/leads',
+    icon: 'users',
+    title: 'Leads',
+    body: 'A lead inbox with its own pipeline: capture from your website form, quote from real zone pricing, convert to a scheduled client in one click.',
   },
   {
     href: '/features/neighbor-referrals',
     icon: 'pin',
     title: 'Neighbors and referrals',
-    body: 'Two way SMS on Twilio, email from your own domain, automatic Google review prompts, two sided referral credits, and a door to door canvassing map seeded from your existing clients.',
+    body: 'Two way SMS on Twilio, email from your own domain, automatic Google review prompts, two sided referral credits, and a door to door canvassing map.',
   },
   {
     href: '/features/ai-tools',
     icon: 'spark',
     title: 'AI tools',
-    body: 'An in house AI receptionist that answers texts and books visits, churn risk scoring, suggested zone pricing with the reasoning shown, dispatch suggestions, and a weekly business digest.',
+    body: 'An in house AI receptionist that answers texts and books visits, churn risk scoring, suggested zone pricing with the reasoning shown, and a weekly digest.',
   },
   {
     href: '/features/reporting',
     icon: 'chart',
     title: 'Reporting',
-    body: 'Revenue and outstanding balances, receivables aging, skip reason breakdowns, tech productivity, zone profitability, top clients, cohort retention, lifetime value, and churn drivers.',
-  },
-];
-
-// Every one of these is a real, first-class part of the product. The
-// ones with an href open the page where the deep dive lives.
-const extras = [
-  {
-    icon: 'users',
-    title: 'Leads',
-    body: 'A lead inbox with its own pipeline: capture from your website form, quote from real zone pricing, convert to a scheduled client in one click.',
-    href: '/features/scheduling-and-routes',
+    body: 'Revenue and outstanding balances, receivables aging, skip reason breakdowns, tech productivity, zone profitability, retention cohorts, and churn drivers.',
   },
   {
-    icon: 'route',
-    title: 'Weather board',
-    body: 'The forecast laid over the schedule, with every visit a storm will hit flagged before the morning it happens.',
-    href: '/features/scheduling-and-routes',
-  },
-  {
+    href: '/features/concerns',
     icon: 'chart',
     title: 'Concerns',
-    body: 'Client complaints tracked to resolution with an owner-visible queue, so nothing dies in a text thread.',
-    href: '/features/neighbor-referrals',
+    body: 'Client complaints tracked to resolution with an owner-visible queue, linked to the visit and its photos, with billing-correct outcomes.',
   },
   {
-    icon: 'card',
-    title: 'Promotions',
-    body: 'Discount codes and seasonal specials that apply themselves on the invoice instead of living in a sticky note.',
-    href: '/features/billing',
-  },
-  {
-    icon: 'card',
-    title: 'Client portal',
-    body: 'Clients view and pay invoices, see visit history and photos, and update their card without calling you.',
-    href: '/features/billing',
-  },
-  {
+    href: '/features/inventory',
     icon: 'box',
     title: 'Inventory',
-    body: 'Track bags, deodorizer, and gear per tech with low stock alerts before someone runs out mid route.',
-    href: '/features/field-app',
+    body: 'Bags, deodorizer, and gear tracked per truck with low stock alerts, usage drawn from field work, and supply costs in your margin numbers.',
   },
   {
+    href: '/features/roles-and-permissions',
     icon: 'users',
     title: 'Roles and permissions',
-    body: 'Owner, office manager, dispatcher, and tech each see only what their job needs, with custom sets on Scale.',
+    body: 'Owner, office manager, dispatcher, and tech each see only their job, financials are gated at the server, and custom sets arrive on Scale.',
   },
   {
+    href: '/for/franchise-owners',
     icon: 'network',
     title: 'Franchise',
-    body: 'Multi location rollup, automatic royalty billing, and a franchisor dashboard.',
-    href: '/for/franchise-owners',
+    body: 'Multi location rollup, automatic royalty billing, and a franchisor dashboard across every location in the network.',
   },
   {
+    href: '/switch',
     icon: 'import',
     title: 'Imports',
-    body: 'Named importers for five competitors plus CSV, each with a mapping preview and dry run.',
-    href: '/switch',
+    body: 'Named importers for five competitors plus CSV, each with a field mapping preview and a dry run before anything is written.',
   },
 ];
 ---
 
 <BaseLayout
   title="HoundStack features: every tool a pooper scooper business runs on"
-  description="The full HoundStack feature tour: scheduling, route optimization, offline field app, billing, commercial and HOA compliance, referral tools, AI tools, and reporting."
+  description="The full HoundStack feature catalog: scheduling, field app, weather, billing, client portal, promotions, HOA compliance, leads, referrals, AI tools, reporting, concerns, inventory, roles, franchise, and imports."
 >
   <section class="hub-hero">
     <div class="container">
       <span class="eyebrow">Features</span>
       <h1>Pooper scooper software features, all of them on one page</h1>
       <p class="lede">
-        Seven areas, one product. Each card below opens a deep dive with the full feature list and
-        a look at the actual screens.
+        Sixteen feature areas, one product. Every card opens a deep dive with the full feature
+        list and a look at the actual screens.
       </p>
     </div>
   </section>
@@ -137,35 +135,6 @@ const extras = [
           ))
         }
       </div>
-
-      <h2 class="extras-heading reveal">And the parts nobody puts on a homepage</h2>
-      <p class="lede reveal">
-        These are not fine print. Each one is a full feature in the product; the linked ones
-        open the page that covers them in depth.
-      </p>
-      <div class="grid-3 extras-grid">
-        {
-          extras.map((c) =>
-            c.href ? (
-              <a href={c.href} class="card reveal">
-                <span class="card-icon">
-                  <Icon name={c.icon as any} />
-                </span>
-                <h3>{c.title}</h3>
-                <p>{c.body}</p>
-              </a>
-            ) : (
-              <div class="card reveal">
-                <span class="card-icon">
-                  <Icon name={c.icon as any} />
-                </span>
-                <h3>{c.title}</h3>
-                <p>{c.body}</p>
-              </div>
-            )
-          )
-        }
-      </div>
     </div>
   </section>
 
@@ -176,13 +145,5 @@ const extras = [
   .hub-hero {
     padding-top: clamp(40px, 6vw, 72px);
     padding-bottom: clamp(32px, 5vw, 56px);
-  }
-
-  .extras-heading {
-    margin-top: 56px;
-  }
-
-  .extras-grid {
-    margin-top: 28px;
   }
 </style>

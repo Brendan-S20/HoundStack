@@ -1,0 +1,136 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'The forecast laid over the schedule',
+    body: 'One board with the week’s weather against the week’s visits. You see which days are at risk before the morning they happen.',
+  },
+  {
+    title: 'Storm-flagged visits, called out by name',
+    body: 'When a storm is coming, the affected visits are flagged on the dashboard and the weather board, not buried in a forecast you have to interpret.',
+  },
+  {
+    title: 'Automatic rescheduling under your rules',
+    body: 'Flagged visits move to the next valid day under your skip rules. Forty stops reschedule themselves instead of piling into a phone triage morning.',
+  },
+  {
+    title: 'Clients hear it from you first',
+    body: 'Weather reschedule notices go out by text and email automatically, so the storm never turns into an inbox full of “are you still coming?”',
+  },
+  {
+    title: 'Billing already knows',
+    body: 'A weather skip follows the billing rule you set for weather: credit, roll forward, or bill as agreed. The invoice comes out right without a correction pass.',
+  },
+  {
+    title: 'It costs what it costs, in dollars',
+    body: 'The reporting suite prices out weather by month, so you know what rain actually cost you and can plan staffing around the season.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Weather-aware scheduling for field service | HoundStack"
+  metaDescription="A weather board for pet waste removal: the forecast laid over the schedule, storm-flagged visits, automatic rescheduling under your skip rules, and client notifications that go out on their own."
+  h1="Weather that reschedules the day before the storm does"
+  eyebrow="Weather"
+  intro="Rain is the biggest uncontrolled variable in this trade. HoundStack watches the forecast against your actual schedule, flags the visits a storm will hit, moves them under your rules, and tells the clients, all before your phone starts ringing."
+  crumbLabel="Weather"
+  switchHref="/switch/from-sweep-and-go"
+  switchText="switching from Sweep&Go"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <MockFrame label="The weather board showing this week's forecast against scheduled visits with storm-flagged days">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Weather board &middot; this week</span>
+              <div class="mk-sub">forecast against 214 scheduled visits</div>
+            </div>
+            <span class="mk-pill warning">Thu flagged</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Tuesday &middot; clear, 74&deg;</span>
+              <span class="mk-faint">57 visits &middot; no action</span>
+            </span>
+            <span class="mk-pill positive">on schedule</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Thursday &middot; storms, 80% by 9am</span>
+              <span class="mk-faint">42 visits &middot; 9 in open-yard zones flagged</span>
+            </span>
+            <span class="mk-pill warning">9 flagged</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Proposed move</span>
+              <span class="mk-faint">9 visits to Friday, clients notified by text</span>
+            </span>
+            <span class="mk-btn sage">Apply reschedule</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Weather skips follow your billing rules automatically</span>
+          </div>
+        </MockFrame>
+      </div>
+      <div class="reveal">
+        <h2>The storm plan writes itself</h2>
+        <p class="lede">
+          The board proposes the move, you approve it, and the texts go out. What used to be a
+          6am scramble is one decision the night before.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Your rules decide.</strong> Which zones flag, where visits move, and what happens to the invoice all follow settings you control.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Blackouts respected.</strong> Rescheduled visits never land on a blackout date; they keep moving to the next valid day.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in weather</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import FeatureLayout from '../../layouts/FeatureLayout.astro';
+import MockFrame from '../../components/MockFrame.astro';
+import Icon from '../../components/Icon.astro';
+
+const features = [
+  {
+    title: 'A lead form that lives on your website',
+    body: 'A hosted form you link or embed: name, address, dogs, and frequency. Submissions land in the lead inbox with everything you need to quote.',
+  },
+  {
+    title: 'Quotes computed from your real zone pricing',
+    body: 'The lead’s address resolves to a zone, and the quote comes from that zone’s actual rates: base price, per extra dog, and area pricing if you use it.',
+  },
+  {
+    title: 'A pipeline with honest states',
+    body: 'New, contacted, quoted, won, lost. Every lead has a state and a next step, so follow-ups happen on purpose instead of by memory.',
+  },
+  {
+    title: 'One click from lead to routed client',
+    body: 'Convert and the client record, property, dogs, and recurring schedule are created together. The first visit can be on a route the same day.',
+  },
+  {
+    title: 'The AI receptionist feeds it',
+    body: 'When the receptionist books a new client by text, the lead and conversion are recorded the same way, so your pipeline numbers stay complete.',
+  },
+  {
+    title: 'Source tracking built in',
+    body: 'Website form, text-in, referral, canvassing. Each lead carries its source, so you learn which channel actually fills routes.',
+  },
+];
+---
+
+<FeatureLayout
+  metaTitle="Lead management for pet waste removal businesses | HoundStack"
+  metaDescription="A lead inbox built for scooper businesses: website lead capture, quotes computed from real zone pricing, a simple pipeline, and one-click conversion to a scheduled client."
+  h1="A lead inbox that turns a website form into a routed client"
+  eyebrow="Leads"
+  intro="Most lost leads in this trade are not lost to competitors, they are lost to the gap between the inquiry and the quote. Here the quote is computed from your zone pricing the moment the lead arrives, and converting creates the client, property, dogs, and schedule in one step."
+  crumbLabel="Leads"
+  switchHref="/switch/from-jobber"
+  switchText="switching from Jobber"
+>
+  <section class="section-alt">
+    <div class="container split">
+      <div class="reveal">
+        <h2>From inquiry to quoted in the same minute</h2>
+        <p class="lede">
+          The inbox shows every open lead with its computed quote and next step. Nothing waits
+          for someone to find a spreadsheet.
+        </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>The number is your number.</strong> Quotes come from the zone’s real rates, so accepting a lead never means honoring a guess.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Won leads route immediately.</strong> Conversion creates the recurring schedule, ready for the next optimization pass.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="The lead inbox showing new website leads with computed quotes and pipeline states">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Leads &middot; this week</span>
+              <div class="mk-sub">6 open &middot; 2 quoted today</div>
+            </div>
+            <span class="mk-pill positive">3 won</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Alvarez &middot; 98107</span>
+              <span class="mk-faint">website form &middot; 2 dogs, weekly &middot; quoted $22/visit</span>
+            </span>
+            <span class="mk-pill neutral">quoted</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Okafor &middot; 98118</span>
+              <span class="mk-faint">AI receptionist &middot; 1 dog, biweekly &middot; quoted $18/visit</span>
+            </span>
+            <span class="mk-pill positive">won</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Cedar Flats Apartments</span>
+              <span class="mk-faint">referral &middot; 48 units &middot; needs a walkthrough</span>
+            </span>
+            <span class="mk-pill warning">contacted</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Convert creates the client, property, dogs, and schedule</span>
+            <span class="mk-btn sage">Convert to client</span>
+          </div>
+        </MockFrame>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="reveal">Everything in leads</h2>
+      <div class="grid-2 detail-grid">
+        {
+          features.map((f) => (
+            <div class="card reveal">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</FeatureLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .detail-grid {
+    margin-top: 32px;
+  }
+</style>

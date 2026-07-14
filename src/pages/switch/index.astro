@@ -1,8 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaSection from '../../components/CtaSection.astro';
+import MockFrame from '../../components/MockFrame.astro';
 import Icon from '../../components/Icon.astro';
 import { COMPETITORS } from '../../lib/competitors';
+
+// Monogram tiles stand in for competitor logos: distinct, tidy, and no
+// trademark art to license. One accent per tool, reused nowhere else.
+const marks: Record<string, { mark: string; bg: string; fg: string; line: string }> = {
+  'from-sweep-and-go': { mark: 'SG', bg: '#eef3f8', fg: '#33566e', line: '#d4e0ea' },
+  'from-jobber': { mark: 'J', bg: '#f3efe6', fg: '#7a5f22', line: '#e6dcc4' },
+  'from-housecall-pro': { mark: 'HP', bg: '#f0eef6', fg: '#544a7d', line: '#dcd7ea' },
+  'from-time-to-pet': { mark: 'TP', bg: '#eaf4f0', fg: '#2f6b52', line: '#cfe4da' },
+  'from-gorilladesk': { mark: 'GD', bg: '#f6eeee', fg: '#7a3d3d', line: '#e8d4d4' },
+};
 
 const shortlines: Record<string, string> = {
   'from-sweep-and-go': 'The trade specific incumbent. The comparison comes down to the AI layer and the interface.',
@@ -31,30 +42,90 @@ const shortlines: Record<string, string> = {
 
   <section class="section-alt">
     <div class="container">
-      <div class="grid-2">
+      <div class="grid-3 switch-grid">
         {
-          COMPETITORS.map((c) => (
-            <a href={`/switch/${c.slug}`} class="card reveal">
-              <h3>Switching from {c.name} <Icon name="arrow-right" size={18} /></h3>
-              <p>{shortlines[c.slug]}</p>
-            </a>
-          ))
+          COMPETITORS.map((c) => {
+            const m = marks[c.slug];
+            return (
+              <a href={`/switch/${c.slug}`} class="card reveal switch-card">
+                <span class="switch-mark" style={`background:${m.bg}; color:${m.fg}; border-color:${m.line}`}>{m.mark}</span>
+                <h3>From {c.name} <Icon name="arrow-right" size={16} /></h3>
+                <p>{shortlines[c.slug]}</p>
+                <span class="switch-tag">Named importer &middot; dry run included</span>
+              </a>
+            );
+          })
         }
-        <div class="card reveal">
-          <h3>Coming from anywhere else?</h3>
+        <div class="card reveal switch-card">
+          <span class="switch-mark" style="background:var(--sage-wash); color:var(--sage-dark); border-color:#cfdccf">CSV</span>
+          <h3>From anywhere else</h3>
           <p>
             The CSV importer takes any export with clients, dogs, schedules, and balances. Same
             mapping preview, same dry run, same safety net.
           </p>
+          <span class="switch-tag">Works with any export</span>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="how reveal">
+  <section>
+    <div class="container how-split">
+      <div class="reveal">
         <h2>Every import works the same way</h2>
         <p class="lede">
           Upload or connect, preview the field mapping, run a dry run that summarizes what would
           change, then confirm. Until that last click, your HoundStack account is untouched.
         </p>
+        <ul class="checklist">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Nothing writes early.</strong> The dry run is a full trial pass; the flags it raises are yours to fix or accept first.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Everything arrives ready.</strong> Clients, dogs, schedules, and balances land routed and billable, not as a pile of rows.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <MockFrame label="An import dry run summary showing clients, dogs, and schedules ready with a few rows flagged for review">
+          <div class="mk-head">
+            <div>
+              <span class="mk-title">Import &middot; dry run</span>
+              <div class="mk-sub">trial pass, nothing written yet</div>
+            </div>
+            <span class="mk-pill neutral">step 3 of 4</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Clients</span>
+              <span class="mk-faint">with properties, gate codes, and notes</span>
+            </span>
+            <span class="mk-num">214</span>
+            <span class="mk-pill positive">ready</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Dogs</span>
+              <span class="mk-faint">names, breeds, and per dog pricing</span>
+            </span>
+            <span class="mk-num">412</span>
+            <span class="mk-pill positive">ready</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-cell">
+              <span class="mk-strong">Flagged for review</span>
+              <span class="mk-faint">3 clients missing a zip, 1 duplicate email</span>
+            </span>
+            <span class="mk-num">4</span>
+            <span class="mk-pill warning">review</span>
+          </div>
+          <div class="mk-row">
+            <span class="mk-faint">Confirm to run the real import</span>
+            <span class="mk-btn">Confirm import</span>
+          </div>
+        </MockFrame>
       </div>
     </div>
   </section>
@@ -71,13 +142,58 @@ const shortlines: Record<string, string> = {
     padding-bottom: clamp(32px, 5vw, 56px);
   }
 
-  .card h3 {
+  .switch-grid {
+    align-items: stretch;
+  }
+
+  .switch-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .switch-card h3 {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 8px;
   }
 
-  .how {
-    margin-top: 56px;
+  .switch-card p {
+    flex: 1;
+  }
+
+  .switch-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+
+  .switch-tag {
+    margin-top: 14px;
+    font-size: 0.78rem;
+    font-weight: 650;
+    color: var(--sage-dark);
+  }
+
+  .how-split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .how-split {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
   }
 </style>
