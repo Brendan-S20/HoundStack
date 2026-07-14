@@ -2,64 +2,192 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 
-// Only features already promised elsewhere on this site belong here.
-// Nothing gets a date, and nothing is marked live before it ships —
-// the same rule the pricing and integrations pages already follow.
-const buildingNow = [
+// The public roadmap, drawn the way this product thinks: as a route.
+// Three stops — building now, up next, down the road. No dates, and
+// nothing is marked live before it ships; shipped items move to the blog.
+//
+// Voting is anonymous and free: counts live in the HoundStack Supabase
+// project (roadmap_votes table, accessed only through two RPCs). One vote
+// per feature per browser, keyed by a random id in localStorage.
+
+const VOTE_URL = 'https://vsxzrbxublqrcfnxfwcu.supabase.co/rest/v1/rpc';
+const VOTE_KEY = 'sb_publishable_B_55iSEzlAh_falU_1DZPA_O8wSys0c';
+
+interface RoadmapItem {
+  slug: string;
+  icon: string;
+  title: string;
+  body: string;
+  promised?: { label: string; href: string };
+}
+
+interface Phase {
+  key: string;
+  stop: number;
+  title: string;
+  badge: string;
+  badgeClass: string;
+  blurb: string;
+  items: RoadmapItem[];
+}
+
+const phases: Phase[] = [
   {
-    icon: 'import',
-    title: 'QuickBooks two-way sync',
-    body: 'Accounting sync to QuickBooks is in development. Until it ships, every report and ledger in HoundStack exports cleanly in one click, so your bookkeeper is not waiting on us.',
-    promised: 'Promised on the integrations page',
-    href: '/integrations',
+    key: 'now',
+    stop: 1,
+    title: 'Building now',
+    badge: 'In development',
+    badgeClass: 'badge-amber',
+    blurb: 'Already promised on this site, already being built.',
+    items: [
+      {
+        slug: 'quickbooks-sync',
+        icon: 'import',
+        title: 'QuickBooks two-way sync',
+        body: 'Accounting sync to QuickBooks. Until it ships, every report and ledger exports cleanly in one click.',
+        promised: { label: 'Promised on the integrations page', href: '/integrations' },
+      },
+      {
+        slug: 'ai-voice-calls',
+        icon: 'spark',
+        title: 'Voice calls for the AI receptionist',
+        body: 'The receptionist books by text today. Call answering is next, announced when it ships, not before.',
+        promised: { label: 'Promised on the AI tools page', href: '/features/ai-tools' },
+      },
+      {
+        slug: 'api-access',
+        icon: 'network',
+        title: 'API access',
+        body: 'Programmatic access to your own data: an add-on on Growth, included on Scale and Enterprise.',
+        promised: { label: 'Promised on the pricing page', href: '/pricing' },
+      },
+    ],
   },
   {
-    icon: 'spark',
-    title: 'Voice calls for the AI receptionist',
-    body: 'The receptionist answers texts about pricing and availability and books visits today. Call answering is next, and it will be announced when it ships, not before.',
-    promised: 'Promised on the AI tools page',
-    href: '/features/ai-tools',
+    key: 'next',
+    stop: 2,
+    title: 'Up next',
+    badge: 'Queued',
+    badgeClass: 'badge-navy',
+    blurb: 'The strongest candidates once the current stop clears. Votes move these up.',
+    items: [
+      {
+        slug: 'payroll',
+        icon: 'card',
+        title: 'Payroll that knows how techs are paid',
+        body: 'Commission, per-visit bonus, and hourly logic done properly, straight from completed visits.',
+      },
+      {
+        slug: 'instant-estimates',
+        icon: 'pin',
+        title: 'Instant self-serve estimates by zip',
+        body: 'A prospective client types a zip code and dog count, gets a real price, and books without a phone call.',
+      },
+      {
+        slug: 'cross-sell',
+        icon: 'box',
+        title: 'Cross-sell workflows on inventory',
+        body: 'Deodorizing, haul-away, and tick treatments offered at the right moment, tied to the stock you already track.',
+      },
+      {
+        slug: 'switch-calculator',
+        icon: 'chart',
+        title: 'Interactive switch-cost calculator',
+        body: 'Put your team size and current tool into the switch guides and see the actual monthly difference.',
+      },
+    ],
   },
   {
-    icon: 'network',
-    title: 'API access',
-    body: 'Programmatic access to your own data. It will be an add-on on Growth and included on Scale and Enterprise, and it will be marked live on the pricing page when it ships.',
-    promised: 'Promised on the pricing page',
-    href: '/pricing',
+    key: 'later',
+    stop: 3,
+    title: 'Down the road',
+    badge: 'Exploring',
+    badgeClass: 'badge-muted',
+    blurb: 'Real candidates, honestly further out. Voting tells us which to pull forward.',
+    items: [
+      {
+        slug: 'franchise-analytics',
+        icon: 'network',
+        title: 'Deeper franchise analytics',
+        body: 'Cross-location trends and benchmarks layered on the rollup and royalty billing that exist today.',
+      },
+      {
+        slug: 'churn-prediction',
+        icon: 'spark',
+        title: 'Predictive churn scoring',
+        body: 'The AI Business Advisor grows from a weekly digest into genuine at-risk-client prediction.',
+      },
+      {
+        slug: 'integration-marketplace',
+        icon: 'route',
+        title: 'Zapier and an integration marketplace',
+        body: 'Built on top of the API access shipping first — connect HoundStack to the rest of your stack.',
+      },
+      {
+        slug: 'client-financing',
+        icon: 'users',
+        title: 'Financing for large one-time jobs',
+        body: 'Let your clients split a big cleanup or install over time, without you carrying the risk.',
+      },
+    ],
   },
 ];
 ---
 
 <BaseLayout
   title="Product roadmap | HoundStack"
-  description="What HoundStack is building next: QuickBooks two-way sync, voice calls for the AI receptionist, and API access. No dates, nothing marked live before it ships."
+  description="The HoundStack roadmap, drawn as a route: what's being built now, what's up next, and what's down the road. Vote on what matters to your business. No dates, nothing marked live before it ships."
 >
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">Roadmap</span>
-      <h1>What we are building, in the open</h1>
+      <h1>The roadmap, drawn like everything else here: as a route</h1>
       <p class="lede">
-        Everything on this page has already been promised somewhere on this site, so it lives here
-        too, in one place you can check back on. No dates, no teasers: an item is marked live when
-        it ships, not before, and shipped items move to the <a href="/blog">blog</a>.
+        Three stops. What we are building now, what is queued next, and what is honestly further
+        out. No dates, no teasers: an item is marked live when it ships, not before, and shipped
+        items move to the <a href="/blog">blog</a>. Upvote what your business needs — the counts
+        are real and they genuinely set the order of the next stop.
       </p>
     </div>
   </section>
 
-  <section class="section-alt">
+  <section class="section-alt roadmap-track" id="roadmap">
     <div class="container">
-      <h2 class="reveal">Building now</h2>
-      <div class="grid-3 roadmap-grid">
+      <div class="phases">
         {
-          buildingNow.map((item) => (
-            <div class="card reveal roadmap-card">
-              <span class="card-icon">
-                <Icon name={item.icon as any} />
-              </span>
-              <span class="badge badge-amber">In development</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-              <a href={item.href} class="roadmap-source">{item.promised}</a>
+          phases.map((phase) => (
+            <div class="phase reveal" data-phase={phase.key}>
+              <div class="phase-head">
+                <span class="phase-stop" aria-hidden="true">{phase.stop}</span>
+                <div>
+                  <h2>{phase.title}</h2>
+                  <p class="phase-blurb">{phase.blurb}</p>
+                </div>
+              </div>
+              <div class="phase-items">
+                {phase.items.map((item) => (
+                  <div class="card roadmap-card">
+                    <div class="rc-top">
+                      <span class="card-icon">
+                        <Icon name={item.icon as any} />
+                      </span>
+                      <span class={`badge ${phase.badgeClass}`}>{phase.badge}</span>
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                    {item.promised && (
+                      <a href={item.promised.href} class="rc-source">{item.promised.label}</a>
+                    )}
+                    <button type="button" class="vote-btn" data-vote={item.slug} aria-pressed="false">
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                      <span class="vote-label">Upvote</span>
+                      <span class="vote-count" data-count aria-live="polite"></span>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           ))
         }
@@ -69,7 +197,7 @@ const buildingNow = [
 
   <section>
     <div class="container reveal suggest-block">
-      <h2>What belongs on this list?</h2>
+      <h2>What belongs on this route?</h2>
       <p class="lede">
         The next entries come from operators, not from a brainstorm. If HoundStack is missing
         something your business needs, say so and it gets weighed against everything else here.
@@ -86,25 +214,247 @@ const buildingNow = [
     padding-bottom: clamp(32px, 5vw, 56px);
   }
 
-  .roadmap-grid {
-    margin-top: 32px;
+  .badge-muted {
+    background: var(--navy-wash);
+    color: var(--ink-muted);
   }
 
-  .roadmap-card .badge {
+  /* The route: three phase columns joined by a dashed sage line running
+     through the numbered stop markers, echoing the product's route maps. */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    position: relative;
+  }
+
+  .phases::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 24px;
+    right: 24px;
+    border-top: 3px dashed rgba(94, 132, 94, 0.55);
+    z-index: 0;
+  }
+
+  .phase {
+    position: relative;
+    z-index: 1;
+  }
+
+  .phase-head {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .phase-stop {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border: 3px solid var(--bg-alt);
+    box-shadow: 0 0 0 2px rgba(94, 132, 94, 0.55);
+  }
+
+  .phase[data-phase='now'] .phase-stop {
+    background: var(--sage);
+  }
+
+  .phase-head h2 {
+    font-size: 1.35rem;
+    margin-bottom: 2px;
+  }
+
+  .phase-blurb {
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .phase-items {
+    display: grid;
+    gap: 14px;
+  }
+
+  .roadmap-card {
+    padding: 20px;
+  }
+
+  .rc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .rc-top .card-icon {
+    width: 38px;
+    height: 38px;
     margin-bottom: 12px;
   }
 
   .roadmap-card h3 {
-    margin-bottom: 8px;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
   }
 
-  .roadmap-source {
-    display: inline-block;
+  .roadmap-card p {
+    font-size: 0.9rem;
+  }
+
+  .rc-source {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.82rem;
+  }
+
+  .vote-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     margin-top: 14px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1.5px solid var(--line);
+    background: #ffffff;
+    color: var(--navy);
+    font: inherit;
     font-size: 0.85rem;
+    font-weight: 650;
+    cursor: pointer;
+    transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+  }
+
+  .vote-btn:hover {
+    border-color: var(--sage);
+    color: var(--sage-dark);
+  }
+
+  .vote-btn[aria-pressed='true'] {
+    background: var(--sage-wash);
+    border-color: var(--sage);
+    color: var(--sage-dark);
+    cursor: default;
+  }
+
+  .vote-count {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+
+  .vote-btn[aria-pressed='true'] .vote-count {
+    color: var(--sage-dark);
   }
 
   .suggest-block .lede {
     max-width: 46em;
   }
+
+  @media (max-width: 960px) {
+    .phases {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    /* vertical route line on stacked layout */
+    .phases::before {
+      top: 24px;
+      bottom: 24px;
+      left: 21px;
+      right: auto;
+      border-top: none;
+      border-left: 3px dashed rgba(94, 132, 94, 0.55);
+    }
+  }
 </style>
+
+<script define:vars={{ VOTE_URL, VOTE_KEY }}>
+  // Free, anonymous roadmap voting against two locked-down Supabase RPCs.
+  // One vote per feature per browser; the voter id is a random UUID in
+  // localStorage. Everything fails soft: if the network call dies, the
+  // page still works, just without counts.
+  const headers = {
+    apikey: VOTE_KEY,
+    Authorization: `Bearer ${VOTE_KEY}`,
+    'Content-Type': 'application/json',
+  };
+
+  const voterId = (() => {
+    try {
+      let id = localStorage.getItem('hs-roadmap-voter');
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem('hs-roadmap-voter', id);
+      }
+      return id;
+    } catch {
+      return crypto.randomUUID();
+    }
+  })();
+
+  const hasVoted = (slug) => {
+    try {
+      return localStorage.getItem(`hs-voted-${slug}`) === '1';
+    } catch {
+      return false;
+    }
+  };
+
+  const buttons = document.querySelectorAll('[data-vote]');
+
+  const render = (counts) => {
+    buttons.forEach((btn) => {
+      const slug = btn.dataset.vote;
+      const el = btn.querySelector('[data-count]');
+      if (counts && slug in counts) el.textContent = String(counts[slug]);
+      if (hasVoted(slug)) {
+        btn.setAttribute('aria-pressed', 'true');
+        btn.querySelector('.vote-label').textContent = 'Upvoted';
+      }
+    });
+  };
+
+  render(null);
+
+  fetch(`${VOTE_URL}/roadmap_vote_counts`, { method: 'POST', headers, body: '{}' })
+    .then((r) => (r.ok ? r.json() : []))
+    .then((rows) => {
+      const counts = {};
+      for (const row of rows) counts[row.feature] = row.votes;
+      buttons.forEach((btn) => {
+        counts[btn.dataset.vote] = counts[btn.dataset.vote] ?? 0;
+      });
+      render(counts);
+    })
+    .catch(() => {});
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.vote;
+      if (hasVoted(slug)) return;
+      try {
+        localStorage.setItem(`hs-voted-${slug}`, '1');
+      } catch {}
+      const el = btn.querySelector('[data-count]');
+      el.textContent = String((parseInt(el.textContent, 10) || 0) + 1);
+      btn.setAttribute('aria-pressed', 'true');
+      btn.querySelector('.vote-label').textContent = 'Upvoted';
+      if (window.plausible) window.plausible('Roadmap Vote', { props: { feature: slug } });
+      fetch(`${VOTE_URL}/cast_roadmap_vote`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ p_feature: slug, p_voter: voterId }),
+      }).catch(() => {});
+    });
+  });
+</script>

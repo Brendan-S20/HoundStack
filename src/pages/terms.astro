@@ -1,81 +1,113 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Ported from the app's canonical terms at app.houndstack.com/legal/terms
+// so the two never disagree; update both together.
 ---
 
 <BaseLayout
-  title="Terms of service | HoundStack"
-  description="The HoundStack terms of service: the agreement covering accounts, pricing by active employees, acceptable use, data ownership, and cancellation."
+  title="Terms of Service | HoundStack"
+  description="The terms that govern your use of HoundStack."
 >
   <section class="page-hero">
     <div class="container-narrow prose">
       <span class="eyebrow">Legal</span>
-      <h1>Terms of service</h1>
-      <p class="muted">Last updated July 6, 2026. Draft pending legal review.</p>
+      <h1>Terms of Service</h1>
+      <p class="muted">Last updated: July 14, 2026</p>
 
-      <h2>The agreement</h2>
       <p>
-        These terms are an agreement between your business and HoundStack covering use of the
-        HoundStack product and this website. Creating an account means you accept them on behalf
-        of your business.
+        These terms govern your use of HoundStack, the field-service platform for pet-care
+        businesses available at app.houndstack.com. By creating an account or using the service
+        you agree to them. If you are accepting on behalf of a business, you confirm you have
+        authority to bind that business.
       </p>
 
-      <h2>Accounts and pricing</h2>
-      <p>
-        Plans are priced by tier as published on the <a href="/pricing">pricing page</a>. Each
-        tier includes an allowance of active employees; an active employee is anyone with a login
-        used at least once in the billing period, in any role. Additional active employees beyond
-        the allowance are billed at a flat $10 per month each, shown in the billing dashboard as
-        incurred. New accounts receive a 60 day free trial of the Launch plan, time based and not
-        contingent on usage. Yearly billing receives a 15% discount on the plan price. Plan
-        changes are prorated within the billing period.
-      </p>
+      <h2>Your account</h2>
+      <ul>
+        <li>You must provide accurate information and keep your credentials secure.</li>
+        <li>
+          You are responsible for activity under your account, including the actions of teammates
+          you invite and the roles you assign them.
+        </li>
+        <li>You must be at least 18 years old to use the service.</li>
+      </ul>
 
-      <h2>Your data</h2>
-      <p>
-        The business data you enter belongs to you. You can export it in one click at any time,
-        including after cancellation for a reasonable wind down period. We claim no ownership of
-        your client lists, records, or photos, and we do not sell them.
-      </p>
+      <h2>Your data and your customers</h2>
+      <ul>
+        <li>
+          You own the business data you store in HoundStack (clients, schedules, invoices,
+          photos, messages). You grant us the limited rights needed to host and process it to
+          provide the service.
+        </li>
+        <li>
+          You are responsible for having the right to store your customers' information, and for
+          obtaining any consent required to contact them, including texting consent. HoundStack
+          enforces SMS opt-outs automatically, but the underlying consent is yours to collect.
+        </li>
+        <li>
+          You will comply with applicable laws when using the service, including telemarketing
+          and messaging laws (such as the TCPA), consumer-protection laws, and data-protection
+          laws.
+        </li>
+      </ul>
 
-      <h2>Payments</h2>
-      <p>
-        Payment processing runs on your own Stripe account under Stripe's terms. HoundStack takes
-        no percentage of your payment volume. Subscription fees for HoundStack itself are billed
-        monthly.
-      </p>
+      <h2>Payments and billing</h2>
+      <ul>
+        <li>
+          Subscriptions are billed through Stripe on the plan you choose. Plans are priced per
+          active staff seat; adding seats adjusts your bill.
+        </li>
+        <li>
+          You can cancel at any time; paid access continues to the end of the billing period.
+          Fees already paid are non-refundable except where required by law.
+        </li>
+        <li>
+          Payments you collect from your own customers run through your connected Stripe account
+          and are subject to Stripe's terms. HoundStack is not a party to the service
+          relationship between you and your customers.
+        </li>
+      </ul>
 
       <h2>Acceptable use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>use the service to send spam or messages without required consent;</li>
+        <li>upload unlawful content or content that infringes others' rights;</li>
+        <li>probe, disrupt, or overload the service or attempt to access others' data;</li>
+        <li>resell or white-label the service without a written agreement with us.</li>
+      </ul>
       <p>
-        Use the product to run your business, not to break the law, spam, attempt unauthorized
-        access to other accounts, or resell the service without an agreement. SMS features must be
-        used in compliance with applicable messaging regulations, including obtaining consent to
-        text your clients.
+        We may suspend accounts that violate these terms, put the platform at risk, or generate
+        carrier complaints, after notice where practical.
       </p>
 
-      <h2>Availability and support</h2>
+      <h2>Service and support</h2>
       <p>
-        We work to keep the service available and to fix real problems quickly, and the service is
-        provided as is without a formal uptime guarantee on standard plans. Offline features in
-        the mobile app are designed to keep field work running during connectivity gaps.
+        We work to keep the service available and fast, but it is provided "as is" without
+        warranties of any kind. We may update features over time. Support is available at
+        <a href="mailto:support@houndstack.com">support@houndstack.com</a>.
       </p>
 
-      <h2>Cancellation</h2>
+      <h2>Limitation of liability</h2>
       <p>
-        You can cancel at any time. Access continues through the end of the paid period, your data
-        remains exportable, and we do not do exit fees or retention phone gauntlets.
+        To the fullest extent permitted by law, HoundStack will not be liable for indirect,
+        incidental, special, consequential, or punitive damages, or lost profits or revenue. Our
+        total liability for any claim is limited to the amounts you paid us in the twelve months
+        before the claim arose.
       </p>
 
-      <h2>Liability</h2>
+      <h2>Termination</h2>
       <p>
-        To the extent permitted by law, HoundStack's liability is limited to the amount you paid
-        for the service in the twelve months before a claim. Neither party is liable for indirect
-        or consequential damages.
+        You may stop using the service and cancel at any time. We may terminate or suspend
+        accounts for material breach of these terms. After termination you may request an export
+        of your data for a reasonable period before it is deleted.
       </p>
 
-      <h2>Changes to these terms</h2>
+      <h2>Changes and contact</h2>
       <p>
-        If these terms change materially, account owners will be notified by email before the
-        change takes effect. Continued use after notice means acceptance.
+        We may update these terms; material changes will be announced in the app or by email, and
+        continued use after the effective date constitutes acceptance. Questions:
+        <a href="mailto:support@houndstack.com">support@houndstack.com</a>.
       </p>
     </div>
   </section>
@@ -84,6 +116,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .page-hero {
     padding-top: clamp(40px, 6vw, 72px);
-    padding-bottom: clamp(48px, 6vw, 80px);
+    padding-bottom: clamp(48px, 7vw, 88px);
   }
 </style>

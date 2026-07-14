@@ -1,72 +1,137 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Ported from the app's canonical policy at app.houndstack.com/legal/privacy
+// so the two never disagree; update both together. The "This website"
+// section is the one marketing-site-specific addition (analytics + forms).
 ---
 
 <BaseLayout
-  title="Privacy policy | HoundStack"
-  description="The HoundStack privacy policy: what data the marketing site and product collect, how it is used, and the choices you have."
+  title="Privacy Policy | HoundStack"
+  description="How HoundStack collects, uses, and protects your data."
 >
   <section class="page-hero">
     <div class="container-narrow prose">
       <span class="eyebrow">Legal</span>
-      <h1>Privacy policy</h1>
-      <p class="muted">Last updated July 6, 2026. Draft pending legal review.</p>
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: July 14, 2026</p>
 
-      <h2>The short version</h2>
       <p>
-        We collect what is needed to run the service and nothing speculative. We do not sell your
-        data. We do not run advertising trackers on this site. Payment card data goes to Stripe
-        and never touches our servers.
+        HoundStack ("we", "us") provides field-service software for pet-care businesses at
+        app.houndstack.com. This policy explains what information we collect, how we use it, and
+        the choices you have. It applies to business users of HoundStack and, where noted, to
+        their customers whose information those businesses store in the platform.
       </p>
 
-      <h2>What this site collects</h2>
+      <h2>Information we collect</h2>
+      <ul>
+        <li>
+          <strong>Account information:</strong> your name, email address, password (stored
+          hashed), business name, and, if you choose to provide it, a mobile phone number and
+          texting consent.
+        </li>
+        <li>
+          <strong>Business data you store:</strong> client records, properties, pets, schedules,
+          visits, photos, invoices, messages, and related operational data your business enters
+          into the platform. Your business owns this data; we process it to run the service.
+        </li>
+        <li>
+          <strong>Payment information:</strong> payments are processed by Stripe. We never see or
+          store full card numbers; we keep references (such as card brand and last four digits)
+          that Stripe provides.
+        </li>
+        <li>
+          <strong>Usage and device information:</strong> log data, browser type, and similar
+          technical information used to keep the service secure and reliable. We use cookies and
+          similar storage only for sign-in sessions and app functionality, not for advertising.
+        </li>
+      </ul>
+
+      <h2>This website</h2>
       <p>
-        This marketing site uses Plausible Analytics, a privacy respecting tool that does not use
-        cookies and does not track you across sites. We see aggregate page views and referral
-        sources, not individual profiles. If you submit the contact or request access form, we
-        receive the name, business name, email, and message you typed, and we use them to respond
-        to you.
+        The marketing site at www.houndstack.com uses Plausible Analytics, a privacy-respecting
+        tool that does not use cookies and does not track you across sites; we see aggregate page
+        views and referral sources, not individual profiles. If you submit the contact or
+        request-access form, we receive the name, business name, email, and message you typed,
+        and we use them to respond to you.
       </p>
 
-      <h2>What the product collects</h2>
+      <h2>How we use information</h2>
+      <ul>
+        <li>To provide, maintain, and improve the service.</li>
+        <li>To authenticate sign-ins and secure accounts.</li>
+        <li>
+          To send communications you request or that are essential to the service: login codes,
+          visit and billing notifications, and account notices.
+        </li>
+        <li>To provide support and respond to requests.</li>
+        <li>To comply with legal obligations.</li>
+      </ul>
+      <p>We do not sell personal information. We do not use your data for advertising.</p>
+
+      <h2>Text messaging</h2>
       <p>
-        Accounts on app.houndstack.com store the business data you put into them: client and dog
-        records, service addresses, schedules, visit history and photos, gate codes and access
-        notes, hazard notes, invoices, and message history. This data belongs to the business that
-        entered it. We process it to provide the service and for nothing else.
+        Text messages are only sent with prior consent, and every message includes opt-out
+        instructions (reply STOP). <strong>No mobile information will be shared with third
+        parties or affiliates for marketing or promotional purposes.</strong> Text messaging
+        originator opt-in data and consent are not shared with any third parties, except with our
+        SMS delivery provider solely to deliver the messages you asked for. See the
+        <a href="/sms-consent">SMS Consent &amp; Messaging Policy</a> for details.
       </p>
 
-      <h2>Payments</h2>
+      <h2>Who we share information with</h2>
       <p>
-        Payments are processed by Stripe under your own Stripe account. Card numbers are entered
-        into and stored by Stripe directly and never reach HoundStack servers. Stripe's own
-        privacy policy governs that data.
+        We share data only with the service providers needed to run HoundStack, under contracts
+        that limit their use of it:
+      </p>
+      <ul>
+        <li>Supabase (database, authentication, and file storage)</li>
+        <li>Stripe (payment processing and billing)</li>
+        <li>Twilio (SMS delivery)</li>
+        <li>Resend (email delivery)</li>
+        <li>Cloud hosting and infrastructure providers</li>
+      </ul>
+      <p>
+        We may also disclose information if required by law, or as part of a business transfer
+        (in which case this policy continues to apply).
       </p>
 
-      <h2>Subprocessors</h2>
+      <h2>Data retention and deletion</h2>
       <p>
-        We use a small set of service providers to run the product: Stripe (payments), Twilio
-        (SMS), Google Maps (routing and navigation), Anthropic (AI features), and our hosting
-        providers. Each receives only what its function requires.
+        We keep your data while your account is active. You can request deletion of your account
+        and its data by emailing
+        <a href="mailto:support@houndstack.com">support@houndstack.com</a>; we delete or
+        anonymize it within a reasonable period, except where the law requires longer retention
+        (for example, billing records).
       </p>
 
-      <h2>Data isolation</h2>
+      <h2>Security</h2>
       <p>
-        HoundStack is multi tenant with row level isolation. Every record is scoped to a single
-        business account at the database layer, and no other customer can access your data.
+        Data is encrypted in transit, access is restricted by role-based controls and row-level
+        security, and payment credentials never touch our servers. No system is perfectly secure,
+        but we design for least access and defense in depth.
       </p>
 
-      <h2>Your choices</h2>
+      <h2>Your rights</h2>
       <p>
-        You can export your data in one click at any time, request deletion of your account and
-        its data, and unsubscribe from any non transactional email. Requests can be sent through
-        the <a href="/contact">contact form</a>.
+        Depending on where you live, you may have the right to access, correct, export, or delete
+        your personal information, or to object to certain processing. Contact us at
+        <a href="mailto:support@houndstack.com">support@houndstack.com</a> and we will honor
+        applicable requests. If you are a customer of a business that uses HoundStack, that
+        business controls your records; contact them directly and we will support their
+        fulfillment of your request.
       </p>
 
-      <h2>Changes</h2>
+      <h2>Children</h2>
       <p>
-        If this policy changes in a way that matters, account owners will be notified by email
-        before the change takes effect.
+        HoundStack is a business tool and is not directed to children under 13. We do not
+        knowingly collect information from children.
+      </p>
+
+      <h2>Changes and contact</h2>
+      <p>
+        We will post any changes to this policy on this page and update the date above. Questions:
+        <a href="mailto:support@houndstack.com">support@houndstack.com</a>.
       </p>
     </div>
   </section>
@@ -75,6 +140,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .page-hero {
     padding-top: clamp(40px, 6vw, 72px);
-    padding-bottom: clamp(48px, 6vw, 80px);
+    padding-bottom: clamp(48px, 7vw, 88px);
   }
 </style>
