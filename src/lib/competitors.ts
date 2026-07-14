@@ -95,7 +95,7 @@ export const COMPETITORS: Competitor[] = [
     metaTitle: 'Jobber alternative for pet waste removal | HoundStack',
     metaDescription:
       'Why scooper businesses outgrow Jobber: per user pricing and no per dog billing. How HoundStack compares and how the Jobber importer migrates your clients with a dry run.',
-    h1: 'A Jobber alternative for pet waste removal, priced by clients instead of users',
+    h1: 'A Jobber alternative built for pet waste removal, with per dog billing native',
     intro:
       'Jobber is excellent general purpose field service software. The question is not whether Jobber is good, it is whether a tool built for every trade can fit the specific way a scooping business bills, routes, and grows.',
     strengths:
