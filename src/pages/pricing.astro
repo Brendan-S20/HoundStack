@@ -26,7 +26,7 @@ const softwareSchema = {
     name: `HoundStack ${p.name}`,
     price: String(p.price),
     priceCurrency: 'USD',
-    description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each. Unlimited customers, dogs, jobs, routes, and zones.`,
+    description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each.`,
   })),
 };
 
@@ -73,18 +73,18 @@ const yearlyMonthly = (price: number) => {
 
 <BaseLayout
   title="Pooper scooper software pricing: Launch $79, Growth $199, Scale $449 | HoundStack"
-  description="HoundStack pricing by operational complexity, not headcount: Launch $79, Growth $199, Scale $449, Enterprise by contract. First teammates included, $10 flat after, 14 day free trial."
+  description="HoundStack pricing: Launch $79, Growth $199, Scale $449, Enterprise by contract. Employee allowance included on every tier, $10 flat per additional active employee, 14 day free trial."
   schema={[softwareSchema]}
 >
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">Pricing</span>
-      <h1>Pooper scooper software pricing built around complexity, not headcount</h1>
+      <h1>Pooper scooper software pricing that stays predictable</h1>
       <p class="lede">
-        Your plan is set by how complex the operation is, not how many customers you have earned
-        or how many people it takes to run it. Every tier includes an employee allowance, and one
-        more teammate is ${OVERAGE_RATE} a month flat. Customers, dogs, jobs, routes, zones, and
-        cities are unlimited on every plan.
+        Pick the tier that fits your operation. Every tier includes an employee allowance — your
+        first 3 teammates on Launch — and each additional active employee is ${OVERAGE_RATE} a
+        month flat, shown live in your billing dashboard as it happens, never a surprise line on
+        an invoice.
       </p>
     </div>
   </section>
@@ -184,8 +184,8 @@ const yearlyMonthly = (price: number) => {
       </div>
       <p class="plan-note reveal">
         Additional active employees are ${OVERAGE_RATE} per month flat on Launch, Growth, and
-        Scale. Operating across three cities costs the same as operating across one street: zones
-        and territories are structure, not a meter.
+        Scale, shown live in your billing dashboard as they are incurred. An active employee is
+        anyone with a login used at least once in the billing period.
       </p>
     </div>
   </section>

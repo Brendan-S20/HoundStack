@@ -84,7 +84,7 @@ export function planTotal(plan: Plan, employees: number): number | null {
 }
 
 // The complete feature model, one structure for everything a tier gets:
-// the per-tier deltas, the always-unlimited items, and the add-ons all
+// the per-tier deltas, the core-platform items, and the add-ons all
 // live here so the pricing page can render each tier's full list without
 // three disconnected sections a visitor has to mentally merge (and
 // without any of them drifting apart).
@@ -106,10 +106,10 @@ export interface TierFeatureGroup {
 
 export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
   {
-    category: 'Always unlimited',
+    category: 'Core platform',
     features: [
-      { label: 'Unlimited customers, dogs, jobs, and routes', tiers: [true, true, true, true] },
-      { label: 'Unlimited zones, cities, and territories', tiers: [true, true, true, true] },
+      { label: 'Customers, dogs, jobs, and routes', tiers: [true, true, true, true] },
+      { label: 'Zones, cities, and territories', tiers: [true, true, true, true] },
       { label: 'Scheduling, recurring services, and route optimization', tiers: [true, true, true, true] },
       { label: 'Estimates, invoicing, payments, and the client portal', tiers: [true, true, true, true] },
       { label: 'The mobile field app with offline support and photos', tiers: [true, true, true, true] },
@@ -180,8 +180,8 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
 // share one source of truth.
 export const PRICING_FAQS = [
   {
-    q: 'Why don’t you charge by number of customers or employees?',
-    a: 'Because growth is success, not a cost trigger. Winning more customers or hiring more people should never be the reason your software bill jumps. What actually changes as an operation matures is complexity, deeper reporting, more control, franchise structure, and that is what the tiers price.',
+    q: 'How does pricing work?',
+    a: 'Each tier is a flat monthly price with an employee allowance included: 3 active employees on Launch, 10 on Growth, 30 on Scale. Each additional active employee is a flat $10 per month, shown live in your billing dashboard. Moving up a tier also unlocks deeper tooling like advanced analytics, custom permissions, and franchise structure.',
   },
   {
     q: 'What counts as an active employee?',
