@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../lib/site';
+---
+
+<BaseLayout
+  title="HoundStack is coming soon: get early access"
+  description="HoundStack is almost ready. Join the early access list to get launch news, an early invite before the public doors open, and a say in what ships first."
+>
+  <section class="page-hero">
+    <div class="container contact-grid">
+      <div>
+        <span class="eyebrow">Coming soon</span>
+        <h1>HoundStack is almost ready</h1>
+        <p class="lede">
+          The app is in the final stretch before launch. Leave your details and you will hear
+          from us the moment the doors open, with early access invites going out before the
+          public launch.
+        </p>
+        <ul class="checklist ea-list">
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>First to know.</strong> A short email the day HoundStack opens, nothing before that except the occasional progress update.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>Early access invites.</strong> Spots ahead of the public launch, so you can have routes loaded before anyone else signs in.</span>
+          </li>
+          <li>
+            <Icon name="check" size={20} />
+            <span><strong>A say in what ships first.</strong> Tell us what your operation needs and it goes straight onto the <a href="/roadmap">roadmap</a> pile.</span>
+          </li>
+        </ul>
+        <p class="muted">
+          Have questions that cannot wait for launch? The <a href="/contact">contact form</a> reaches a person who will answer within one business day.
+        </p>
+      </div>
+      <div class="reveal">
+        <h2 class="ea-form-h">Join the early access list</h2>
+        <p class="muted ea-form-p">
+          Takes about twenty seconds. No spam, and you can unsubscribe with one click.
+        </p>
+        <LeadForm
+          endpoint={SITE.earlyAccessFormEndpoint}
+          eventName="Early Access Submitted"
+          messageLabel="What should HoundStack nail for your business? (optional)"
+          messagePlaceholder="Current software, team size, the thing you most want fixed"
+          submitLabel="Get early access"
+          redirectTo="/thank-you"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .ea-list {
+    margin-bottom: 20px;
+  }
+
+  .ea-form-h {
+    font-size: 1.3rem;
+  }
+
+  .ea-form-p {
+    margin-bottom: 20px;
+  }
+</style>

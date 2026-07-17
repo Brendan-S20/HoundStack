@@ -1,26 +1,26 @@
 ---
-// A single, polite get-started prompt: appears once per visitor after
+// A single, polite early-access prompt: appears once per visitor after
 // they have actually read (half the page or ~25 seconds), never again
 // after dismissal, and never on legal or form pages (BaseLayout skips
 // rendering it there). Escape, the X, and the backdrop all close it.
-import { SITE, TRIAL_DAYS } from '../lib/site';
+import { SITE } from '../lib/site';
 ---
 
 <div class="gsp" id="gsp" role="dialog" aria-modal="true" aria-labelledby="gsp-title" hidden>
   <div class="gsp-backdrop" data-gsp-close></div>
   <div class="gsp-card">
     <button class="gsp-x" type="button" aria-label="Close" data-gsp-close>&times;</button>
-    <span class="eyebrow">Try it on a real route</span>
-    <h2 id="gsp-title">Put HoundStack on one truck this week</h2>
+    <span class="eyebrow">Coming soon</span>
+    <h2 id="gsp-title">Be first in when HoundStack opens</h2>
     <p>
-      {TRIAL_DAYS} days free, no credit card, and named importers if you are coming from another
-      tool. Judge it on your own clients, not screenshots.
+      The app is in its final stretch before launch. Join the early access list for launch news
+      and an invite ahead of the public doors opening.
     </p>
     <div class="gsp-actions">
-      <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
+      <a href={SITE.earlyAccessUrl} class="btn btn-secondary">Coming soon</a>
       <a href="/contact" class="btn btn-ghost">Talk to us</a>
     </div>
-    <p class="gsp-note">Your first 3 teammates are included on every plan.</p>
+    <p class="gsp-note">Launch news only, no spam. Unsubscribe anytime.</p>
   </div>
 </div>
 

@@ -59,8 +59,7 @@ const path = Astro.url.pathname;
     </nav>
 
     <div class="header-ctas">
-      <a href={SITE.appUrl} class="signin-link" data-app-link>Sign in</a>
-      <a href={SITE.signupUrl} class="btn btn-secondary btn-header" data-app-link>Start free</a>
+      <a href={SITE.earlyAccessUrl} class="btn btn-secondary btn-header">Coming soon</a>
     </div>
 
     <button
@@ -79,9 +78,8 @@ const path = Astro.url.pathname;
     <ul>
       <li><a href="/features">Features</a></li>
       {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
-      <li><a href={SITE.appUrl} data-app-link>Sign in</a></li>
     </ul>
-    <a href={SITE.signupUrl} class="btn btn-secondary mobile-cta" data-app-link>Start free</a>
+    <a href={SITE.earlyAccessUrl} class="btn btn-secondary mobile-cta">Coming soon</a>
   </nav>
 </header>
 
@@ -247,12 +245,6 @@ const path = Astro.url.pathname;
     align-items: center;
     gap: 18px;
     flex-shrink: 0;
-  }
-
-  .signin-link {
-    color: var(--navy);
-    font-weight: 550;
-    font-size: 0.96rem;
   }
 
   .btn-header {

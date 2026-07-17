@@ -1,12 +1,12 @@
 export const SITE = {
   name: 'HoundStack',
   url: 'https://www.houndstack.com',
-  appUrl: 'https://app.houndstack.com',
-  signupUrl: 'https://app.houndstack.com/sign-up',
-  // Temporary form backend. Swap both endpoints to the real signup
-  // pipeline when it exists; the forms post plain FormData.
+  // The app at app.houndstack.com is not open to the public yet. Every
+  // button that used to send people there routes to the early access
+  // list instead; point them back at the app when it launches.
+  earlyAccessUrl: '/early-access',
+  earlyAccessFormEndpoint: 'https://formspree.io/f/xaqrezpw',
   contactFormEndpoint: 'https://formspree.io/f/REPLACE_CONTACT_FORM_ID',
-  requestAccessFormEndpoint: 'https://formspree.io/f/REPLACE_ACCESS_FORM_ID',
 } as const;
 
 // Pricing model: complexity tiers with an included employee allowance.

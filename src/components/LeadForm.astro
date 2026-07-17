@@ -1,15 +1,18 @@
 ---
-// Shared form for /contact and /request-access. Posts to a temporary
-// Formspree-style endpoint; swap endpoints in src/lib/site.ts when the
-// real pipeline exists. Tracks a distinct Plausible event per form.
+// Shared form for /contact and /early-access. Posts plain FormData to a
+// Formspree endpoint from src/lib/site.ts and tracks a distinct
+// Plausible event per form. On success it either swaps in the inline
+// confirmation or, when redirectTo is set, navigates to that page.
 interface Props {
   endpoint: string;
   eventName: string;
   messageLabel: string;
   messagePlaceholder: string;
   submitLabel: string;
-  confirmHeading: string;
-  confirmBody: string;
+  confirmHeading?: string;
+  confirmBody?: string;
+  /** Navigate here after a successful submit instead of confirming inline */
+  redirectTo?: string;
 }
 
 const {
@@ -20,6 +23,7 @@ const {
   submitLabel,
   confirmHeading,
   confirmBody,
+  redirectTo,
 } = Astro.props;
 ---
 
@@ -29,6 +33,7 @@ const {
   action={endpoint}
   novalidate
   data-event={eventName}
+  data-redirect={redirectTo}
 >
   <div class="field">
     <label for="lf-name">Your name</label>
@@ -59,10 +64,14 @@ const {
   </p>
 </form>
 
-<div class="form-confirm" hidden>
-  <h2>{confirmHeading}</h2>
-  <p class="lede">{confirmBody}</p>
-</div>
+{
+  !redirectTo && (
+    <div class="form-confirm" hidden>
+      <h2>{confirmHeading}</h2>
+      <p class="lede">{confirmBody}</p>
+    </div>
+  )
+}
 
 <style>
   .lead-form {
@@ -145,6 +154,10 @@ const {
         });
         if (!res.ok) throw new Error(String(res.status));
         window.plausible?.(form.dataset.event!);
+        if (form.dataset.redirect) {
+          window.location.assign(form.dataset.redirect);
+          return;
+        }
         form.hidden = true;
         confirm.hidden = false;
         confirm.scrollIntoView({ block: 'center', behavior: 'smooth' });

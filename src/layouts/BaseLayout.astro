@@ -11,15 +11,17 @@ interface Props {
   /** Extra JSON-LD blocks for this page */
   schema?: object[];
   ogType?: string;
+  /** Keep utility pages (e.g. the thank-you page) out of search results */
+  noindex?: boolean;
 }
 
-const { title, description, schema = [], ogType = 'website' } = Astro.props;
+const { title, description, schema = [], ogType = 'website', noindex = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname === '/' ? '/' : Astro.url.pathname.replace(/\/$/, ''), SITE.url).href;
 
 // The get-started prompt stays off pages where it would be noise or
 // worse: legal documents, the forms it would interrupt, and errors.
-const noPopup = ['/privacy', '/terms', '/sms-consent', '/contact', '/request-access', '/404'];
+const noPopup = ['/privacy', '/terms', '/sms-consent', '/contact', '/early-access', '/thank-you', '/404'];
 const showPopup = !noPopup.some((p) => Astro.url.pathname.startsWith(p));
 const ogImage = new URL('/og.png', SITE.url).href;
 
@@ -48,6 +50,7 @@ const allSchema = [organizationSchema, ...schema];
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
     <meta name="theme-color" content="#142937" />
