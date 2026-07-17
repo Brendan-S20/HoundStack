@@ -5,13 +5,13 @@ interface Props {
   heading?: string;
   body?: string;
   /** Pages where the sale starts with a conversation (e.g. HOA programs)
-      lead with the contact button instead of self-serve signup. */
+      lead with the contact button instead of the early access list. */
   leadWithContact?: boolean;
 }
 
 const {
-  heading = 'Try it on your own route',
-  body = 'Every account starts with a 14 day free trial, no credit card. Your first 3 teammates are included on every plan, and named import tools are ready if you are coming from somewhere else.',
+  heading = 'Be first through the door',
+  body = `HoundStack opens to the public soon. Join the early access list for launch news and an early invite, with a ${TRIAL_DAYS} day free trial waiting when the doors open.`,
   leadWithContact = false,
 } = Astro.props;
 ---
@@ -25,18 +25,18 @@ const {
         leadWithContact ? (
           <>
             <a href="/contact" class="btn btn-secondary">Talk to us</a>
-            <a href={SITE.signupUrl} class="btn btn-ghost" data-app-link>Start free</a>
+            <a href={SITE.earlyAccessUrl} class="btn btn-ghost">Coming soon</a>
           </>
         ) : (
           <>
-            <a href={SITE.signupUrl} class="btn btn-secondary" data-app-link>Start free</a>
+            <a href={SITE.earlyAccessUrl} class="btn btn-secondary">Coming soon</a>
             <a href="/contact" class="btn btn-ghost">Talk to us</a>
           </>
         )
       }
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
     </div>
-    <p class="cta-note">{TRIAL_DAYS} day free trial · No credit card · Cancel anytime, data stays exportable</p>
+    <p class="cta-note">Early invites go out before launch · Launch news only, no spam · Unsubscribe anytime</p>
   </div>
 </section>
 

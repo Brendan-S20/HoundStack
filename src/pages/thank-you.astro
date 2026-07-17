@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="You're on the list | HoundStack"
+  description="Thanks for joining the HoundStack early access list. We'll be in touch with launch news and your early invite."
+  noindex
+>
+  <section class="page-hero">
+    <div class="container-narrow text-center">
+      <span class="ty-mark"><Icon name="check" size={30} /></span>
+      <span class="eyebrow">You're on the list</span>
+      <h1>Thanks, we'll be in touch</h1>
+      <p class="lede ty-lede">
+        Your spot on the early access list is saved. Expect a short email when HoundStack opens
+        its doors, with early invites going out ahead of the public launch. Until then, we will
+        only write when there is something worth reading.
+      </p>
+      <div class="ty-actions">
+        <a href="/features" class="btn btn-primary">Explore the features</a>
+        <a href="/roadmap" class="btn btn-ghost">See the roadmap</a>
+      </div>
+      <p class="muted ty-note">
+        Something urgent in the meantime? <a href="/contact">Contact us</a> and a person will
+        answer within one business day.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: clamp(56px, 8vw, 96px);
+    padding-bottom: clamp(64px, 9vw, 110px);
+  }
+
+  .ty-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--sage-wash);
+    border: 1px solid var(--sage);
+    color: var(--sage-dark);
+    margin: 0 auto 18px;
+  }
+
+  .ty-lede {
+    max-width: 38em;
+    margin-inline: auto;
+  }
+
+  .ty-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+
+  .ty-note {
+    margin-top: 20px;
+    font-size: 0.92rem;
+  }
+</style>

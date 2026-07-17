@@ -149,11 +149,10 @@ const yearlyMonthly = (price: number) => {
               <p class="plan-blurb">{p.audience}</p>
               {p.price !== null ? (
                 <a
-                  href={SITE.signupUrl}
+                  href={SITE.earlyAccessUrl}
                   class={`btn plan-cta ${p.popular ? 'btn-secondary' : 'btn-ghost'}`}
-                  data-app-link
                 >
-                  Choose {p.name}
+                  Coming soon
                 </a>
               ) : (
                 <a href="/contact" class="btn btn-ghost plan-cta">
@@ -262,8 +261,8 @@ const yearlyMonthly = (price: number) => {
   </section>
 
   <CtaSection
-    heading="Run the trial on your real routes"
-    body={`Every account starts with ${TRIAL_DAYS} days of Launch free, no credit card, purely time based. Import your book with a dry run and judge it on your own operation.`}
+    heading="Lock in your place at the front"
+    body={`HoundStack opens soon, and every account will start with ${TRIAL_DAYS} days of Launch free, no credit card, purely time based. Join early access and be first to judge it on your own operation.`}
   />
 </BaseLayout>
 
