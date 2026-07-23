@@ -1,5 +1,5 @@
 ---
-title: How to handle a client who calls to complain their yard was missed
+title: Handling the client whose yard was missed
 description: The missed yard call is the most common complaint in this trade. A calm script, the proof to check first, and how to keep the same call from repeating.
 pubDate: 2026-06-22
 relatedFeature:

@@ -1,5 +1,5 @@
 ---
-title: What separates a good tech from a great one in this trade
+title: What separates a good tech from a great one
 description: Speed is table stakes. The techs who grow a scooping business are the ones clients mention by name, and the habits behind that are trainable.
 pubDate: 2026-06-29
 relatedFeature:
