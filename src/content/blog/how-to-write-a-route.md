@@ -1,5 +1,5 @@
 ---
-title: How to write a route so techs are not driving in circles
+title: Writing routes that stop the circling
 description: Route order is the biggest controllable cost in a scooping business. Here is how to build routes that hold up, from zone boundaries to the order you actually drive.
 pubDate: 2026-07-06
 relatedFeature:

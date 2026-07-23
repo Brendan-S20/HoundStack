@@ -30,7 +30,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'HoundStack',
   url: SITE.url,
-  logo: new URL('/logo-mark.svg', SITE.url).href,
+  logo: new URL('/icon-512.png', SITE.url).href,
   description:
     'HoundStack is business software built for pet waste removal companies: scheduling, routing, billing, field operations, and growth tools in one app.',
 };
@@ -52,7 +52,10 @@ const allSchema = [organizationSchema, ...schema];
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#142937" />
 
     <link
