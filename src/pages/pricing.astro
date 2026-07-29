@@ -33,30 +33,61 @@ const softwareSchema = {
 // Add-on detail blurbs. Availability itself lives in TIER_FEATURE_GROUPS
 // (rendered inside every tier card); this section only explains what
 // each add-on does.
+// MKT-1: this list is now the app's real add-on catalog (platform_addons),
+// with the app's own prices. It previously advertised four add-ons of which
+// THREE did not exist in the app at all — AI Business Advisor (never built;
+// the weekly digest it described is a plan feature, not a SKU), Referral
+// Programs (un-gated and included on every plan, not something to buy), and
+// Franchise Management (an Enterprise capability, already listed as such under
+// "Franchise and multi-brand") — while omitting five that do exist.
+//
+// Availability is stated per add-on rather than blanket "available at launch",
+// because two of these are not built yet and one is gated on regulatory
+// approval outside our control. Saying otherwise is the MKT-2 mistake again.
 const addons = [
   {
     icon: 'spark',
     name: 'AI Receptionist',
+    price: '$49/mo',
     body: 'Answers client texts about pricing and availability and books straight into the calendar. Texts today; voice calls are on the roadmap and will be labeled when live.',
     availability: 'Add-on, every plan',
   },
   {
-    icon: 'chart',
-    name: 'AI Business Advisor',
-    body: 'The weekly digest: revenue, completed visits, at risk clients, and one recommended action, computed from your real numbers and delivered every week.',
+    icon: 'message',
+    name: 'Managed texting',
+    price: '$29/mo',
+    body: 'We supply the number and handle carrier registration, so you are not standing up your own Twilio account to send appointment texts.',
+    // Gated on 10DLC/A2P brand and campaign approval, which is a registrar
+    // queue measured in days to weeks and not ours to accelerate.
+    availability: 'Coming soon',
+  },
+  {
+    icon: 'network',
+    name: 'White-label client portal',
+    price: '$19/mo',
+    body: 'Your own domain on the client portal, so the people you serve see your business rather than ours.',
+    availability: 'Coming soon',
+  },
+  {
+    icon: 'mail',
+    name: 'White-label emails',
+    price: '$19/mo',
+    body: 'Client emails sent from your domain, authenticated so they land in the inbox rather than the spam folder.',
+    availability: 'Coming soon',
+  },
+  {
+    icon: 'shield',
+    name: 'Priority support',
+    price: '$29/mo',
+    body: 'Front of the queue for support, with a same business day response commitment.',
     availability: 'Add-on, every plan',
   },
   {
     icon: 'users',
-    name: 'Referral Programs',
-    body: 'Referral codes with credit applied automatically to both the referrer and the new client. Built for the two doors down growth this trade actually runs on.',
-    availability: 'Add-on, every plan',
-  },
-  {
-    icon: 'network',
-    name: 'Franchise Management and Regional Dashboards',
-    body: 'Parent and child organizations, automatic royalty billing, and rollup reporting across every location in the network.',
-    availability: 'Included with Enterprise',
+    name: 'Done-for-you setup',
+    price: '$499 one time',
+    body: 'We import your clients, properties, and schedule from your current software and get you running, instead of handing you an import tool and wishing you luck.',
+    availability: 'One-time service',
   },
 ];
 
@@ -219,9 +250,14 @@ const yearlyMonthly = (price: number) => {
     <div class="container">
       <h2 class="reveal">What the add-ons actually do</h2>
       <p class="lede reveal">
-        Each tier card above lists which add-ons it can install; this is what they are. Everything
-        listed here is live in the product today; more are in development and will appear when
-        they ship.
+        {/* MKT-1: this used to promise "everything listed here is live in the
+            product today", which stopped being true the moment the list became
+            the real catalog — three of these are not built yet. The badge on
+            each card is now the honest answer, so the intro points at it
+            instead of making a blanket claim over the top of it. */}
+        Each tier card above lists which add-ons it can install; this is what they are. Each one
+        shows whether it is available now or still coming, and nothing is marked available before
+        it ships.
       </p>
       <div class="grid-2 addon-grid">
         {
@@ -231,8 +267,13 @@ const yearlyMonthly = (price: number) => {
                 <Icon name={a.icon as any} />
               </span>
               <h3>{a.name}</h3>
+              {/* MKT-1: prices come from the app's platform_addons catalog, so
+                  the site cannot quote a number the product does not charge. */}
+              <p class="addon-price">{a.price}</p>
               <p>{a.body}</p>
-              <span class="badge badge-sage addon-badge">{a.availability}</span>
+              <span
+                class={`badge addon-badge ${a.availability === 'Coming soon' ? 'badge-amber' : 'badge-sage'}`}
+              >{a.availability}</span>
             </div>
           ))
         }
@@ -525,6 +566,14 @@ const yearlyMonthly = (price: number) => {
 
   .addon-badge {
     margin-top: 14px;
+  }
+
+  /* MKT-1: the price sits directly under the name so the figure is impossible
+     to miss and impossible to confuse with the description below it. */
+  .addon-price {
+    margin-top: 4px;
+    font-weight: 600;
+    color: var(--ink);
   }
 
   .enterprise-block .lede {

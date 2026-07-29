@@ -6,7 +6,12 @@ export const SITE = {
   // list instead; point them back at the app when it launches.
   earlyAccessUrl: '/early-access',
   earlyAccessFormEndpoint: 'https://formspree.io/f/xaqrezpw',
-  contactFormEndpoint: 'https://formspree.io/f/REPLACE_CONTACT_FORM_ID',
+  // MKT-4: deliberately the SAME Formspree endpoint as early access — one
+  // inbox pre-launch. LeadForm posts a `_subject` and a `form` field so the two
+  // are still tellable apart once they arrive; without those the submissions
+  // are identical in shape. Split them onto separate endpoints if contact
+  // volume ever warrants its own inbox.
+  contactFormEndpoint: 'https://formspree.io/f/xaqrezpw',
 } as const;
 
 // Pricing model: complexity tiers with an included employee allowance.
@@ -114,6 +119,9 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
       { label: 'Estimates, invoicing, payments, and the client portal', tiers: [true, true, true, true] },
       { label: 'The mobile field app with offline support and photos', tiers: [true, true, true, true] },
       { label: 'Work orders, notifications, GPS navigation, and reporting', tiers: [true, true, true, true] },
+      // MKT-1: referrals were listed as a purchasable add-on. They are not a
+      // SKU — they are un-gated on every plan, so they belong here as included.
+      { label: 'Referral program with automatic credit to both sides', tiers: [true, true, true, true] },
     ],
   },
   {
@@ -144,11 +152,25 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
     ],
   },
   {
+    // MKT-1: mirrors the app's platform_addons catalog. Previously listed two
+    // SKUs the app has never had — AI Business Advisor (never built) and
+    // Referral Programs (which is included on every plan, not purchasable) —
+    // and omitted four that exist. Anything not yet built says so, in the same
+    // "not before it ships" spirit as the API row that was already here.
     category: 'Add-ons',
     features: [
-      { label: 'AI Receptionist', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
-      { label: 'AI Business Advisor', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
-      { label: 'Referral Programs', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'AI Receptionist ($49/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'Priority support ($29/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'Done-for-you setup ($499 one time)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      {
+        label: 'Managed texting (coming soon — pending carrier registration)',
+        tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
+      },
+      {
+        label: 'White-label client portal (coming soon)',
+        tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
+      },
+      { label: 'White-label emails (coming soon)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       {
         label: 'API access (coming soon, marked live here when it ships, not before)',
         tiers: [false, 'add-on', true, true],

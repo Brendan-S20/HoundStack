@@ -35,6 +35,17 @@ const {
   data-event={eventName}
   data-redirect={redirectTo}
 >
+  {/* MKT-4: the contact and early-access forms post to the SAME Formspree
+      endpoint, so without this a submission arrives with only name / business /
+      email / message and nothing saying which form it came from — two different
+      conversations landing in one inbox, indistinguishable. `eventName` was only
+      ever a data- attribute for analytics and is never submitted.
+
+      `_subject` is Formspree's own special field: it sets the notification
+      subject line. The plain `form` field carries the same value into the
+      submission body so exports and integrations can filter on it too. */}
+  <input type="hidden" name="_subject" value={`HoundStack — ${eventName}`} />
+  <input type="hidden" name="form" value={eventName} />
   <div class="field">
     <label for="lf-name">Your name</label>
     <input type="text" id="lf-name" name="name" autocomplete="name" required />
