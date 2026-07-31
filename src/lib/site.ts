@@ -226,6 +226,17 @@ export const PRICING_FAQS = [
     a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
   },
   {
+    // The app gates AI on a paid plan (BUILD-7, owner decision: every request
+    // costs real money to run and there is no metering yet). The site sold "AI
+    // tools" on the feature list and a free trial of "Launch" on the pricing
+    // page, and said nothing anywhere about the one not including the other —
+    // so the first a trialling customer would learn of it is a feature
+    // declining to run. Saying it up front costs a sentence; not saying it
+    // costs the trust of the person who found out the other way.
+    q: `Does the ${TRIAL_DAYS} day trial include the AI features?`,
+    a: 'No, and it is the only thing it leaves out. Everything else runs in full: scheduling, routing, invoicing, payments, the field app, the client portal. The AI features run on our own model accounts and every request costs us real money, so they switch on when a plan does. Nothing else about the trial is limited, and no card is needed to start it.',
+  },
+  {
     q: 'What happens if I go over my included employee allowance?',
     a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
   },
