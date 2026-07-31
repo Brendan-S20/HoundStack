@@ -7,7 +7,7 @@ import PostArt from '../components/PostArt.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
-import { SITE, TRIAL_DAYS, PRICING_FAQS } from '../lib/site';
+import { SITE, ORG_ID, PRODUCT_ID, TRIAL_DAYS, PRICING_FAQS } from '../lib/site';
 
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,20 +15,30 @@ const posts = (await getCollection('blog'))
 
 const postDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
+// MKT-6: shares its `@id` with the fuller block on /pricing so the two are
+// one product, and declares PreOrder for the same reason that page does —
+// every CTA on this site reads "Coming soon" and the app is not open yet, so
+// an InStock offer would put a buyable price in a search result for
+// something nobody can buy. Flip both when signup goes live.
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
+  '@id': PRODUCT_ID,
   name: 'HoundStack',
   applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Field Service Management',
   operatingSystem: 'Web',
   url: SITE.url,
   image: new URL('/og.png', SITE.url).href,
+  publisher: { '@id': ORG_ID },
   description:
     'Pet waste removal software: scheduling, route optimization, dispatch, offline mobile app, billing, commercial and HOA tools, and AI tools in one product.',
   offers: {
     '@type': 'Offer',
     price: '79',
     priceCurrency: 'USD',
+    availability: 'https://schema.org/PreOrder',
+    url: new URL('/pricing', SITE.url).href,
     description:
       'Launch plan at $79 per month with 3 active employees included, after a 14 day free trial with no credit card required.',
   },

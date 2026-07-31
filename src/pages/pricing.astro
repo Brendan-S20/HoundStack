@@ -7,6 +7,8 @@ import Icon from '../components/Icon.astro';
 import {
   PLANS,
   SITE,
+  ORG_ID,
+  PRODUCT_ID,
   TRIAL_DAYS,
   OVERAGE_RATE,
   ANNUAL_DISCOUNT,
@@ -14,18 +16,41 @@ import {
   TIER_FEATURE_GROUPS,
 } from '../lib/site';
 
+const pricingUrl = new URL('/pricing', SITE.url).href;
+
+// MKT-6. Two things this deliberately does NOT say:
+//
+// `availability` is PreOrder, not InStock. Every plan CTA on this page reads
+// "Coming soon" and links to the early access list, because the app is not
+// open yet. Publishing InStock would put a buyable price in a search result
+// for something nobody can buy — the same class of claim MKT-2 removed from
+// the copy, just in a place a human reviewer never reads. Flip it to InStock
+// in the same change that turns the CTAs into real signup links, not before.
+//
+// No `aggregateRating` / `review`: there are no customers yet, so there is
+// nothing to aggregate. Enterprise is absent from `offers` for the same
+// reason it has no number on the page — it is priced by contract, and a
+// schema Offer cannot say "by contract" without inventing a figure.
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
+  '@id': PRODUCT_ID,
   name: 'HoundStack',
   applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'Field Service Management',
   operatingSystem: 'Web',
   url: SITE.url,
+  description:
+    'Business software for pet waste removal companies: scheduling, route optimization, invoicing and payments, a field app, and a client portal.',
+  image: new URL('/og.png', SITE.url).href,
+  publisher: { '@id': ORG_ID },
   offers: PLANS.filter((p) => p.price !== null).map((p) => ({
     '@type': 'Offer',
     name: `HoundStack ${p.name}`,
     price: String(p.price),
     priceCurrency: 'USD',
+    availability: 'https://schema.org/PreOrder',
+    url: pricingUrl,
     description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each.`,
   })),
 };
@@ -93,16 +118,11 @@ const addons = [
 
 const faqs = PRICING_FAQS;
 
-// FAQ rich-result eligibility: the same questions rendered on the page.
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
+// MKT-6: there used to be a second, hand-built FAQPage here, passed to the
+// layout alongside the one <FaqBlock> already emits from the same array —
+// two identical FAQPage nodes on one page. FaqBlock is the single emitter;
+// it builds the schema from exactly the questions it renders, which is the
+// property that keeps the two from drifting.
 
 const discountPct = Math.round(ANNUAL_DISCOUNT * 100);
 
@@ -116,7 +136,7 @@ const yearlyMonthly = (price: number) => {
 <BaseLayout
   title="Pooper scooper software pricing | HoundStack"
   description="HoundStack pricing: Launch $79, Growth $199, Scale $449, Enterprise by contract. Employee allowance on every tier, $10 per extra active employee."
-  schema={[softwareSchema, faqSchema]}
+  schema={[softwareSchema]}
 >
   <section class="page-hero">
     <div class="container">
@@ -165,7 +185,8 @@ const yearlyMonthly = (price: number) => {
                     </span>
                     <span class="price-yearly">
                       <span class="plan-amount">${yearlyMonthly(p.price)}</span>
-                      <span class="plan-suffix">/mo billed yearly</span>
+                      <span class="plan-suffix">/mo</span>
+                      <span class="plan-billed">billed yearly</span>
                     </span>
                   </>
                 ) : (
@@ -348,12 +369,27 @@ const yearlyMonthly = (price: number) => {
     color: #ffffff;
   }
 
+  /* MKT-3: the tier cards used to be independently-sized boxes in a plain
+     grid, so nothing lined up across them. Each card's price, employee
+     allowance and audience blurb wrap to a different number of lines, which
+     staggered every row below: at 1280px the four "Coming soon" buttons sat
+     at four different heights and the "See all features" divider was spread
+     over 117px. `min-height: 4em` on the blurb was an attempt to hold one of
+     those rows level and was simply too short for the three-line blurbs.
+     A price comparison whose rows do not line up is not a comparison.
+
+     Each card is now a subgrid sharing the outer grid's row tracks, so every
+     row is sized by the tallest card and the four cards line up by
+     construction — no per-element magic numbers to go stale the next time
+     someone edits the copy in site.ts. Row gap is moved onto the cards
+     themselves because the outer grid's rows are now INSIDE the cards. */
   .plan-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    column-gap: 18px;
+    row-gap: 0;
     margin-top: 32px;
-    align-items: start;
+    margin-bottom: -18px;
   }
 
   @media (max-width: 1020px) {
@@ -371,19 +407,25 @@ const yearlyMonthly = (price: number) => {
   .plan-card {
     padding: 24px;
     position: relative;
+    margin-bottom: 18px;
+    /* 7 in-flow children: title, price, allowance, blurb, CTA, ladder,
+       feature list. The "Most popular" badge is absolutely positioned and
+       so is not a grid item. */
+    grid-row: span 7;
+    display: grid;
+    grid-template-rows: subgrid;
+    /* Equal on every card, so the subgrid tracks start at the same offset
+       inside each one; only the colour changes for the popular tier. */
+    border-width: 2px;
   }
 
+  /* The popular tier used to also be raised 8px above the row. A negative
+     margin moves a subgrid item's tracks with it, which would re-introduce
+     the misalignment this section exists to remove — and the 2px sage
+     border, the lift shadow and the badge already mark it out. */
   .plan-popular {
     border-color: var(--sage);
-    border-width: 2px;
     box-shadow: var(--shadow-lift);
-  }
-
-  /* margin, not transform, so the .reveal transition cannot cancel the lift */
-  @media (min-width: 1021px) {
-    .plan-popular {
-      margin-top: -8px;
-    }
   }
 
   .popular-badge {
@@ -408,7 +450,18 @@ const yearlyMonthly = (price: number) => {
   }
 
   .plan-grid.billing-yearly .price-yearly {
-    display: inline;
+    display: block;
+  }
+
+  /* MKT-3: the yearly suffix used to read "/mo billed yearly" on one line,
+     which wrapped mid-phrase inside a 235px card and left "yearly" orphaned
+     on its own line against the allowance below it. It is its own line now,
+     deliberately, so the wrap is the design rather than an accident. */
+  .plan-billed {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-faint);
   }
 
   .plan-grid.billing-yearly .price-monthly {
@@ -439,15 +492,20 @@ const yearlyMonthly = (price: number) => {
     margin-bottom: 10px;
   }
 
+  /* The 4em floor is gone: the shared row track is now sized by the tallest
+     blurb in the row, which the fixed height was never able to track. */
   .plan-blurb {
-    min-height: 4em;
     font-size: 0.92rem;
+    margin-bottom: 14px;
   }
 
+  /* align-self, or a card whose CTA row is taller than its own button
+     stretches the button to fill it. */
   .plan-cta {
     width: 100%;
     justify-content: center;
     margin-bottom: 4px;
+    align-self: start;
   }
 
   .plan-ladder {
@@ -455,6 +513,7 @@ const yearlyMonthly = (price: number) => {
     padding: 0;
     margin: 14px 0 0;
     display: grid;
+    align-content: start;
     gap: 9px;
     font-size: 0.88rem;
     color: var(--ink-muted);

@@ -14,6 +14,18 @@ export const SITE = {
   contactFormEndpoint: 'https://formspree.io/f/xaqrezpw',
 } as const;
 
+// MKT-6: the stable node id for the Organization block BaseLayout emits on
+// every page. Per-page schema (the pricing SoftwareApplication, blog
+// Articles) references this instead of restating the publisher, so search
+// engines resolve one entity rather than forty look-alikes.
+export const ORG_ID = `${SITE.url}/#organization`;
+
+// Likewise for the product. The homepage and /pricing both publish a
+// SoftwareApplication block; without a shared id they are two unrelated
+// products that happen to share a name, and the two Offer sets read as
+// contradicting each other.
+export const PRODUCT_ID = `${SITE.url}/#software`;
+
 // Pricing model: complexity tiers with an included employee allowance.
 // The estimator, the plan comparison, and the Offer schema all read from
 // this single source so the numbers cannot drift apart.

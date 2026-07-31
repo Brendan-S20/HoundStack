@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import GetStartedPopup from '../components/GetStartedPopup.astro';
-import { SITE } from '../lib/site';
+import { SITE, ORG_ID } from '../lib/site';
 
 interface Props {
   title: string;
@@ -24,15 +24,30 @@ const canonical = new URL(Astro.url.pathname === '/' ? '/' : Astro.url.pathname.
 const noPopup = ['/privacy', '/terms', '/sms-consent', '/contact', '/early-access', '/thank-you', '/404'];
 const showPopup = !noPopup.some((p) => Astro.url.pathname.startsWith(p));
 const ogImage = new URL('/og.png', SITE.url).href;
+const ogImageAlt = 'HoundStack: software for pet waste removal businesses';
 
+// MKT-6: `@id` so other pages' blocks (the pricing SoftwareApplication, the
+// blog's Article publisher) can point at this one organization rather than
+// each declaring a separate, unrelated entity with the same name.
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': ORG_ID,
   name: 'HoundStack',
   url: SITE.url,
   logo: new URL('/icon-512.png', SITE.url).href,
   description:
     'HoundStack is business software built for pet waste removal companies: scheduling, routing, billing, field operations, and growth tools in one app.',
+  // The one contact channel the site actually publishes — /privacy, /terms
+  // and /sms-consent all point at it. Deliberately no `sameAs`: there are no
+  // social profiles to link yet, and guessing at handles is how a knowledge
+  // panel ends up citing somebody else's account as ours.
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: 'support@houndstack.com',
+    availableLanguage: 'English',
+  },
 };
 
 const allSchema = [organizationSchema, ...schema];
@@ -68,17 +83,20 @@ const allSchema = [organizationSchema, ...schema];
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="HoundStack" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="HoundStack: software for pet waste removal businesses" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {allSchema.map((block) => (
       <script type="application/ld+json" set:html={JSON.stringify(block)} />

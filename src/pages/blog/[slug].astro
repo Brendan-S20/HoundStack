@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import PostArt from '../../components/PostArt.astro';
 import { getCollection, render } from 'astro:content';
-import { SITE } from '../../lib/site';
+import { SITE, ORG_ID } from '../../lib/site';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -24,8 +24,13 @@ const articleSchema = {
   datePublished: post.data.pubDate.toISOString(),
   image: new URL('/og.png', SITE.url).href,
   url: new URL(`/blog/${post.id}`, SITE.url).href,
-  author: { '@type': 'Organization', name: 'HoundStack' },
-  publisher: { '@type': 'Organization', name: 'HoundStack', url: SITE.url },
+  // MKT-6: point at the one Organization node BaseLayout emits rather than
+  // restating it, so the author and publisher resolve to the same entity as
+  // the rest of the site. No `dateModified`: the collection records only a
+  // publication date, and defaulting it to pubDate would assert a fact about
+  // revisions nobody has recorded.
+  author: { '@id': ORG_ID },
+  publisher: { '@id': ORG_ID },
 };
 ---
 

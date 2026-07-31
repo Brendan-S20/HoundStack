@@ -54,15 +54,9 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
+// MKT-6: the FAQPage this used to build by hand duplicated the one
+// <FaqBlock> emits further down from the same array. FaqBlock is the single
+// emitter, so the schema can only ever describe the questions on the page.
 ---
 
 <FeatureLayout
@@ -74,7 +68,6 @@ const faqSchema = {
   crumbLabel="AI tools"
   switchHref="/switch/from-sweep-and-go"
   switchText="switching from Sweep&Go"
-  schema={[faqSchema]}
 >
   <section class="section-alt">
     <div class="container split">
