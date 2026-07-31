@@ -124,9 +124,12 @@ const faqs = PRICING_FAQS;
 // it builds the schema from exactly the questions it renders, which is the
 // property that keeps the two from drifting.
 
-const discountPct = Math.round(ANNUAL_DISCOUNT * 100);
-
-/** Per-month price under yearly billing, formatted without trailing .00 */
+/** Per-month price under yearly billing, formatted without trailing .00.
+ *
+ *  Derived from ANNUAL_MONTHS_PAID, which is what the app actually charges:
+ *  ten months' price billed once a year. This used to apply a 15% discount the
+ *  product does not use, so the figure shown here was $1.32/mo higher than the
+ *  customer is charged on Launch. */
 const yearlyMonthly = (price: number) => {
   const v = price * (1 - ANNUAL_DISCOUNT);
   return Number.isInteger(v) ? String(v) : v.toFixed(2);
@@ -166,7 +169,7 @@ const yearlyMonthly = (price: number) => {
             Monthly
           </button>
           <button type="button" class="bt-opt" data-billing-opt="yearly" aria-pressed="false">
-            Yearly &middot; save {discountPct}%
+            Yearly &middot; 2 months free
           </button>
         </div>
       </div>

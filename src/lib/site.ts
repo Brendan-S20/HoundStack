@@ -31,7 +31,27 @@ export const PRODUCT_ID = `${SITE.url}/#software`;
 // this single source so the numbers cannot drift apart.
 export const TRIAL_DAYS = 14;
 export const OVERAGE_RATE = 10; // per additional active employee per month
-export const ANNUAL_DISCOUNT = 0.15;
+/**
+ * Annual billing is TWO MONTHS FREE — pay for ten, get twelve.
+ *
+ * This was 0.15, and the app disagreed. `platform_plans.annual_price_cents` is
+ * exactly ten times the monthly price on every live tier (Launch 7900 → 79000,
+ * Growth 19900 → 199000, Scale 44900 → 449000), and billing.functions.ts
+ * describes it in as many words: "year for annual = two months free". That is
+ * 16.7% off, not 15%.
+ *
+ * So the site quoted Launch at $67.15/mo when the customer is actually charged
+ * $790/yr, or $65.83/mo. Under-promising rather than over-promising, which is
+ * the harmless direction — but it is still a published price that is not the
+ * price, and the FAQ stated a percentage the product does not use.
+ *
+ * Expressed as months-paid rather than a percentage on purpose: the app's
+ * number is structural (10 × monthly), so deriving the same way means the two
+ * cannot drift again, and "two months free" is a better offer than "15% off"
+ * anyway.
+ */
+export const ANNUAL_MONTHS_PAID = 10;
+export const ANNUAL_DISCOUNT = 1 - ANNUAL_MONTHS_PAID / 12; // 0.1666…
 
 export interface Plan {
   name: string;
@@ -250,7 +270,7 @@ export const PRICING_FAQS = [
   },
   {
     q: 'Is there a discount for paying annually?',
-    a: 'Yes, 15% off the plan price, applied automatically when you choose yearly billing.',
+    a: 'Yes — pay for ten months and get twelve. You are billed once a year at ten times the monthly price, which works out about 17% cheaper, and it applies automatically when you choose yearly billing.',
   },
   {
     q: 'What happens to my data if I downgrade?',
