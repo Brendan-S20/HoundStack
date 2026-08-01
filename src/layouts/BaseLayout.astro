@@ -102,9 +102,13 @@ const allSchema = [organizationSchema, ...schema];
       <script type="application/ld+json" set:html={JSON.stringify(block)} />
     ))}
 
+    <!-- The apex and the www form are two different sites to Plausible. This
+         must match the host that actually serves the page — SITE.url, and so
+         every canonical URL published, is the www form — or the events are
+         sent and silently dropped against a property that never loads. -->
     <script
       defer
-      data-domain="houndstack.com"
+      data-domain="www.houndstack.com"
       src="https://plausible.io/js/script.outbound-links.js"
     ></script>
     <script is:inline>

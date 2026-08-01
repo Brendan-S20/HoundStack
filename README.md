@@ -10,13 +10,13 @@ Astro static site for houndstack.com. Built July 2026 against `houndstack-market
 
 ## Deploying to Vercel
 
-Zero config: import the repo in Vercel, framework preset "Astro". Build command `npm run build`, output `dist`. Set the production domain to `houndstack.com`.
+Zero config: import the repo in Vercel, framework preset "Astro". Build command `npm run build`, output `dist`. Set the production domain to `www.houndstack.com`, with the apex `houndstack.com` redirecting to it. The www form is authoritative — it is `SITE.url`, every canonical URL, the sitemap entry and the Plausible property.
 
 ## Before launch, in order
 
 1. ~~**Swap the form endpoints.**~~ Done (MKT-4). Both forms post to one real Formspree endpoint; `LeadForm` sends `_subject` and a `form` field so contact and early-access submissions are still tellable apart in a shared inbox. Split them onto separate endpoints if contact volume ever warrants it.
-2. **Add houndstack.com to Plausible.** *(Still outstanding — needs the owner's account.)* The tracking script is already on every page (`data-domain="houndstack.com"`, outbound links extension) and the custom events already fire from the code: `Contact Submitted` and `Request Access Submitted` (`LeadForm`), `Popup Shown` (`GetStartedPopup`), `Roadmap Vote` (`/roadmap`). Register the site in Plausible and add those as goals; until then the events are sent and dropped. Note the `data-domain` is the apex while `SITE.url` — and therefore every canonical — is `www`; make the Plausible site name match whichever host actually serves the site.
-3. **Google Search Console.** Verify the domain, then submit `https://houndstack.com/sitemap-index.xml`.
+2. **Add www.houndstack.com to Plausible.** *(Still outstanding — needs the owner's account.)* The tracking script is already on every page (`data-domain="www.houndstack.com"`, outbound links extension) and the custom events already fire from the code: `Contact Submitted` and `Request Access Submitted` (`LeadForm`), `Popup Shown` (`GetStartedPopup`), `Roadmap Vote` (`/roadmap`). Register the site in Plausible and add those as goals; until then the events are sent and dropped. Register the site in Plausible as **`www.houndstack.com`** — the `data-domain` on the page now says www, matching `SITE.url` and every canonical. An apex property would receive nothing.
+3. **Google Search Console.** Verify the domain, then submit `https://www.houndstack.com/sitemap-index.xml` — the host the sitemap and canonicals actually use.
 4. **Validate structured data** with Google's Rich Results Test on `/`, `/pricing`, one feature page, one switch page, and one blog post.
 5. **Legal review.** `/privacy` and `/terms` are drafts and say so in the page copy ("Draft pending legal review"). Remove that line once counsel signs off.
 

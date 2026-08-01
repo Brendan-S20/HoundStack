@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.houndstack.com/sitemap-index.xml
+
+# The www form is authoritative: SITE.url, every canonical and the Plausible
+# property all use it. The apex redirects here.
+Host: www.houndstack.com
