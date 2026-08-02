@@ -4,10 +4,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // Ported from the app's canonical policy at app.houndstack.com/legal/sms
 // (the public SMS program disclosure used for Twilio toll-free verification
 // and TCPA compliance) so the two never disagree; update both together.
+//
+// MKT-6: the title prop below used to read `&amp;`, which Astro escaped a
+// second time on the way into <title> — the browser tab and the search
+// result both showed the literal "SMS Consent &amp; Messaging Policy".
+// Props are plain strings; the HTML entity belongs only in the markup.
 ---
 
 <BaseLayout
-  title="SMS Consent &amp; Messaging Policy | HoundStack"
+  title="SMS Consent & Messaging Policy | HoundStack"
   description="How HoundStack collects consent for text messages, what we send, and how to opt out."
 >
   <section class="page-hero">

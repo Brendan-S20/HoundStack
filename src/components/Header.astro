@@ -306,6 +306,22 @@ const path = Astro.url.pathname;
       display: block;
     }
   }
+
+  /* Found during the MKT-3 responsive pass: the logo lockup renders 261px
+     wide, so logo + 28px gap + menu button needs 312px inside 24px gutters.
+     At 360px that lands exactly on the gutter and below it the header — and
+     therefore every page on the site — picks up a horizontal scrollbar
+     (329px of scroll width at 320px). Shrink the mark rather than the
+     gutters, so nothing else on the page moves. */
+  @media (max-width: 380px) {
+    .header-inner {
+      gap: 12px;
+    }
+
+    .logo-link img {
+      height: 28px;
+    }
+  }
 </style>
 
 <script>

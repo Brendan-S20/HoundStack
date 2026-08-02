@@ -6,15 +6,52 @@ export const SITE = {
   // list instead; point them back at the app when it launches.
   earlyAccessUrl: '/early-access',
   earlyAccessFormEndpoint: 'https://formspree.io/f/xaqrezpw',
-  contactFormEndpoint: 'https://formspree.io/f/REPLACE_CONTACT_FORM_ID',
+  // MKT-4: deliberately the SAME Formspree endpoint as early access — one
+  // inbox pre-launch. LeadForm posts a `_subject` and a `form` field so the two
+  // are still tellable apart once they arrive; without those the submissions
+  // are identical in shape. Split them onto separate endpoints if contact
+  // volume ever warrants its own inbox.
+  contactFormEndpoint: 'https://formspree.io/f/xaqrezpw',
 } as const;
+
+// MKT-6: the stable node id for the Organization block BaseLayout emits on
+// every page. Per-page schema (the pricing SoftwareApplication, blog
+// Articles) references this instead of restating the publisher, so search
+// engines resolve one entity rather than forty look-alikes.
+export const ORG_ID = `${SITE.url}/#organization`;
+
+// Likewise for the product. The homepage and /pricing both publish a
+// SoftwareApplication block; without a shared id they are two unrelated
+// products that happen to share a name, and the two Offer sets read as
+// contradicting each other.
+export const PRODUCT_ID = `${SITE.url}/#software`;
 
 // Pricing model: complexity tiers with an included employee allowance.
 // The estimator, the plan comparison, and the Offer schema all read from
 // this single source so the numbers cannot drift apart.
 export const TRIAL_DAYS = 14;
 export const OVERAGE_RATE = 10; // per additional active employee per month
-export const ANNUAL_DISCOUNT = 0.15;
+/**
+ * Annual billing is TWO MONTHS FREE — pay for ten, get twelve.
+ *
+ * This was 0.15, and the app disagreed. `platform_plans.annual_price_cents` is
+ * exactly ten times the monthly price on every live tier (Launch 7900 → 79000,
+ * Growth 19900 → 199000, Scale 44900 → 449000), and billing.functions.ts
+ * describes it in as many words: "year for annual = two months free". That is
+ * 16.7% off, not 15%.
+ *
+ * So the site quoted Launch at $67.15/mo when the customer is actually charged
+ * $790/yr, or $65.83/mo. Under-promising rather than over-promising, which is
+ * the harmless direction — but it is still a published price that is not the
+ * price, and the FAQ stated a percentage the product does not use.
+ *
+ * Expressed as months-paid rather than a percentage on purpose: the app's
+ * number is structural (10 × monthly), so deriving the same way means the two
+ * cannot drift again, and "two months free" is a better offer than "15% off"
+ * anyway.
+ */
+export const ANNUAL_MONTHS_PAID = 10;
+export const ANNUAL_DISCOUNT = 1 - ANNUAL_MONTHS_PAID / 12; // 0.1666…
 
 export interface Plan {
   name: string;
@@ -114,6 +151,9 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
       { label: 'Estimates, invoicing, payments, and the client portal', tiers: [true, true, true, true] },
       { label: 'The mobile field app with offline support and photos', tiers: [true, true, true, true] },
       { label: 'Work orders, notifications, GPS navigation, and reporting', tiers: [true, true, true, true] },
+      // MKT-1: referrals were listed as a purchasable add-on. They are not a
+      // SKU — they are un-gated on every plan, so they belong here as included.
+      { label: 'Referral program with automatic credit to both sides', tiers: [true, true, true, true] },
     ],
   },
   {
@@ -144,11 +184,25 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
     ],
   },
   {
+    // MKT-1: mirrors the app's platform_addons catalog. Previously listed two
+    // SKUs the app has never had — AI Business Advisor (never built) and
+    // Referral Programs (which is included on every plan, not purchasable) —
+    // and omitted four that exist. Anything not yet built says so, in the same
+    // "not before it ships" spirit as the API row that was already here.
     category: 'Add-ons',
     features: [
-      { label: 'AI Receptionist', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
-      { label: 'AI Business Advisor', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
-      { label: 'Referral Programs', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'AI Receptionist ($49/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'Priority support ($29/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      { label: 'Done-for-you setup ($499 one time)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      {
+        label: 'Managed texting (coming soon — pending carrier registration)',
+        tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
+      },
+      {
+        label: 'White-label client portal (coming soon)',
+        tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
+      },
+      { label: 'White-label emails (coming soon)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       {
         label: 'API access (coming soon, marked live here when it ships, not before)',
         tiers: [false, 'add-on', true, true],
@@ -192,6 +246,17 @@ export const PRICING_FAQS = [
     a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
   },
   {
+    // The app gates AI on a paid plan (BUILD-7, owner decision: every request
+    // costs real money to run and there is no metering yet). The site sold "AI
+    // tools" on the feature list and a free trial of "Launch" on the pricing
+    // page, and said nothing anywhere about the one not including the other —
+    // so the first a trialling customer would learn of it is a feature
+    // declining to run. Saying it up front costs a sentence; not saying it
+    // costs the trust of the person who found out the other way.
+    q: `Does the ${TRIAL_DAYS} day trial include the AI features?`,
+    a: 'No, and it is the only thing it leaves out. Everything else runs in full: scheduling, routing, invoicing, payments, the field app, the client portal. The AI features run on our own model accounts and every request costs us real money, so they switch on when a plan does. Nothing else about the trial is limited, and no card is needed to start it.',
+  },
+  {
     q: 'What happens if I go over my included employee allowance?',
     a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
   },
@@ -205,7 +270,7 @@ export const PRICING_FAQS = [
   },
   {
     q: 'Is there a discount for paying annually?',
-    a: 'Yes, 15% off the plan price, applied automatically when you choose yearly billing.',
+    a: 'Yes — pay for ten months and get twelve. You are billed once a year at ten times the monthly price, which works out about 17% cheaper, and it applies automatically when you choose yearly billing.',
   },
   {
     q: 'What happens to my data if I downgrade?',

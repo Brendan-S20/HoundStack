@@ -10,7 +10,12 @@ const features = [
     body: 'Built on Twilio and Claude, not a third party bolt on. It answers texts about pricing and availability and books directly into your calendar. Call answering is on the roadmap.',
   },
   {
+    // MKT-2: this is the AI Marketing Assistant, which the repo's own README
+    // records as broken at last direct test. It was written here in the present
+    // tense as a shipping feature. Presented as roadmap until it is retested
+    // and confirmed working — never describe a broken integration as available.
     title: 'AI marketing content',
+    status: 'coming soon',
     body: 'Drafts for social posts, email blasts, and review responses, generated from your actual services and prices, ready to edit and send.',
   },
   {
@@ -22,7 +27,10 @@ const features = [
     body: 'Pricing suggestions based on drive time density per zone, shown with the why behind each number so you can accept or ignore it with eyes open.',
   },
   {
+    // MKT-2: this is the AI Dispatcher — same story as the marketing drafts
+    // above. Roadmap until retested.
     title: 'Suggested dispatch reassignment',
+    status: 'coming soon',
     body: 'When the board gets lopsided, the AI proposes moves between techs. You stay in charge, it just spots the imbalance first.',
   },
   {
@@ -46,15 +54,9 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-};
+// MKT-6: the FAQPage this used to build by hand duplicated the one
+// <FaqBlock> emits further down from the same array. FaqBlock is the single
+// emitter, so the schema can only ever describe the questions on the page.
 ---
 
 <FeatureLayout
@@ -66,7 +68,6 @@ const faqSchema = {
   crumbLabel="AI tools"
   switchHref="/switch/from-sweep-and-go"
   switchText="switching from Sweep&Go"
-  schema={[faqSchema]}
 >
   <section class="section-alt">
     <div class="container split">
@@ -159,7 +160,11 @@ const faqSchema = {
       <div class="reveal">
         <h2>A business review you actually read</h2>
         <p class="lede">
-          Every Monday the AI Business Advisor reads your week: revenue, completed visits,
+          {/* MKT-1: "AI Business Advisor" was a SKU that was never built and is
+              retired from the catalog. The weekly digest it described is real —
+              it is a plan feature, not something to buy — so the capability
+              stays and only the retired product name goes. */}
+          Every Monday the weekly digest reads your week: revenue, completed visits,
           skips and why, churn scores. It sends one digest with exactly one recommended
           action, computed from your real numbers. Not a dashboard to check, an answer.
         </p>
@@ -170,7 +175,9 @@ const faqSchema = {
           </li>
           <li>
             <Icon name="check" size={20} />
-            <span><strong>Marketing drafts on tap.</strong> Social posts, email blasts, and review responses generated from your actual services and prices.</span>
+            {/* MKT-2: same unverified feature as the card below — a checkmark
+                bullet reads as "this ships today", so it says otherwise. */}
+            <span><strong>Marketing drafts on tap <span class="badge badge-amber">Coming soon</span></strong> Social posts, email blasts, and review responses generated from your actual services and prices.</span>
           </li>
         </ul>
       </div>
@@ -184,7 +191,10 @@ const faqSchema = {
         {
           features.map((f) => (
             <div class="card reveal">
-              <h3>{f.title}</h3>
+              <h3>
+                {f.title}
+                {f.status === 'coming soon' && <span class="badge badge-amber">Coming soon</span>}
+              </h3>
               <p>{f.body}</p>
             </div>
           ))

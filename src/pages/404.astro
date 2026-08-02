@@ -1,10 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// MKT-6: noindex as a second line of defence. A static host is supposed to
+// serve this body with a 404 status, which keeps it out of the index on its
+// own — but a misconfigured rewrite that returns 200 turns it into a soft
+// 404 that gets indexed and outranks nothing. The header costs nothing and
+// does not depend on the host being configured correctly. It is also why
+// this page has a canonical to itself rather than to /.
 ---
 
 <BaseLayout
   title="Page not found | HoundStack"
   description="That page does not exist. Head back to the HoundStack home page, features, or pricing."
+  noindex
 >
   <section class="nf">
     <div class="container text-center">

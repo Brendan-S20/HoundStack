@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CtaSection from '../components/CtaSection.astro';
 import stackedLogo from '../assets/HoundStackTextwLogo-trim.svg';
-import { SITE } from '../lib/site';
+import { SITE, ORG_ID } from '../lib/site';
 
 const personSchema = {
   '@context': 'https://schema.org',
@@ -10,11 +10,8 @@ const personSchema = {
   name: 'Brendan Schmidt',
   jobTitle: 'Founder',
   url: new URL('/about', SITE.url).href,
-  worksFor: {
-    '@type': 'Organization',
-    name: 'HoundStack',
-    url: SITE.url,
-  },
+  // MKT-6: the same Organization node BaseLayout emits, not a second one.
+  worksFor: { '@id': ORG_ID },
 };
 ---
 
