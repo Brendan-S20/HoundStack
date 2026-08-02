@@ -1,6 +1,7 @@
 ---
 import FeatureLayout from '../../layouts/FeatureLayout.astro';
 import MockFrame from '../../components/MockFrame.astro';
+import Screenshot from '../../components/Screenshot.astro';
 
 const features = [
   {
@@ -51,33 +52,17 @@ const features = [
         </p>
       </div>
       <div class="reveal">
-        <MockFrame label="Reporting dashboard showing monthly revenue by zone with an outstanding balance summary">
-          <div class="mk-head">
-            <span class="mk-title">Revenue by zone &middot; June</span>
-            <span class="mk-pill positive">on pace</span>
-          </div>
-          <div class="mk-bars" aria-hidden="true">
-            <span style="height: 46%"></span>
-            <span style="height: 72%" class="hot"></span>
-            <span style="height: 58%"></span>
-            <span style="height: 34%"></span>
-            <span style="height: 64%"></span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">Zone 2 north</span>
-              <span class="mk-faint">highest margin per drive minute</span>
-            </div>
-            <span class="mk-pill positive">most profitable</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">Overdue over 30 days</span>
-              <span class="mk-faint">4 clients &middot; reminders queued</span>
-            </div>
-            <span class="mk-num">$486</span>
-          </div>
-        </MockFrame>
+        {/* A real capture, replacing the recreation that used to sit here.
+            The recreation showed "Revenue by zone - June" with invented bars;
+            this is the actual /reports page of the demo organization, which is
+            seeded to a believable month rather than a flattering one — 93%
+            completion, not 100%, and two skipped visits with their reasons. */}
+        <Screenshot
+          src="/screenshots/05-reports-1440x900.png"
+          width={1440}
+          height={900}
+          alt="The Reports page: collected and net collected in cash, billed on accrual, outstanding balance, completed visits, a 93% completion rate, skipped visits, and receivables aged into current, 1-30, 31-60 and 60+ day buckets beside a breakdown of skip reasons."
+        />
       </div>
     </div>
   </section>

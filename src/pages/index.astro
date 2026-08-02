@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import AppScene from '../components/AppScene.astro';
 import CtaSection from '../components/CtaSection.astro';
 import MockFrame from '../components/MockFrame.astro';
+import Screenshot from '../components/Screenshot.astro';
 import PostArt from '../components/PostArt.astro';
 import FaqBlock from '../components/FaqBlock.astro';
 import Icon from '../components/Icon.astro';
@@ -183,10 +184,24 @@ const alsoInBox = [
         <span class="eyebrow">The product</span>
         <h2>Have a look around before launch</h2>
         <p class="lede">
-          The dispatch board, invoices, the AI receptionist, and zone profitability, shown the
-          way they look inside the product. Stylized recreations of real screens, not stock
-          mockups.
+          The owner's dashboard below is a real screenshot, taken from a live account. The four
+          panels under it are stylized recreations of the dispatch board, invoices, the AI
+          receptionist and zone profitability — accurate to the real screens, and labelled as
+          recreations rather than passed off as captures.
         </p>
+      </div>
+      {/* The lede used to describe the whole section as recreations. That was
+          true when it was written and is now only true of the four panels
+          below, so the sentence names which is which. A page that says
+          "screenshot" about a drawing is the kind of small dishonesty that
+          makes a buyer distrust the rest of it. */}
+      <div class="reveal shot-hero">
+        <Screenshot
+          src="/screenshots/01-dashboard-1440x900.png"
+          width={1440}
+          height={900}
+          alt="The owner's dashboard: active clients, collected month to date, open receivables with an overdue count, and visits done today, above a live map of the day's route, the tech's progress, and the overdue invoice list."
+        />
       </div>
       <div class="gallery-grid">
         <MockFrame label="The HoundStack dispatch board showing three techs' routes for the day" class="reveal">
@@ -542,6 +557,11 @@ const alsoInBox = [
 
   .alsobox-grid {
     margin-top: 36px;
+  }
+
+  .shot-hero {
+    max-width: 980px;
+    margin: 32px auto 40px;
   }
 
   .gallery-grid {
