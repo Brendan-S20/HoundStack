@@ -1,6 +1,7 @@
 ---
 import FeatureLayout from '../../layouts/FeatureLayout.astro';
 import Icon from '../../components/Icon.astro';
+import Screenshot from '../../components/Screenshot.astro';
 
 const features = [
   {
@@ -78,28 +79,47 @@ const features = [
             legible, which is why this slot takes a real image where the
             two-column gallery on the home page still cannot.
 
-            Captured from the demo organization by
-            scratchpad/qa3/shot-myday-desktop.mjs's sibling script, which
-            asserts from the DOM that no gate or lock-box code is inside the
-            viewport before it will write the file. The stop card genuinely
-            does show access codes to the assigned tech — that is the feature —
-            but a published image is a different audience from a tech at a
-            gate, so the capture is framed on properties that carry none. */}
-        <figure class="shot-phone">
-          <img
-            src="/screenshots/06-my-day-mobile-390x844.png"
-            width="390"
-            height="844"
-            loading="lazy"
-            decoding="async"
-            alt="The My Day screen on a phone: two of six visits done, the first stop showing the client, address, dog temperament and yard size, with Start, Complete, Skip and Take photo actions, and the second visit in progress."
-          />
-        </figure>
+            The earlier note here said the capture was "framed on properties
+            that carry none", because at the time the demo data DID contain
+            gate codes and the capture script's job was to keep them out of
+            frame. That is no longer how it works: `seed_demo_org` does not
+            write gate_code, lock_box_code or key_location at all, so no
+            framing decision is protecting anything. The stop card still shows
+            access codes to the assigned tech in a real account — that is the
+            feature — but the demo org has none to show. */}
+        <Screenshot
+          variant="phone"
+          src="/screenshots/06-my-day-mobile-390x844.png"
+          width={390}
+          height={844}
+          alt="The My Day screen on a phone: four of six visits done, each stop showing its sequence number, zone, client, address and ETA window with Navigate and Call actions, and the fifth visit in progress with a Resume bar pinned to the bottom."
+        />
       </div>
     </div>
   </section>
 
   <section>
+    <div class="container">
+      <div class="reveal">
+        <h2>The same day, at a desk</h2>
+        <p class="lede">
+          Nothing is phone-only. A dispatcher covering for a tech, or an owner checking on a
+          route from the office, gets the same list, the same ordering and the same actions in a
+          browser — including the Resume bar for whichever stop is open.
+        </p>
+      </div>
+      <div class="reveal shot-wide">
+        <Screenshot
+          src="/screenshots/07-my-day-desktop-1440x900.png"
+          width={1440}
+          height={900}
+          alt="My Day in a browser: four of six visits done with a progress bar, each stop numbered and showing its zone, client, address and ETA window with Navigate and Call buttons, and a Resume bar for the visit currently in progress."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
     <div class="container">
       <h2 class="reveal">Everything in the field app</h2>
       <div class="grid-2 detail-grid">
@@ -152,22 +172,13 @@ const features = [
 </FeatureLayout>
 
 <style>
+  .shot-wide {
+    max-width: 980px;
+    margin: 32px auto 0;
+  }
+
   /* Real screenshots carry their own chrome from the app, so they get a plain
      rounded frame rather than the drawn phone bezel MockFrame provides. */
-  .shot-phone {
-    margin: 0 auto;
-    max-width: 310px;
-  }
-
-  .shot-phone img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 28px;
-    border: 7px solid var(--navy);
-    box-shadow: var(--shadow-lift);
-  }
-
   .split {
     display: grid;
     grid-template-columns: 1.1fr 1fr;

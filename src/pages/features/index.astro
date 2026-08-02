@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Screenshot from '../../components/Screenshot.astro';
 import CtaSection from '../../components/CtaSection.astro';
 import Icon from '../../components/Icon.astro';
 
@@ -120,6 +121,24 @@ const cards = [
     </div>
   </section>
 
+  <section>
+    <div class="container">
+      <div class="reveal shot-wide">
+        {/* The hub promised "a look at the actual screens" and showed none.
+            The client record is the right one to lead with: it is where every
+            other feature area converges — the service plan, the property and
+            its dogs, the visit history, the invoices and the credit ledger all
+            hang off this page. */}
+        <Screenshot
+          src="/screenshots/03-client-record-1440x900.png"
+          width={1440}
+          height={900}
+          alt="A client record: the client's name and contact details, their service plan and cadence, the property with its dogs and access notes, and tabs for visit history, invoices and account credit."
+        />
+      </div>
+    </div>
+  </section>
+
   <section class="section-alt hub-cards">
     <div class="container">
       <div class="grid-2">
@@ -142,6 +161,11 @@ const cards = [
 </BaseLayout>
 
 <style>
+  .shot-wide {
+    max-width: 980px;
+    margin: 8px auto 0;
+  }
+
   .hub-hero {
     padding-top: clamp(40px, 6vw, 72px);
     padding-bottom: clamp(32px, 5vw, 56px);

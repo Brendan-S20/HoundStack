@@ -1,6 +1,7 @@
 ---
 import FeatureLayout from '../../layouts/FeatureLayout.astro';
 import RouteMap from '../../components/RouteMap.astro';
+import Screenshot from '../../components/Screenshot.astro';
 import Icon from '../../components/Icon.astro';
 
 const features = [
@@ -75,6 +76,27 @@ const features = [
       </div>
       <div class="reveal">
         <RouteMap />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="reveal">
+        <h2>And here it is, actually running</h2>
+        <p class="lede">
+          The same board in the product: today's six stops on the map in route order, the tech's
+          load and finish time on the left, and zone density on the right. The pins are real
+          addresses in the demo account, and the depot marker is where the truck starts.
+        </p>
+      </div>
+      <div class="reveal shot-wide">
+        <Screenshot
+          src="/screenshots/02-dispatch-board-1440x900.png"
+          width={1440}
+          height={900}
+          alt="The dispatch board: a date picker with Map and Board views, today's weather, a map of six visits in route order with the depot marked, and beneath it tech load showing four of six done with a finish time, next to zone density across two zones."
+        />
       </div>
     </div>
   </section>
@@ -213,6 +235,11 @@ const features = [
 </script>
 
 <style>
+  .shot-wide {
+    max-width: 980px;
+    margin: 32px auto 0;
+  }
+
   .split {
     display: grid;
     grid-template-columns: 1fr 1.1fr;

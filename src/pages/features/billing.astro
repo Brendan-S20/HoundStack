@@ -1,6 +1,6 @@
 ---
 import FeatureLayout from '../../layouts/FeatureLayout.astro';
-import MockFrame from '../../components/MockFrame.astro';
+import Screenshot from '../../components/Screenshot.astro';
 import Icon from '../../components/Icon.astro';
 
 const features = [
@@ -69,40 +69,16 @@ const features = [
         </ul>
       </div>
       <div class="reveal">
-        <MockFrame label="Billing screen showing skip reason rules applied to an invoice">
-          <div class="mk-head">
-            <span class="mk-title">Invoice draft &middot; Nguyen residence</span>
-            <span class="mk-pill neutral">March</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">4 completed visits</span>
-              <span class="mk-faint">weekly, 1 dog</span>
-            </div>
-            <span class="mk-num">$96.00</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">Skipped Mar 12</span>
-              <span class="mk-faint">reason: weather &middot; rule: waive</span>
-            </div>
-            <span class="mk-num">$0.00</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">Skipped Mar 19</span>
-              <span class="mk-faint">reason: locked gate &middot; rule: bill full</span>
-            </div>
-            <span class="mk-num">$24.00</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-strong">Total due</span>
-              <span class="mk-faint">auto reminder in 14 days</span>
-            </div>
-            <span class="mk-num">$120.00</span>
-          </div>
-        </MockFrame>
+        {/* The real invoice list from the demo organization. It shows what
+            the recreation could only assert: prepaid top-ups and postpaid
+            invoices sitting in one book, each with its own period, due date
+            and sent date. */}
+        <Screenshot
+          src="/screenshots/04-invoice-1440x900.png"
+          width={1440}
+          height={900}
+          alt="The Invoices page: outstanding balance, open invoice count and collected this month across the top, then a table of invoices by client showing period, due date, total and status, with prepaid top-ups and postpaid invoices side by side."
+        />
       </div>
     </div>
   </section>
