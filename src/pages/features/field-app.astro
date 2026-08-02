@@ -1,6 +1,5 @@
 ---
 import FeatureLayout from '../../layouts/FeatureLayout.astro';
-import MockFrame from '../../components/MockFrame.astro';
 import Icon from '../../components/Icon.astro';
 
 const features = [
@@ -74,41 +73,28 @@ const features = [
         </ul>
       </div>
       <div class="reveal">
-        <MockFrame variant="phone" label="Mobile stop card showing safety hazards, gate code, and photo requirements for a visit">
-          <div class="mk-head">
-            <div class="mk-cell">
-              <span class="mk-title">Hartley residence</span>
-              <span class="mk-sub">Stop 4 of 12 &middot; 9:40 ETA</span>
-            </div>
-            <span class="mk-pill positive">on time</span>
-          </div>
-          <div class="fa-hazards">
-            <span class="mk-pill negative">Aggressive dog</span>
-            <span class="mk-pill warning">Invisible fence</span>
-            <span class="mk-pill warning">Dog in yard during service</span>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-faint">Gate code</span>
-              <span class="mk-strong">4482#</span>
-            </div>
-            <div class="mk-cell">
-              <span class="mk-faint">Dogs</span>
-              <span class="mk-strong">3 (Bruno, Pepper, Ace)</span>
-            </div>
-          </div>
-          <div class="mk-row">
-            <div class="mk-cell">
-              <span class="mk-faint">Photos required</span>
-              <span class="mk-strong">Before &middot; After &middot; Issue</span>
-            </div>
-            <span class="mk-pill neutral">2 queued offline</span>
-          </div>
-          <div class="fa-actions">
-            <span class="mk-btn">Navigate</span>
-            <span class="mk-btn sage">Complete visit</span>
-          </div>
-        </MockFrame>
+        {/* A real screenshot, not a recreation. The phone frame is 310px wide
+            and the capture is 390px, so it renders at 79% — small text stays
+            legible, which is why this slot takes a real image where the
+            two-column gallery on the home page still cannot.
+
+            Captured from the demo organization by
+            scratchpad/qa3/shot-myday-desktop.mjs's sibling script, which
+            asserts from the DOM that no gate or lock-box code is inside the
+            viewport before it will write the file. The stop card genuinely
+            does show access codes to the assigned tech — that is the feature —
+            but a published image is a different audience from a tech at a
+            gate, so the capture is framed on properties that carry none. */}
+        <figure class="shot-phone">
+          <img
+            src="/screenshots/06-my-day-mobile-390x844.png"
+            width="390"
+            height="844"
+            loading="lazy"
+            decoding="async"
+            alt="The My Day screen on a phone: two of six visits done, the first stop showing the client, address, dog temperament and yard size, with Start, Complete, Skip and Take photo actions, and the second visit in progress."
+          />
+        </figure>
       </div>
     </div>
   </section>
@@ -166,6 +152,22 @@ const features = [
 </FeatureLayout>
 
 <style>
+  /* Real screenshots carry their own chrome from the app, so they get a plain
+     rounded frame rather than the drawn phone bezel MockFrame provides. */
+  .shot-phone {
+    margin: 0 auto;
+    max-width: 310px;
+  }
+
+  .shot-phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 28px;
+    border: 7px solid var(--navy);
+    box-shadow: var(--shadow-lift);
+  }
+
   .split {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
