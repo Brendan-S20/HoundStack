@@ -17,10 +17,10 @@ const posts = (await getCollection('blog'))
 const postDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
 // MKT-6: shares its `@id` with the fuller block on /pricing so the two are
-// one product, and declares PreOrder for the same reason that page does —
-// every CTA on this site reads "Coming soon" and the app is not open yet, so
-// an InStock offer would put a buyable price in a search result for
-// something nobody can buy. Flip both when signup goes live.
+// one product, and declares the same availability that page does. Both were
+// PreOrder while the CTAs read "Coming soon"; both are InStock now that they
+// point at signup. They have to move together — two blocks sharing an `@id`
+// and disagreeing about availability is one product contradicting itself.
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -38,7 +38,7 @@ const softwareSchema = {
     '@type': 'Offer',
     price: '79',
     priceCurrency: 'USD',
-    availability: 'https://schema.org/PreOrder',
+    availability: 'https://schema.org/InStock',
     url: new URL('/pricing', SITE.url).href,
     description:
       'Launch plan at $79 per month with 3 active employees included, after a 14 day free trial with no credit card required.',
@@ -132,7 +132,7 @@ const alsoInBox = [
           to it. Plans that stay predictable as your team grows.
         </p>
         <div class="hero-ctas">
-          <a href={SITE.earlyAccessUrl} class="btn btn-primary">Coming soon</a>
+          <a href={SITE.signupUrl} class="btn btn-primary">Get started</a>
           <a href="/pricing" class="btn btn-ghost">See pricing</a>
         </div>
         <p class="hero-note">

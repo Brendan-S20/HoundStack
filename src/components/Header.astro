@@ -59,7 +59,7 @@ const path = Astro.url.pathname;
     </nav>
 
     <div class="header-ctas">
-      <a href={SITE.earlyAccessUrl} class="btn btn-secondary btn-header">Coming soon</a>
+      <a href={SITE.signupUrl} class="btn btn-secondary btn-header">Get started</a>
     </div>
 
     <button
@@ -79,7 +79,7 @@ const path = Astro.url.pathname;
       <li><a href="/features">Features</a></li>
       {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
     </ul>
-    <a href={SITE.earlyAccessUrl} class="btn btn-secondary mobile-cta">Coming soon</a>
+    <a href={SITE.signupUrl} class="btn btn-secondary mobile-cta">Get started</a>
   </nav>
 </header>
 

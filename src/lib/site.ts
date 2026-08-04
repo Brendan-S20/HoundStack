@@ -1,9 +1,16 @@
 export const SITE = {
   name: 'HoundStack',
   url: 'https://www.houndstack.com',
-  // The app at app.houndstack.com is not open to the public yet. Every
-  // button that used to send people there routes to the early access
-  // list instead; point them back at the app when it launches.
+  // Signup is OPEN. Every launch CTA on the site points here.
+  //
+  // Absolute, and to app.houndstack.com specifically — that host is the one
+  // the app actually answers on, and a relative path would 404 on the
+  // marketing origin. Not www.app.houndstack.com: that redirect was retired.
+  signupUrl: 'https://app.houndstack.com/auth',
+  // Kept, and still live at /early-access. It is no longer a CTA — the
+  // launch buttons go to signup — but the page and its form still work, and
+  // the footer keeps a link for people who would rather be emailed than
+  // sign up today.
   earlyAccessUrl: '/early-access',
   earlyAccessFormEndpoint: 'https://formspree.io/f/xaqrezpw',
   // MKT-4: deliberately the SAME Formspree endpoint as early access — one
