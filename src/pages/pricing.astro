@@ -18,14 +18,16 @@ import {
 
 const pricingUrl = new URL('/pricing', SITE.url).href;
 
-// MKT-6. Two things this deliberately does NOT say:
+// MKT-6. One thing this deliberately does NOT say:
 //
-// `availability` is PreOrder, not InStock. Every plan CTA on this page reads
-// "Coming soon" and links to the early access list, because the app is not
-// open yet. Publishing InStock would put a buyable price in a search result
-// for something nobody can buy — the same class of claim MKT-2 removed from
-// the copy, just in a place a human reviewer never reads. Flip it to InStock
-// in the same change that turns the CTAs into real signup links, not before.
+// `availability` is InStock as of launch. It was PreOrder while every CTA read
+// "Coming soon" and pointed at the early access list — publishing InStock then
+// would have put a buyable price in a search result for something nobody could
+// buy, the same class of claim MKT-2 removed from the copy but in a place no
+// human reviewer reads. The note here said to flip it in the same change that
+// turns the CTAs into real signup links; this is that change, and the two moved
+// together for exactly that reason. If signup is ever closed again, both go
+// back together.
 //
 // No `aggregateRating` / `review`: there are no customers yet, so there is
 // nothing to aggregate. Enterprise is absent from `offers` for the same
@@ -49,7 +51,7 @@ const softwareSchema = {
     name: `HoundStack ${p.name}`,
     price: String(p.price),
     priceCurrency: 'USD',
-    availability: 'https://schema.org/PreOrder',
+    availability: 'https://schema.org/InStock',
     url: pricingUrl,
     description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each.`,
   })),
@@ -82,23 +84,26 @@ const addons = [
     name: 'Managed texting',
     price: '$29/mo',
     body: 'We supply the number and handle carrier registration, so you are not standing up your own Twilio account to send appointment texts.',
-    // Gated on 10DLC/A2P brand and campaign approval, which is a registrar
-    // queue measured in days to weeks and not ours to accelerate.
-    availability: 'Coming soon',
+    // Sellable from launch by owner decision. The 10DLC/A2P brand and
+    // campaign registration is a registrar queue measured in days to weeks
+    // and not ours to accelerate, so a customer who buys this before it
+    // clears has bought a number that cannot send yet. The body copy says we
+    // handle registration, which is true; it does not promise same-day.
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'network',
     name: 'White-label client portal',
     price: '$19/mo',
     body: 'Your own domain on the client portal, so the people you serve see your business rather than ours.',
-    availability: 'Coming soon',
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'mail',
     name: 'White-label emails',
     price: '$19/mo',
     body: 'Client emails sent from your domain, authenticated so they land in the inbox rather than the spam folder.',
-    availability: 'Coming soon',
+    availability: 'Add-on, every plan',
   },
   {
     icon: 'shield',
@@ -204,10 +209,10 @@ const yearlyMonthly = (price: number) => {
               <p class="plan-blurb">{p.audience}</p>
               {p.price !== null ? (
                 <a
-                  href={SITE.earlyAccessUrl}
+                  href={SITE.signupUrl}
                   class={`btn plan-cta ${p.popular ? 'btn-secondary' : 'btn-ghost'}`}
                 >
-                  Coming soon
+                  Get started
                 </a>
               ) : (
                 <a href="/contact" class="btn btn-ghost plan-cta">
@@ -375,8 +380,8 @@ const yearlyMonthly = (price: number) => {
   /* MKT-3: the tier cards used to be independently-sized boxes in a plain
      grid, so nothing lined up across them. Each card's price, employee
      allowance and audience blurb wrap to a different number of lines, which
-     staggered every row below: at 1280px the four "Coming soon" buttons sat
-     at four different heights and the "See all features" divider was spread
+     staggered every row below: at 1280px the four plan buttons (then reading
+     "Coming soon", now "Get started") sat at four different heights and the "See all features" divider was spread
      over 117px. `min-height: 4em` on the blurb was an attempt to hold one of
      those rows level and was simply too short for the three-line blurbs.
      A price comparison whose rows do not line up is not a comparison.
