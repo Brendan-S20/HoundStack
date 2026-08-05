@@ -61,9 +61,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </blockquote>
       <p>
         We record when consent was given, the number it covers, and the exact language shown.
-        Businesses using HoundStack to message their customers are responsible for collecting
-        equivalent consent from those customers, and the platform enforces opt-outs for them
-        automatically.
+      </p>
+
+      <h3>Consent from a business's own customers</h3>
+      <p>
+        A business using HoundStack cannot text one of its customers until that customer has
+        opted in. This is enforced by the platform, not left to the business: a customer record
+        with no consent on file cannot be sent a message by any route — manual messages,
+        appointment reminders, on-my-way notifications, or review requests. Consent is collected
+        one of two ways, and which one is recorded against every customer:
+      </p>
+      <ul>
+        <li>
+          <strong>The customer opts in themselves</strong> from their own client portal, signed
+          in with a link sent to them, by ticking an unticked-by-default box.
+        </li>
+        <li>
+          <strong>The business records consent obtained directly</strong> — in person, on a
+          signed service agreement, or over the phone — from the customer's page. These are
+          stored as staff-recorded so they are distinguishable in an audit.
+        </li>
+      </ul>
+      <p>The box the customer sees reads:</p>
+      <blockquote>
+        "I agree to receive service text messages about my appointments, visit updates, and
+        billing from this business at the number provided. Consent is not a condition of
+        purchase. Message and data rates may apply. Message frequency varies. Reply STOP to opt
+        out or HELP for help."
+      </blockquote>
+      <p>
+        Consent is stored with the timestamp, the number it was given for, that exact wording,
+        and how it was collected. Consent applies only to the number given: if a customer's phone
+        number is later changed, the consent is cleared automatically and they must opt in again
+        on the new number. Replying STOP overrides any consent on file immediately.
       </p>
 
       <h2>Message frequency and rates</h2>
