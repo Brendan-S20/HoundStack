@@ -93,17 +93,21 @@ const addons = [
   },
   {
     icon: 'network',
-    name: 'White-label client portal',
-    price: '$19/mo',
-    body: 'Your own domain on the client portal, so the people you serve see your business rather than ours.',
-    availability: 'Add-on, every plan',
-  },
-  {
-    icon: 'mail',
-    name: 'White-label emails',
-    price: '$19/mo',
-    body: 'Client emails sent from your domain, authenticated so they land in the inbox rather than the spam folder.',
-    availability: 'Add-on, every plan',
+    name: 'White label',
+    price: '$99/mo',
+    body: 'Your own domain on the client portal and client emails sent from your domain, authenticated so they land in the inbox. The people you serve see your business rather than ours.',
+    // Was two $19/mo add-ons, one for the portal and one for emails, until
+    // 2026-08-15. They are the same conversation about the customer's domain
+    // and the same DNS records, so selling them apart implied a choice
+    // operations does not offer — and $19 priced a logo rather than what is
+    // actually given up, which is HoundStack's name on every email and every
+    // portal page the customer's own clients ever see.
+    //
+    // "Setup is arranged after purchase" is here for the same reason the
+    // managed-texting entry above carries its note: this one is delivered by
+    // hand, per tenant, and the copy should not imply it is live the moment
+    // the card is charged.
+    availability: 'Add-on, every plan · setup arranged after purchase',
   },
   {
     icon: 'shield',
