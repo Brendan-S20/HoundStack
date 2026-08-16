@@ -84,12 +84,21 @@ const addons = [
     name: 'Managed texting',
     price: '$29/mo',
     body: 'We supply the number and handle carrier registration, so you are not standing up your own Twilio account to send appointment texts.',
-    // Sellable from launch by owner decision. The 10DLC/A2P brand and
-    // campaign registration is a registrar queue measured in days to weeks
-    // and not ours to accelerate, so a customer who buys this before it
-    // clears has bought a number that cannot send yet. The body copy says we
-    // handle registration, which is true; it does not promise same-day.
-    availability: 'Add-on, every plan',
+    // ── THE AVAILABILITY LINE NOW SAYS THE PART THE COMMENT USED TO ───────
+    //
+    // This comment previously ended: "The body copy says we handle
+    // registration, which is true; it does not promise same-day." That was a
+    // reason written down for us and not for the customer — the card said
+    // "Add-on, every plan", identical to four add-ons that work the moment you
+    // buy them, and nothing on the page distinguished it.
+    //
+    // Owner call, 2026-08-16, offered the choice of pulling it from sale: keep
+    // selling it, priced honestly. 10DLC/A2P brand and campaign registration is
+    // a carrier queue we submit to and do not control, so a buyer today is
+    // reserving a place rather than switching something on. The comparison
+    // table in site.ts has said "coming soon — pending carrier registration"
+    // all along; this card was the page disagreeing with itself.
+    availability: 'Add-on, every plan · texting starts when carrier registration clears',
   },
   {
     icon: 'network',
