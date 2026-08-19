@@ -205,11 +205,15 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
         label: 'Managed texting (coming soon — pending carrier registration)',
         tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
       },
+      // One line, because it is one add-on: the portal domain and the sending
+      // domain are the same conversation and the same DNS records, and they
+      // were never going to be delivered separately. Sold together at $99/mo
+      // from 2026-08-15; see the migration of the same date for why $19 each
+      // was the wrong number.
       {
-        label: 'White-label client portal (coming soon)',
+        label: 'White label — your domain on the portal and on client emails (setup arranged after purchase)',
         tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
       },
-      { label: 'White-label emails (coming soon)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       {
         label: 'API access (coming soon, marked live here when it ships, not before)',
         tiers: [false, 'add-on', true, true],
