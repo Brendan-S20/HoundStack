@@ -1,26 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import { SITE } from '../lib/site';
 ---
 
 <BaseLayout
   title="You're on the list | HoundStack"
-  description="Thanks for joining the HoundStack early access list. We'll be in touch with launch news and your early invite."
+  description="Thanks for getting in touch with HoundStack. We'll reply shortly, and you can start your free trial in the meantime."
   noindex
 >
   <section class="page-hero">
     <div class="container-narrow text-center">
       <span class="ty-mark"><Icon name="check" size={30} /></span>
-      <span class="eyebrow">You're on the list</span>
+      <span class="eyebrow">Message received</span>
       <h1>Thanks, we'll be in touch</h1>
       <p class="lede ty-lede">
-        Your spot on the early access list is saved. Expect a short email when HoundStack opens
-        its doors, with early invites going out ahead of the public launch. Until then, we will
-        only write when there is something worth reading.
+        A person will read this and reply by email, usually within one business day. You do not
+        have to wait for us to start: HoundStack is available now, and your free trial takes about
+        two minutes to set up.
       </p>
       <div class="ty-actions">
-        <a href="/features" class="btn btn-primary">Explore the features</a>
-        <a href="/roadmap" class="btn btn-ghost">See the roadmap</a>
+        <a href={SITE.signupUrl} class="btn btn-primary">Start your free trial</a>
+        <a href="/features" class="btn btn-ghost">Explore the features</a>
       </div>
       <p class="muted ty-note">
         Something urgent in the meantime? <a href="/contact">Contact us</a> and a person will
