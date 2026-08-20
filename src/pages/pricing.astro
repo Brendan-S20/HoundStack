@@ -585,6 +585,12 @@ const yearlyMonthly = (price: number) => {
     margin-top: -3px;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .plan-features summary::after {
+      transition: none;
+    }
+  }
+
   .plan-features[open] summary::after {
     transform: rotate(-135deg);
     margin-top: 3px;

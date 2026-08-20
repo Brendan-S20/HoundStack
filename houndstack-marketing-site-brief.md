@@ -190,15 +190,107 @@ See the note in section 3 on keeping these distinct. Both should be short forms.
 
 ## 8. Final checklist before this is called done
 
-- [ ] Every feature in section 2 has a real home somewhere on the site
-- [ ] No em dashes anywhere in any page's copy
-- [ ] No emoji used as icons anywhere
-- [ ] Mobile navigation works and was tested at 390px width, not assumed
-- [ ] Pricing page numbers match the live product exactly (Free, Fetch $59, Scoop $99, Haul $149, Pack Leader $2 per client, Kennel $1.50 per client, with the correct client bands for each)
-- [ ] Every page has unique title, meta description, and one H1
+Worked through on **2026-08-20**. Each line records what was actually measured
+rather than what was intended, because a ticked box with no method behind it is
+the thing this list exists to prevent.
+
+- [x] Every feature in section 2 has a real home somewhere on the site
+      — 57 of 59 matched against the rendered text of all 43 pages. The two
+      misses are "priced by active client count, never by seat" and "unlimited
+      staff on every plan": the product no longer works that way, so the site is
+      right not to say them. See the pricing line below.
+- [x] No em dashes anywhere in any page's copy
+      — 9 found and removed, 0 remain, re-checked against the BUILT HTML rather
+      than the source. Three were in `src/lib/site.ts` (two add-on labels and a
+      pricing FAQ answer) and would have been missed by a source scan that only
+      looked at `.astro` pages. Note for whoever re-runs this: a stripper that
+      removes `{/* */}` and `//` but not `<!-- -->` reports false positives in
+      `BaseLayout.astro`, where the dashes are in an HTML comment.
+- [x] No emoji used as icons anywhere
+      — full-Unicode scan of `src/`, not just the BMP ranges grep usually
+      reaches. Zero pictographic emoji. One `⚠` (U+26A0) remains at
+      `AppScene.astro:167` as the hazard chip's icon inside the hand-tuned app
+      mock; whether that is an emoji or a typographic symbol is a design call,
+      so it was left. `→` in link text is typography, not an icon.
+- [x] Mobile navigation works and was tested at 390px width, not assumed
+      — driven in Chromium with real taps at 390/384/360/320: opens, closes,
+      `aria-expanded` flips both ways, all six items on screen, the drawer's
+      links navigate, and no horizontal page scroll at 390/384/360. The toggle
+      measured **40×43px** and is now 44×44. **Known and not fixed:** at 320px
+      the home page has 24px of horizontal scroll from `.teaser-bands`, proven
+      pre-existing by reverting the header change and re-measuring. Fixing it is
+      a reflow decision, not a bug fix.
+- [x] Pricing page numbers match the live product exactly
+      — **and this line was the thing that was wrong, not the site.** It used to
+      name Free / Fetch $59 / Scoop $99 / Haul $149 / Pack Leader $2 per client /
+      Kennel $1.50 per client with client bands. Every one of those rows is
+      `is_active = false` in `platform_plans`. The live catalog is **Launch $79
+      (3 employees included), Growth $199 (10), Scale $449 (30), Enterprise by
+      contract**, all with $10 per extra employee and no client bands at all —
+      and that is exactly what the site renders. Rewriting the page to match the
+      old list would have published prices nothing can be bought at. Add-ons
+      verified against `platform_addons` too: AI receptionist $49, priority
+      support $29, done-for-you setup $499 one-time, managed texting $29, white
+      label $99 — and the two retired $19 white-label rows appear nowhere.
+- [x] Every page has unique title, meta description, and one H1
+      — parsed from all 43 built pages: no duplicate titles, no duplicate
+      descriptions, exactly one H1 each, canonical self-referencing. The one
+      exception is `/request-access`, the redirect stub to `/early-access`,
+      which is correct for a redirect and is excluded from the sitemap.
 - [ ] Structured data is in place and validated (Google's Rich Results Test, not just eyeballed)
-- [ ] Sitemap submitted to Search Console
-- [ ] All five switch pages are live, fair, and accurate about each competitor
-- [ ] Interactive pricing calculator lands exactly on the real band boundaries
-- [ ] Reduced motion setting is respected across every animation
-- [ ] Security and trust page is live before any HOA or commercial persona traffic is driven to the site
+      — **half done, and the half that needs you is the half that counts.**
+      Locally: all 77 JSON-LD blocks across 42 pages parse, `Organization` on
+      all 42, `SoftwareApplication` on `/` and `/pricing`, three `Offer`s at
+      $79/$199/$449 matching the catalog, `BreadcrumbList` on all 25
+      feature/switch/persona/blog pages, and no `Review` or `AggregateRating`
+      anywhere, as section 6 requires. Submitting to Google's Rich Results Test
+      needs a person.
+- [ ] Sitemap submitted to Search Console — **needs you.**
+- [x] All five switch pages are live, fair, and accurate about each competitor
+      — all five return 200 with one H1 and unique meta, and each concedes real
+      strengths before its gaps. Competitor prices are cited "as published July
+      2026" and are now six weeks old; the tier names and caps are the
+      unverifiable part. Two lines are worth your eye rather than mine:
+      Sweep&Go "there is no AI layer at all" (an absolute negative about someone
+      else's roadmap) and "built a decade later, and it shows too" (the one line
+      that reads as a dig rather than a comparison).
+- [x] Interactive pricing calculator lands exactly on the real band boundaries
+      — driven in-browser at n = 1, 2, 3, 4, 9, 10, 11, 29, 30, 31, 60. Exactly
+      `price + max(0, n − included) × $10` with no off-by-one at any allowance
+      edge. Found and fixed a real factual error while there: the footnote said
+      paying yearly "drops 15%", while annual is ten times monthly — about 17%,
+      which is what the FAQ and the toggle on the same page already said.
+- [x] Reduced motion setting is respected across every animation
+      — three were not guarded and now are: `LeadForm`'s `scrollIntoView`
+      passed an explicit `behavior: 'smooth'`, which overrides the CSS
+      `scroll-behavior: auto` the reduced-motion block sets; the pricing
+      `summary::after` rotation; and `RouteMap`'s `.stop` transition. Verified
+      from computed style in Chromium with `prefers-reduced-motion: reduce`
+      across 16 routes: nothing live, against 5 animations and 18 transitions on
+      the home page alone at `no-preference`.
+- [x] Security and trust page is live before any HOA or commercial persona traffic is driven to the site
+      — `/security` builds, has its own title, one H1 and unique description,
+      loads at all four widths, and is linked from the footer on every page plus
+      contextually from `/for/hoa-and-property-managers`.
+
+### Found while working the list, not fixed, and why
+
+Each is a judgement call about positioning or design rather than a defect:
+
+1. **AI action metering is invisible on the site.** The catalog meters AI usage
+   — `ai_actions_included` 200 / 750 / 2500 by tier, `ai_overage_cents_per_action`
+   10 — and nothing on the site mentions an allowance or a per-action charge. A
+   customer can incur a charge the site never describes. How to present it is a
+   pricing-presentation decision.
+2. **"Launching soon" versus signup being open.** `site.ts` says signup is open,
+   every CTA points at `app.houndstack.com/auth`, and the pricing schema
+   publishes `InStock` — but `/pricing` says "HoundStack opens soon" and the home
+   hero badge says "14 day free trial at launch".
+3. **The comparison table omits the price for managed texting and white label**
+   while giving it for the other three add-ons. Nothing stated is wrong, and both
+   prices are correct on the cards further down the same page.
+4. **`PricingEstimator` hardcodes `const OVERAGE = 10`** in its client script
+   while importing `OVERAGE_RATE` from `site.ts` for the server-rendered
+   footnote. Both are 10 today. It is the same drift risk that produced the 15%
+   error above.
+5. **320px horizontal overflow** on the home page, described under mobile nav.

@@ -44,7 +44,7 @@ const {
       `_subject` is Formspree's own special field: it sets the notification
       subject line. The plain `form` field carries the same value into the
       submission body so exports and integrations can filter on it too. */}
-  <input type="hidden" name="_subject" value={`HoundStack — ${eventName}`} />
+  <input type="hidden" name="_subject" value={`HoundStack: ${eventName}`} />
   <input type="hidden" name="form" value={eventName} />
   <div class="field">
     <label for="lf-name">Your name</label>
@@ -171,7 +171,8 @@ const {
         }
         form.hidden = true;
         confirm.hidden = false;
-        confirm.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        confirm.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
       } catch {
         errorBanner.hidden = false;
         button.disabled = false;

@@ -179,6 +179,18 @@
   .route-map.is-animated .stop:nth-child(5) { transition-delay: 1700ms; }
   .route-map.is-animated .stop:nth-child(6) { transition-delay: 2200ms; }
 
+  /* The animation only ever runs because the script below adds
+     .will-animate / .is-animated, and it does not add them under
+     prefers-reduced-motion. The transition on .stop is declared
+     unconditionally though, so it is still live in the computed style;
+     turn it off explicitly so nothing here can animate at all. */
+  @media (prefers-reduced-motion: reduce) {
+    .route-map #route-path,
+    .route-map .stop {
+      transition: none;
+    }
+  }
+
   .map-caption {
     display: flex;
     align-items: center;
