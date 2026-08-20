@@ -202,7 +202,7 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
       { label: 'Priority support ($29/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       { label: 'Done-for-you setup ($499 one time)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       {
-        label: 'Managed texting (coming soon — pending carrier registration)',
+        label: 'Managed texting (coming soon, pending carrier registration)',
         tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
       },
       // One line, because it is one add-on: the portal domain and the sending
@@ -211,7 +211,7 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
       // from 2026-08-15; see the migration of the same date for why $19 each
       // was the wrong number.
       {
-        label: 'White label — your domain on the portal and on client emails (setup arranged after purchase)',
+        label: 'White label: your domain on the portal and on client emails (setup arranged after purchase)',
         tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
       },
       {
@@ -281,7 +281,7 @@ export const PRICING_FAQS = [
   },
   {
     q: 'Is there a discount for paying annually?',
-    a: 'Yes — pay for ten months and get twelve. You are billed once a year at ten times the monthly price, which works out about 17% cheaper, and it applies automatically when you choose yearly billing.',
+    a: 'Yes. Pay for ten months and get twelve. You are billed once a year at ten times the monthly price, which works out about 17% cheaper, and it applies automatically when you choose yearly billing.',
   },
   {
     q: 'What happens to my data if I downgrade?',

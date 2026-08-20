@@ -253,10 +253,19 @@ const path = Astro.url.pathname;
 
   .nav-toggle {
     display: none;
+    place-items: center;
+    /* Measured at 390px and 360px: this was a 40x43 box, under the 44px
+       touch target, and it is the one control that opens the whole menu.
+       The extra 4px of width comes out of the gutter with a negative
+       margin rather than out of the header row, so the tight 380px logo
+       math below is working with the same 40px it always was. */
+    width: 44px;
+    height: 44px;
+    margin-right: -4px;
     background: none;
     border: none;
     color: var(--navy);
-    padding: 8px;
+    padding: 0;
     margin-left: auto;
     cursor: pointer;
   }
@@ -299,7 +308,7 @@ const path = Astro.url.pathname;
     }
 
     .nav-toggle {
-      display: block;
+      display: grid;
     }
 
     .mobile-nav:not([hidden]) {
