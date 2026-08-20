@@ -289,7 +289,11 @@ export const PRICING_FAQS = [
   },
   {
     q: `What happens after my ${TRIAL_DAYS} day trial?`,
-    a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Nothing is deleted either way; a paused account keeps its data and picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
+    // "Pauses" was promised here and defined nowhere, which let the app and
+    // this page describe day 15 differently. Owner decision 2026-08-20: it
+    // means GROWTH pauses, and the sentence now says which. The app enforces
+    // exactly this and nothing wider.
+    a: `You either convert to Launch at $${PLANS[0].price} per month or the account pauses. Pausing means new customers only: you cannot add a new client until you pick a plan, and the AI features need a plan as before. Everything you already have keeps working, including your existing clients, jobs and routes, your invoices and history, and the customer portal. Nothing is deleted either way, and the account picks up where it left off when a payment method is added. The trial is purely time based, nothing you do inside it triggers a charge.`,
   },
   {
     // The app gates AI on a paid plan (BUILD-7, owner decision: every request
