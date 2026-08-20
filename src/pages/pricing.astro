@@ -11,6 +11,7 @@ import {
   PRODUCT_ID,
   TRIAL_DAYS,
   OVERAGE_RATE,
+  AI_OVERAGE_RATE,
   ANNUAL_DISCOUNT,
   PRICING_FAQS,
   TIER_FEATURE_GROUPS,
@@ -53,7 +54,7 @@ const softwareSchema = {
     priceCurrency: 'USD',
     availability: 'https://schema.org/InStock',
     url: pricingUrl,
-    description: `$${p.price} per month with ${p.includedEmployees} active employees included. Additional active employees are $${OVERAGE_RATE} per month each.`,
+    description: `$${p.price} per month with ${p.includedEmployees} active employees and ${p.includedAiActions?.toLocaleString() ?? 'a negotiated allowance of'} AI actions included. Additional active employees are $${OVERAGE_RATE} per month each; additional AI actions are $${AI_OVERAGE_RATE.toFixed(2)} each.`,
   })),
 };
 
@@ -165,9 +166,10 @@ const yearlyMonthly = (price: number) => {
       <h1>Pooper scooper software pricing that stays predictable</h1>
       <p class="lede">
         Pick the tier that fits your operation. Every tier includes an employee allowance (your
-        first 3 teammates on Launch), and each additional active employee is ${OVERAGE_RATE} a
-        month flat, shown live in your billing dashboard as it happens, never a surprise line on
-        an invoice.
+        first 3 teammates on Launch) and a monthly allowance of AI actions. Each additional active
+        employee is ${OVERAGE_RATE} a month flat, and each AI action past your allowance is
+        ${AI_OVERAGE_RATE.toFixed(2)}. Both are shown live in your billing dashboard as they
+        happen, never a surprise line on an invoice.
       </p>
     </div>
   </section>
@@ -213,6 +215,11 @@ const yearlyMonthly = (price: number) => {
                 ) : (
                   <span class="plan-amount plan-custom">By contract</span>
                 )}
+              </p>
+              <p class="plan-emp">
+                {p.includedAiActions !== null
+                  ? `${p.includedAiActions.toLocaleString()} AI actions included each month`
+                  : 'Negotiated AI allowance'}
               </p>
               <p class="plan-emp">
                 {p.includedEmployees !== null
@@ -268,7 +275,10 @@ const yearlyMonthly = (price: number) => {
       <p class="plan-note reveal">
         Additional active employees are ${OVERAGE_RATE} per month flat on Launch, Growth, and
         Scale, shown live in your billing dashboard as they are incurred. An active employee is
-        anyone with a login used at least once in the billing period.
+        anyone with a login used at least once in the billing period. AI actions past your tier's
+        allowance (200 on Launch, 750 on Growth, 2,500 on Scale) are
+        ${AI_OVERAGE_RATE.toFixed(2)} each on the same invoice. One action is one AI request, so a
+        receptionist conversation counts once however many replies it takes.
       </p>
     </div>
   </section>

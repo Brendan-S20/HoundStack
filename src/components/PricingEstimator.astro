@@ -3,7 +3,7 @@
 // question up front routes franchise/multi-brand parents to the
 // Enterprise path; everyone else gets an employee stepper with live
 // totals across Launch, Growth, and Scale.
-import { PLANS, OVERAGE_RATE } from '../lib/site';
+import { PLANS, OVERAGE_RATE, AI_OVERAGE_RATE } from '../lib/site';
 
 const publishedPlans = PLANS.filter((p) => p.price !== null);
 ---
@@ -66,8 +66,9 @@ const publishedPlans = PLANS.filter((p) => p.price !== null);
     <p class="est-note">
       Teammates cost the same everywhere: your plan's allowance is included, and each one past it
       is ${OVERAGE_RATE} a month flat, shown live in your billing dashboard as it happens. The
-      tiers differ by tooling, not by how many people they allow. Pay yearly and you pay for ten
-      months instead of twelve.
+      tiers differ by tooling and by their monthly AI allowance (200 actions on Launch, 750 on
+      Growth, 2,500 on Scale, with anything past it at ${AI_OVERAGE_RATE.toFixed(2)} an action),
+      not by how many people they allow. Pay yearly and you pay for ten months instead of twelve.
     </p>
     <button type="button" class="est-back-link" data-back>Franchise or multi-brand parent instead?</button>
   </div>

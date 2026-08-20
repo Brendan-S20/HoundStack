@@ -39,6 +39,21 @@ export const PRODUCT_ID = `${SITE.url}/#software`;
 export const TRIAL_DAYS = 14;
 export const OVERAGE_RATE = 10; // per additional active employee per month
 /**
+ * Dollars per AI action past the plan's monthly allowance.
+ *
+ * Named apart from OVERAGE_RATE, which is the SEAT rate, because two bare
+ * "overage" constants in one file is how a page ends up quoting one where it
+ * meant the other.
+ *
+ * Verified against `platform_plans.ai_overage_cents_per_action` on 2026-08-20:
+ * 10 cents on Launch, Growth and Scale; null on Enterprise, which negotiates.
+ * Update this and `includedAiActions` below together with the date, or not at
+ * all — the same rule competitors.ts applies to competitor pricing. NOTHING
+ * automated compares this file to the catalog, which is how the annual discount
+ * came to say 15% while the app charged ~17%.
+ */
+export const AI_OVERAGE_RATE = 0.1;
+/**
  * Annual billing is TWO MONTHS FREE — pay for ten, get twelve.
  *
  * This was 0.15, and the app disagreed. `platform_plans.annual_price_cents` is
@@ -66,6 +81,9 @@ export interface Plan {
   price: number | null;
   /** Active employees included, or null for negotiated allowances */
   includedEmployees: number | null;
+  /** AI actions included each month, or null for negotiated allowances.
+   *  Metered: anything past this is AI_OVERAGE_RATE per action. */
+  includedAiActions: number | null;
   audience: string;
   /** The complexity ladder for this tier, not a feature checklist */
   ladder: string[];
@@ -78,6 +96,7 @@ export const PLANS: Plan[] = [
     name: 'Launch',
     price: 79,
     includedEmployees: 3,
+    includedAiActions: 200,
     audience: 'A solo operator or a small crew running one business.',
     ladder: [
       'Standard reporting suite',
@@ -89,6 +108,7 @@ export const PLANS: Plan[] = [
     name: 'Growth',
     price: 199,
     includedEmployees: 10,
+    includedAiActions: 750,
     popular: true,
     audience: 'Past "just me and a couple techs," still one business.',
     ladder: [
@@ -101,6 +121,7 @@ export const PLANS: Plan[] = [
     name: 'Scale',
     price: 449,
     includedEmployees: 30,
+    includedAiActions: 2500,
     audience: 'A large operation spread across multiple cities or territories.',
     ladder: [
       'Cross-zone and regional performance reporting',
@@ -112,6 +133,7 @@ export const PLANS: Plan[] = [
     name: 'Enterprise',
     price: null,
     includedEmployees: null,
+    includedAiActions: null,
     audience: 'A franchise or multi-brand parent overseeing separate child businesses.',
     ladder: [
       'Parent and child organization structure with full rollup',
@@ -191,6 +213,16 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
     ],
   },
   {
+    category: 'AI',
+    features: [
+      { label: 'AI actions included each month', tiers: ['200', '750', '2,500', 'by contract'] },
+      {
+        label: 'Additional AI actions',
+        tiers: ['$0.10 each', '$0.10 each', '$0.10 each', 'by contract'],
+      },
+    ],
+  },
+  {
     // MKT-1: mirrors the app's platform_addons catalog. Previously listed two
     // SKUs the app has never had — AI Business Advisor (never built) and
     // Referral Programs (which is included on every plan, not purchasable) —
@@ -198,7 +230,10 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
     // "not before it ships" spirit as the API row that was already here.
     category: 'Add-ons',
     features: [
-      { label: 'AI Receptionist ($49/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
+      {
+        label: 'AI Receptionist ($49/mo, conversations use your AI actions)',
+        tiers: ['add-on', 'add-on', 'add-on', 'add-on'],
+      },
       { label: 'Priority support ($29/mo)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       { label: 'Done-for-you setup ($499 one time)', tiers: ['add-on', 'add-on', 'add-on', 'add-on'] },
       {
@@ -258,18 +293,22 @@ export const PRICING_FAQS = [
   },
   {
     // The app gates AI on a paid plan (BUILD-7, owner decision: every request
-    // costs real money to run and there is no metering yet). The site sold "AI
+    // costs real money to run; metering shipped with BUILD-2, so the allowance and the per-action rate are now published rather than absent). The site sold "AI
     // tools" on the feature list and a free trial of "Launch" on the pricing
     // page, and said nothing anywhere about the one not including the other —
     // so the first a trialling customer would learn of it is a feature
     // declining to run. Saying it up front costs a sentence; not saying it
     // costs the trust of the person who found out the other way.
     q: `Does the ${TRIAL_DAYS} day trial include the AI features?`,
-    a: 'No, and it is the only thing it leaves out. Everything else runs in full: scheduling, routing, invoicing, payments, the field app, the client portal. The AI features run on our own model accounts and every request costs us real money, so they switch on when a plan does. Nothing else about the trial is limited, and no card is needed to start it.',
+    a: 'No, and it is the only thing it leaves out. Everything else runs in full: scheduling, routing, invoicing, payments, the field app, the client portal. The AI features run on our own model accounts and every request costs us real money, so they switch on when a plan does, with a monthly allowance of AI actions included and anything past it billed per action. Nothing else about the trial is limited, and no card is needed to start it.',
   },
   {
     q: 'What happens if I go over my included employee allowance?',
     a: `Each additional active employee is a flat $${OVERAGE_RATE} per month, shown live in your billing dashboard as it is incurred, never a surprise line on an invoice. In the app it reads the way it should: add a teammate for $${OVERAGE_RATE}.`,
+  },
+  {
+    q: 'What happens if I go over my AI action allowance?',
+    a: `Each tier includes AI actions every month: 200 on Launch, 750 on Growth, 2,500 on Scale. Anything past that is $${AI_OVERAGE_RATE.toFixed(2)} an action, shown live in Settings, AI Tools as it is incurred, and billed as one line on your next invoice. One action is one AI request, so a receptionist conversation counts once however many replies it takes. You can also set a ceiling that stops AI rather than billing past it.`,
   },
   {
     q: 'Do I lose features on Launch that Enterprise gets?',
