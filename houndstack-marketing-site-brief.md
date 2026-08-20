@@ -266,7 +266,13 @@ either done or is a person opening a browser.
 
       Submitting a URL to Google's Rich Results Test needs a person with a
       browser; the validation above is what can be checked from the repo, and it
-      is the part that would have found an error if one existed.
+      is the part that would have found an error if one existed. **Owner closed
+      this item on 2026-08-20**, on the basis that the repo-side validation found
+      zero errors across the four page types. Search Console is closed too: the
+      sitemap is already submitted and indexed. Neither is outstanding.
+
+      Twilio toll-free verification is now the only external gate left on
+      launch, and it is the owner's to clear.
 - [x] All five switch pages are live, fair, and accurate about each competitor
       — all five return 200 with one H1 and unique meta, and each concedes real
       strengths before its gaps. Competitor prices are cited "as published July
