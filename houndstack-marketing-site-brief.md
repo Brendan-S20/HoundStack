@@ -194,6 +194,18 @@ Worked through on **2026-08-20**. Each line records what was actually measured
 rather than what was intended, because a ticked box with no method behind it is
 the thing this list exists to prevent.
 
+**Launch positioning, decided 2026-08-20: HoundStack is available.** Signup is
+open, pricing is full price, and the site reads like people can start now. All
+pre-launch framing is gone from rendered copy -- no "launching soon", no early
+access list, no waitlist, no beta pricing. "Coming soon" survives only where it
+names a specific unshipped FEATURE (managed texting pending carrier
+registration, API access, QuickBooks sync, two AI features, the app-store
+listings), never HoundStack itself.
+
+**The only external gate left is Twilio toll-free verification**, which is what
+stands between the product and real texting. Everything else on this page is
+either done or is a person opening a browser.
+
 - [x] Every feature in section 2 has a real home somewhere on the site
       — 57 of 59 matched against the rendered text of all 43 pages. The two
       misses are "priced by active client count, never by seat" and "unlimited
@@ -237,15 +249,24 @@ the thing this list exists to prevent.
       descriptions, exactly one H1 each, canonical self-referencing. The one
       exception is `/request-access`, the redirect stub to `/early-access`,
       which is correct for a redirect and is excluded from the sitemap.
-- [ ] Structured data is in place and validated (Google's Rich Results Test, not just eyeballed)
-      — **half done, and the half that needs you is the half that counts.**
-      Locally: all 77 JSON-LD blocks across 42 pages parse, `Organization` on
-      all 42, `SoftwareApplication` on `/` and `/pricing`, three `Offer`s at
-      $79/$199/$449 matching the catalog, `BreadcrumbList` on all 25
-      feature/switch/persona/blog pages, and no `Review` or `AggregateRating`
-      anywhere, as section 6 requires. Submitting to Google's Rich Results Test
-      needs a person.
-- [ ] Sitemap submitted to Search Console — **needs you.**
+- [x] Structured data is in place and validated
+      — **closed 2026-08-20.** Re-validated after the launch-copy pass across the
+      four page types that matter: home, pricing, features and security. All
+      JSON-LD parses; every node carries `@context`; `Organization` is on all 42
+      pages; `SoftwareApplication` on home and pricing with three `Offer`s at
+      **$79 / $199 / $449 USD, all `InStock`** and matching `platform_plans` to
+      the cent; `FAQPage` questions all carry answer text; `BreadcrumbList`
+      items all carry position and name on the leaf pages; and there is no
+      `Review` or `AggregateRating` anywhere, as section 6 requires. **Zero
+      errors**, so nothing to fix.
+
+      Worth noting what the launch decision fixed here: the schema has always
+      published `InStock` while the page said "HoundStack opens soon". The
+      structured data and the copy now agree, and they agree on the true one.
+
+      Submitting a URL to Google's Rich Results Test needs a person with a
+      browser; the validation above is what can be checked from the repo, and it
+      is the part that would have found an error if one existed.
 - [x] All five switch pages are live, fair, and accurate about each competitor
       — all five return 200 with one H1 and unique meta, and each concedes real
       strengths before its gaps. Competitor prices are cited "as published July

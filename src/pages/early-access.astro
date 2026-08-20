@@ -6,27 +6,27 @@ import { SITE } from '../lib/site';
 ---
 
 <BaseLayout
-  title="HoundStack is coming soon: get early access"
-  description="HoundStack is almost ready. Join the early access list to get launch news, an early invite before the public doors open, and a say in what ships first."
+  title="HoundStack updates: product news by email"
+  description="HoundStack is available now. Leave your email for product news, what shipped this month, and what is coming next. No sales sequence."
 >
   <section class="page-hero">
     <div class="container contact-grid">
       <div>
-        <span class="eyebrow">Coming soon</span>
-        <h1>HoundStack is almost ready</h1>
+        <span class="eyebrow">Stay in touch</span>
+        <h1>Product news, once in a while</h1>
         <p class="lede">
-          The app is in the final stretch before launch. Leave your details and you will hear
-          from us the moment the doors open, with early access invites going out before the
-          public launch.
+          HoundStack is available today, so there is nothing to wait for: you can
+          <a href={SITE.signupUrl}>start a free trial</a> right now. This list is for
+          afterwards, or instead, if you would rather read than sign up.
         </p>
         <ul class="checklist ea-list">
           <li>
             <Icon name="check" size={20} />
-            <span><strong>First to know.</strong> A short email the day HoundStack opens, nothing before that except the occasional progress update.</span>
+            <span><strong>What shipped.</strong> A short note when something lands that changes how a day runs, not a release log.</span>
           </li>
           <li>
             <Icon name="check" size={20} />
-            <span><strong>Early access invites.</strong> Spots ahead of the public launch, so you can have routes loaded before anyone else signs in.</span>
+            <span><strong>What is coming.</strong> The next things on the <a href="/roadmap">roadmap</a>, while there is still time to argue with them.</span>
           </li>
           <li>
             <Icon name="check" size={20} />
@@ -34,11 +34,11 @@ import { SITE } from '../lib/site';
           </li>
         </ul>
         <p class="muted">
-          Have questions that cannot wait for launch? The <a href="/contact">contact form</a> reaches a person who will answer within one business day.
+          Questions first? The <a href="/contact">contact form</a> reaches a person who will answer within one business day.
         </p>
       </div>
       <div class="reveal">
-        <h2 class="ea-form-h">Join the early access list</h2>
+        <h2 class="ea-form-h">Get product news by email</h2>
         <p class="muted ea-form-p">
           Takes about twenty seconds. No spam, and you can unsubscribe with one click.
         </p>
@@ -47,7 +47,7 @@ import { SITE } from '../lib/site';
           eventName="Early Access Submitted"
           messageLabel="What should HoundStack nail for your business? (optional)"
           messagePlaceholder="Current software, team size, the thing you most want fixed"
-          submitLabel="Get early access"
+          submitLabel="Send me product news"
           redirectTo="/thank-you"
         />
       </div>

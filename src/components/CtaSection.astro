@@ -5,13 +5,16 @@ interface Props {
   heading?: string;
   body?: string;
   /** Pages where the sale starts with a conversation (e.g. HOA programs)
-      lead with the contact button instead of the early access list. */
+      lead with the contact button instead of the signup link. */
   leadWithContact?: boolean;
 }
 
+// Launch positioning, 2026-08-20: HoundStack is available. Signup is open,
+// pricing is full price, and this block appears on twenty-five pages -- so it
+// was doing most of the work of making a shipped product read as a preview.
 const {
-  heading = 'Be first through the door',
-  body = `HoundStack opens to the public soon. Join the early access list for launch news and an early invite, with a ${TRIAL_DAYS} day free trial waiting when the doors open.`,
+  heading = 'Put it on a truck this week',
+  body = `HoundStack is available now. Start today with a ${TRIAL_DAYS} day free trial, no credit card, and your first 3 teammates included.`,
   leadWithContact = false,
 } = Astro.props;
 ---
@@ -36,7 +39,7 @@ const {
       }
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
     </div>
-    <p class="cta-note">Early invites go out before launch · Launch news only, no spam · Unsubscribe anytime</p>
+    <p class="cta-note">14 day free trial · No credit card · Cancel anytime</p>
   </div>
 </section>
 
