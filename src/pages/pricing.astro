@@ -439,10 +439,21 @@ const yearlyMonthly = (price: number) => {
     padding: 24px;
     position: relative;
     margin-bottom: 18px;
-    /* 7 in-flow children: title, price, allowance, blurb, CTA, ladder,
-       feature list. The "Most popular" badge is absolutely positioned and
-       so is not a grid item. */
-    grid-row: span 7;
+    /* EIGHT in-flow children, and the count is load-bearing: title, price,
+       AI allowance, employee allowance, blurb, CTA, ladder, feature list. The
+       "Most popular" badge is absolutely positioned and so is not a grid item.
+
+       It read `span 7` from #12 until #17 added the AI-actions line above the
+       employee one and did not update it. A subgrid item that spans fewer
+       tracks than it has children does not stack the remainder -- the eighth
+       child lands in an implicit row outside the spanned area, so "See all
+       features" rendered ON TOP of the ladder above it, in all four cards, at
+       every width.
+
+       If you add a row to this card, change this number. There is no way to
+       make it count itself: `subgrid` needs an explicit span, and that is the
+       trade for having the four cards line up by construction. */
+    grid-row: span 8;
     display: grid;
     grid-template-rows: subgrid;
     /* Equal on every card, so the subgrid tracks start at the same offset
