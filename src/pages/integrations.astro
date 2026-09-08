@@ -8,15 +8,15 @@ const integrations = [
     icon: 'card',
     name: 'Stripe',
     status: 'live',
-    body: 'Payments run through your own Stripe account with your own key. HoundStack adds zero markup on processing, and payouts settle directly to you. Checkout, saved cards, and the client portal all ride on it.',
-    detail: 'Bring your own key. No percentage taken, ever.',
+    body: 'Payments run through your own Stripe account with your own key. Cards are Stripe\u2019s standard 2.9% + 30\u00a2 and bank payments 0.8% capped at $5, billed by Stripe to your account, and payouts settle directly to you. Checkout, saved cards, and the client portal all ride on it.',
+    detail: 'Bring your own key. 2.9% + 30\u00a2 per card transaction.',
   },
   {
     icon: 'message',
     name: 'Twilio',
     status: 'live',
-    body: 'Two way SMS with clients and the AI receptionist both run on Twilio. Clients text your business number, and the conversation lives in HoundStack next to their account.',
-    detail: 'Powers two way SMS and the AI receptionist.',
+    body: 'Automated texts (visit reminders, on-my-way, review asks) and portal login codes send today on HoundStack\u2019s number. Conversational two way texting on your own business number is pending US carrier registration, and the AI receptionist runs on Twilio.',
+    detail: 'Automated texts today. Two way texting pending carrier registration.',
   },
   {
     icon: 'pin',
@@ -28,9 +28,9 @@ const integrations = [
   {
     icon: 'mail',
     name: 'Your email domain',
-    status: 'live',
-    body: 'Transactional email (invoices, reminders, visit notifications) sends from your own domain. Clients see your business in the from line, not a software platform.',
-    detail: 'Custom sending domain for all transactional email.',
+    status: 'coming soon',
+    body: 'Today transactional email (invoices, reminders, visit notifications) sends from HoundStack with your business name in the from line. A custom sending domain is part of the White label add-on and is arranged by hand after purchase, not self-serve yet.',
+    detail: 'Add-on, arranged after purchase. Marked live here when it is self-serve, not before.',
   },
   {
     icon: 'chart',

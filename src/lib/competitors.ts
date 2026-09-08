@@ -233,7 +233,7 @@ export const COMPETITORS: Competitor[] = [
         'Time To Pet prices as published on timetopet.com/pricing, July 2026 (In-Home plans; their Lite and Solo tiers serve smaller sitters). Check their page for current numbers.',
     },
     featureRows: [
-      { feature: 'Client communication and visit report cards', them: 'Excellent, genuinely loved', us: 'Also strong: two way SMS, photos, review prompts' },
+      { feature: 'Client communication and visit report cards', them: 'Excellent, genuinely loved', us: 'Also strong: automated texts, photos, review prompts' },
       { feature: 'Route optimization for dense stop lists', them: 'No, visit model', us: 'One click, real drive time math' },
       { feature: 'Per dog waste pricing', them: 'No', us: 'Native' },
       { feature: 'Skip reason billing for rain days', them: 'No', us: 'Yes, rules per reason' },
