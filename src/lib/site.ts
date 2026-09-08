@@ -124,8 +124,8 @@ export const PLANS: Plan[] = [
     includedAiActions: 2500,
     audience: 'A large operation spread across multiple cities or territories.',
     ladder: [
-      'Cross-zone and regional performance reporting',
-      'Custom permission sets beyond the standard four roles',
+      'Cross-zone and regional performance reporting (coming soon)',
+      'Custom permission sets beyond the standard four roles (coming soon)',
       'Phone support with a named account contact',
     ],
   },
@@ -193,14 +193,14 @@ export const TIER_FEATURE_GROUPS: TierFeatureGroup[] = [
         label: 'Advanced analytics: cohort retention, zone profitability, churn drivers',
         tiers: [false, true, true, true],
       },
-      { label: 'Cross-zone and regional performance reporting', tiers: [false, false, true, true] },
+      { label: 'Cross-zone and regional performance reporting (coming soon, marked live here when it ships, not before)', tiers: [false, false, true, true] },
     ],
   },
   {
     category: 'Team and permissions',
     features: [
       { label: 'Standard roles: owner, office manager, dispatcher, tech', tiers: [true, true, true, true] },
-      { label: 'Custom permission sets beyond the standard four roles', tiers: [false, false, true, true] },
+      { label: 'Custom permission sets beyond the standard four roles (coming soon, marked live here when it ships, not before)', tiers: [false, false, true, true] },
     ],
   },
   {
