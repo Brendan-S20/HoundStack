@@ -115,23 +115,54 @@ needed to start.
 
 ## Blocked, because each is currently false in production
 
-**"Works offline", "install it on your phone", "progressive web app".** This one
-is easy to say by accident, because the offline machinery is built and correct
-in the application repository. It is not being served: `/sw.js` answers 404 on
-the live app, so there is no install prompt and no offline tolerance for
-anybody. The `deployment` job in the app's CI watches this and is red until it
-is fixed. When the deploy serves the worker this becomes one of the better
-claims available, for a product used in driveways with one bar of signal. Not
-before.
+**"Works offline".** Still false and still blocked. `/sw.js` answers 404 on the
+live app, so there is no service worker, and nothing is cached for a technician
+who loses signal in a driveway. The offline machinery IS built and correct in
+the application repository, and the `deployment` job in the app's CI watches
+this and is red until the host serves it. When it does, this becomes one of the
+better claims available for this product. Not before.
+
+**"Install it on your phone", "progressive web app".** Blocked, but no longer
+for the reason written here until 2026-09-09, and the correction matters
+because it was making the block look narrower than it was.
+
+This entry used to say the machinery was "built and correct" and merely unserved.
+That was true of the offline half and false of the install half. There was a
+SECOND fault, unrelated and undetected: no page carried a
+`<link rel="manifest">` at all. `vite-plugin-pwa` generates the manifest and
+injects that link into `index.html`, which a server-rendered app never emits, so
+the file was built, deployed, and served with a 200 for the life of the app and
+no browser ever read it. Fixing `/sw.js` would not have made the app
+installable.
+
+That half is now fixed and live. The manifest is linked and complete: name,
+short_name, three icons including a 512 maskable, `start_url`, `scope`,
+`display: standalone`, over HTTPS.
+
+It stays blocked anyway, on a narrower and more honest question: **nobody has
+confirmed an install prompt actually appears.** Chrome's installability criteria
+have changed more than once on whether a service worker is required, and have
+differed between desktop and Android. With `/sw.js` still 404 we are on exactly
+the line that keeps moving. This is settled by opening the live app in Chrome on
+a real phone and looking for the install option, not by reading either
+repository. Until somebody has done that and said so, do not put "install it on
+your phone" on the site.
 
 **"Public API", "regional performance reports", "custom permission sets".**
 None of the three exists. `src/lib/entitlements.ts` says so in as many words.
 
 ## Keeping this true
 
-Two rows above are time-limited and will go stale in the ordinary course of
-work rather than through anybody's mistake: the platform fee wording, and the
-offline claim. Check both before publishing anything built from this file.
+Three rows above are time-limited and will go stale in the ordinary course of
+work rather than through anybody's mistake: the platform fee wording, the
+offline claim, and the install claim, which now waits on one person checking one
+phone rather than on an engineering fix. Check all three before publishing
+anything built from this file.
+
+The install claim is also the clearest example yet of why this file asks every
+claim to name its proof. "The machinery is built, it is just not served" was
+written in good faith, was true of the thing being looked at, and was false of
+the thing beside it. One 200 response covered for a file no browser was reading.
 
 When a claim here is contradicted by a change in the product, the copy is what
 changes. The seven corrected in September were all found by reading the code
