@@ -97,6 +97,38 @@ carries neither. They are set up in HoundStack after the import. Claiming
 otherwise sets up the failure on day one of a migration, which is the worst
 moment for one.
 
+## In the field, when the signal goes
+
+**Say: "the app keeps working when the signal drops", "pages you have already
+opened still work with no bars", "it does not go blank in a driveway".**
+
+Unblocked 2026-09-10, after three weeks in the list below. `/sw.js` answers 200
+on the live app: 21,477 bytes, 377 precached entries. `npm run check:pwa:live`
+prints "the deployed site serves its service worker and links its manifest",
+and the `deployment` job in the app's CI is green on main for the first time
+since it was created.
+
+**Do NOT say "works offline" flat, and this is not pedantry.** The app is
+server-rendered, so a navigation is a request. What the worker does is
+NetworkFirst with a three second timeout, which means a page the technician has
+already opened is served from cache when the network is gone, and the hashed
+assets behind it are cached for thirty days. A route they have NEVER opened
+while online has nothing to serve and will not load.
+
+So the true claim is about a day that starts with signal and loses it, which is
+the actual driveway: they open their route in the morning, drive into a dead
+spot, and the app is still there. The false claim is a technician installing
+the app in a basement and expecting a full day of work out of it.
+
+The distinction survives contact with a customer asking "so it works offline?"
+The answer is "once you have opened your day, yes, it keeps working" -- which
+is both honest and the thing they were actually asking about.
+
+**What the worker also fixed, worth knowing but not a marketing line:** web
+push. Every notification toggle in the product needs a registered worker.
+Without one they hung forever after the person granted permission, including on
+the client portal, where customers met it. See the app repo's PushToggle.
+
 ## Plans
 
 Launch $79, Growth $199, Scale $449, Enterprise custom, per month. Checked
@@ -114,13 +146,6 @@ The trial is time-based. Nothing inside it triggers a charge and no card is
 needed to start.
 
 ## Blocked, because each is currently false in production
-
-**"Works offline".** Still false and still blocked. `/sw.js` answers 404 on the
-live app, so there is no service worker, and nothing is cached for a technician
-who loses signal in a driveway. The offline machinery IS built and correct in
-the application repository, and the `deployment` job in the app's CI watches
-this and is red until the host serves it. When it does, this becomes one of the
-better claims available for this product. Not before.
 
 **"Install it on your phone", "progressive web app".** Blocked, but no longer
 for the reason written here until 2026-09-09, and the correction matters
@@ -140,24 +165,33 @@ short_name, three icons including a 512 maskable, `start_url`, `scope`,
 `display: standalone`, over HTTPS.
 
 It stays blocked anyway, on a narrower and more honest question: **nobody has
-confirmed an install prompt actually appears.** Chrome's installability criteria
-have changed more than once on whether a service worker is required, and have
-differed between desktop and Android. With `/sw.js` still 404 we are on exactly
-the line that keeps moving. This is settled by opening the live app in Chrome on
-a real phone and looking for the install option, not by reading either
-repository. Until somebody has done that and said so, do not put "install it on
-your phone" on the site.
+confirmed an install prompt actually appears.** Both technical preconditions are
+now met -- the manifest is linked and complete, and as of 2026-09-10 `/sw.js`
+serves too -- so there is every reason to expect it works. That is not the same
+as having seen it.
+
+Chrome's installability criteria have changed more than once and have differed
+between desktop and Android, and this file's whole purpose is that a claim
+names its proof rather than its likelihood. This one is settled by opening the
+live app in Chrome on a real phone and looking for the install option. It is a
+five minute check. Until somebody has done it and said so, do not put "install
+it on your phone" on the site.
 
 **"Public API", "regional performance reports", "custom permission sets".**
 None of the three exists. `src/lib/entitlements.ts` says so in as many words.
 
 ## Keeping this true
 
-Three rows above are time-limited and will go stale in the ordinary course of
-work rather than through anybody's mistake: the platform fee wording, the
-offline claim, and the install claim, which now waits on one person checking one
-phone rather than on an engineering fix. Check all three before publishing
-anything built from this file.
+Two rows above are time-limited and will go stale in the ordinary course of
+work rather than through anybody's mistake: the platform fee wording, and the
+install claim, which waits on one person checking one phone rather than on an
+engineering fix. Check both before publishing anything built from this file.
+
+The offline row moved OUT of blocked on 2026-09-10 and is worth watching for
+the opposite reason: it is newly true, and the temptation will be to round it
+up. "Keeps working when the signal drops" is what was built. "Works offline"
+is not, and the gap between them is a technician in a basement expecting a
+full day of work.
 
 The install claim is also the clearest example yet of why this file asks every
 claim to name its proof. "The machinery is built, it is just not served" was
